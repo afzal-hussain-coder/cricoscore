@@ -1,0 +1,1507 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Activity.ScorecardActivity">
+   <include
+       android:id="@+id/toolbar"
+       layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/toolbar"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:gravity="center"
+                        android:text="June 23 ,2023"
+                        android:textAllCaps="true"
+                        android:textColor="@color/purple_700"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <TextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:gravity="center"
+                        android:text="Ekana Sports City, Lucknow"
+                        android:textColor="@color/verified_user_color"
+                        android:textSize="@dimen/_10sdp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_bold"
+                        android:gravity="center"
+                        android:text="Toss : "
+                        android:textColor="@color/purple_700"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <TextView
+                        android:id="@+id/tv_toss"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:gravity="center"
+                        android:text="RC won the toss and decided to bowl"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_10sdp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/tab_bacgroundindicator_selcted"
+                android:backgroundTint="@color/lightgrey_dim"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_8sdp"
+                    android:layout_height="@dimen/_8sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:src="@drawable/circle_camera"
+                    app:tint="@color/purple_700"></ImageView>
+
+                <TextView
+                    android:id="@+id/tv_live_scorecard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/opensans_bold"
+                    android:text="Live"
+                    android:textColor="@color/purple_700"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!--first team-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_10sdp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/image"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/placeholder_user"
+                    tools:ignore="ImageContrastCheck" />
+
+                <TextView
+                    android:id="@+id/tvTeamNameScorecard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text="CHENNAI SUPER KING"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_runScorecard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:gravity="center"
+                    android:text="180"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@string/app_name"
+                    android:rotation="-25"
+                    android:src="@drawable/line_corve" />
+
+                <TextView
+                    android:id="@+id/tv_wicketScorecard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="-3dp"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="("
+                    android:textSize="@dimen/_11sdp" />
+
+                <TextView
+                    android:id="@+id/tv_ballScorecard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:gravity="center"
+                    android:text="20.0"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:contentDescription="@string/app_name"
+                    android:rotation="-25"
+                    android:src="@drawable/line_corve" />
+
+                <TextView
+                    android:id="@+id/tv_tolal_overScorecard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="-3dp"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:gravity="center"
+                    android:text="20 Ov"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text=")"
+                    android:textSize="@dimen/_11sdp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!--SecondTeam-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_10sdp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageScorecard2"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/placeholder_user"
+                    tools:ignore="ImageContrastCheck" />
+
+                <TextView
+                    android:id="@+id/tv_teamNameScorecard2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text="ROYAL CHALLENGERS"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_runScorecard2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:gravity="center"
+                    android:text="105"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@string/app_name"
+                    android:rotation="-25"
+                    android:src="@drawable/line_corve" />
+
+                <TextView
+                    android:id="@+id/tv_wicketScorecard2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="-3dp"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="("
+                    android:textSize="@dimen/_11sdp" />
+
+                <TextView
+                    android:id="@+id/tv_ballScorecard2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:gravity="center"
+                    android:text="9.4"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:contentDescription="@string/app_name"
+                    android:rotation="-25"
+                    android:src="@drawable/line_corve" />
+
+                <TextView
+                    android:id="@+id/tv_tolal_overScorecard2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="-3dp"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:gravity="center"
+                    android:text="20 Ov"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text=")"
+                    android:textSize="@dimen/_11sdp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/opensans_bold"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:text="Target :"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp" />
+
+            <TextView
+                android:id="@+id/tv_target"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/opensans_bold"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:text="76 runs in 10.2 overs 8 wkts"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:src="@drawable/line_gradient">
+
+        </ImageView>
+
+       <androidx.core.widget.NestedScrollView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:orientation="vertical">
+               <!--first team score details-->
+               <RelativeLayout
+                   android:id="@+id/rl_team1Details"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="@dimen/_10sdp"
+                   android:layout_marginTop="@dimen/_5sdp"
+                   android:layout_marginEnd="@dimen/_10sdp">
+
+                   <LinearLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal">
+
+                       <de.hdodenhof.circleimageview.CircleImageView
+                           android:id="@+id/imageFinal"
+                           android:layout_width="@dimen/_20sdp"
+                           android:layout_height="@dimen/_20sdp"
+                           android:layout_gravity="center_vertical"
+                           android:src="@drawable/placeholder_user"
+                           tools:ignore="ImageContrastCheck" />
+
+                       <TextView
+                           android:id="@+id/tvTeamNameScorecardFinal"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="center_vertical"
+                           android:fontFamily="@font/opensans_semibold"
+                           android:gravity="center"
+                           android:padding="@dimen/_5sdp"
+                           android:text="CHENNAI SUPER KING"
+                           android:textAllCaps="true"
+                           android:textColor="@color/black"
+                           android:textSize="@dimen/_12sdp" />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_alignParentEnd="true"
+                       android:layout_centerVertical="true">
+
+                       <ImageView
+                           android:id="@+id/img_down_arrow"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@drawable/arrow_circle_down_black_24dp"
+                           android:visibility="visible"
+                           app:tint="@color/verified_user_color" />
+
+                       <ImageView
+                           android:id="@+id/img_up_arrow"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@drawable/arrow_circle_up_black_24dp"
+                           android:visibility="gone"
+                           app:tint="@color/verified_user_color" />
+
+                   </LinearLayout>
+
+
+               </RelativeLayout>
+
+               <androidx.core.widget.NestedScrollView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginBottom="@dimen/_10sdp">
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical">
+
+                       <LinearLayout
+                           android:id="@+id/liTeam1Details"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:orientation="vertical"
+                           android:visibility="visible">
+                           <!--Batsman1-->
+                           <LinearLayout
+                               android:id="@+id/li_batsman1"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:layout_marginTop="@dimen/_5sdp"
+                               android:orientation="vertical"
+                               android:visibility="visible">
+
+                               <View
+                                   android:id="@+id/vBatsman"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="@dimen/_3sdp"
+                                   android:background="@color/dim_sky" />
+
+                               <LinearLayout
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:background="@color/verified_user_color"
+                                   android:orientation="horizontal"
+                                   android:padding="@dimen/_5sdp"
+                                   android:weightSum="3">
+
+                                   <LinearLayout
+                                       android:layout_width="0dp"
+                                       android:layout_height="wrap_content"
+                                       android:layout_gravity="center_vertical"
+                                       android:layout_weight="1.2"
+                                       android:orientation="horizontal">
+
+                                       <LinearLayout
+                                           android:layout_width="match_parent"
+                                           android:layout_height="wrap_content"
+                                           android:orientation="horizontal">
+
+                                           <TextView
+                                               android:layout_width="wrap_content"
+                                               android:layout_height="wrap_content"
+                                               android:layout_alignParentStart="true"
+                                               android:layout_centerVertical="true"
+                                               android:layout_marginStart="@dimen/_10sdp"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:text="Batting"
+                                               android:textAllCaps="true"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+
+                                       </LinearLayout>
+                                   </LinearLayout>
+
+                                   <LinearLayout
+                                       android:layout_width="0dp"
+                                       android:layout_height="wrap_content"
+                                       android:layout_marginStart="@dimen/_10sdp"
+                                       android:layout_weight="1.8"
+                                       android:orientation="horizontal">
+
+                                       <LinearLayout
+                                           android:layout_width="match_parent"
+                                           android:layout_height="wrap_content"
+                                           android:orientation="horizontal">
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_gravity="center_vertical"
+                                               android:layout_weight="1"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="R"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_weight="1"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="B"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_weight="1"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="4s"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_weight="1"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="6s"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_weight="2"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="SR"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+                                       </LinearLayout>
+                                   </LinearLayout>
+
+                               </LinearLayout>
+
+                               <androidx.recyclerview.widget.RecyclerView
+                                   android:id="@+id/rvBatsmanTeam1"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:layout_marginStart="@dimen/_5sdp"
+                                   android:layout_marginEnd="@dimen/_5sdp">
+
+                               </androidx.recyclerview.widget.RecyclerView>
+
+                               <RelativeLayout
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:background="@color/white"
+                                   android:padding="@dimen/_5sdp">
+
+                                   <TextView
+                                       android:id="@+id/tvExtras"
+                                       android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:layout_centerVertical="true"
+                                       android:layout_gravity="center_vertical"
+                                       android:layout_marginStart="@dimen/_10sdp"
+                                       android:fontFamily="@font/opensans_bold"
+                                       android:gravity="center"
+                                       android:text="Extras :"
+                                       android:textColor="@color/black"
+                                       android:textSize="@dimen/_10sdp" />
+
+                                   <LinearLayout
+                                       android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:layout_centerVertical="true"
+                                       android:layout_marginStart="@dimen/_90sdp"
+                                       android:layout_toRightOf="@+id/tvExtras"
+                                       android:orientation="horizontal">
+
+                                       <TextView
+                                           android:id="@+id/tv_runScorecardExtrasRun"
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:fontFamily="@font/opensans_semibold"
+                                           android:gravity="center"
+                                           android:text="9"
+                                           android:textAllCaps="true"
+                                           android:textColor="@color/black"
+                                           android:textSize="@dimen/_14sdp" />
+
+
+                                       <TextView
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:layout_marginStart="@dimen/_5sdp"
+                                           android:fontFamily="@font/opensans_regular"
+                                           android:text="("
+                                           android:textColor="@color/black"
+                                           android:textSize="@dimen/_11sdp" />
+
+                                       <TextView
+                                           android:id="@+id/tv_ballScorecardExtrasType"
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:fontFamily="@font/opensans_semibold"
+                                           android:gravity="center"
+                                           android:text="W 6,LB 2 , NB 1"
+                                           android:textAllCaps="true"
+                                           android:textColor="@color/black"
+                                           android:textSize="@dimen/_10sdp" />
+
+
+                                       <TextView
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:layout_marginStart="@dimen/_2sdp"
+                                           android:fontFamily="@font/opensans_regular"
+                                           android:text=")"
+                                           android:textColor="@color/black"
+                                           android:textSize="@dimen/_11sdp" />
+
+                                   </LinearLayout>
+                               </RelativeLayout>
+
+                               <RelativeLayout
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:background="@color/lightgrey_dim"
+                                   android:padding="@dimen/_5sdp">
+
+                                   <TextView
+                                       android:id="@+id/tvTotal"
+                                       android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:layout_centerVertical="true"
+                                       android:layout_gravity="center_vertical"
+                                       android:layout_marginStart="@dimen/_10sdp"
+                                       android:fontFamily="@font/opensans_bold"
+                                       android:gravity="center"
+                                       android:text="Total :"
+                                       android:textColor="@color/black"
+                                       android:textSize="@dimen/_10sdp" />
+
+                                   <LinearLayout
+                                       android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:layout_centerVertical="true"
+                                       android:layout_marginStart="@dimen/_90sdp"
+                                       android:layout_toRightOf="@+id/tvTotal"
+                                       android:orientation="horizontal">
+
+                                       <TextView
+                                           android:id="@+id/tv_runScorecardTotal"
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:fontFamily="@font/opensans_semibold"
+                                           android:gravity="center"
+                                           android:text="180"
+                                           android:textAllCaps="true"
+                                           android:textColor="@color/black"
+                                           android:textSize="@dimen/_14sdp" />
+
+                                       <ImageView
+                                           android:layout_width="@dimen/_12sdp"
+                                           android:layout_height="@dimen/_16sdp"
+                                           android:layout_gravity="center_vertical"
+                                           android:contentDescription="@string/app_name"
+                                           android:rotation="-25"
+                                           android:src="@drawable/line_corve" />
+
+                                       <TextView
+                                           android:id="@+id/tv_wicketScorecardTotal"
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:layout_marginStart="-3dp"
+                                           android:fontFamily="@font/opensans_semibold"
+                                           android:gravity="center"
+                                           android:text="0"
+                                           android:textAllCaps="true"
+                                           android:textColor="@color/black"
+                                           android:textSize="@dimen/_14sdp" />
+
+                                       <TextView
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:layout_marginStart="@dimen/_5sdp"
+                                           android:fontFamily="@font/opensans_regular"
+                                           android:text="("
+                                           android:textColor="@color/black"
+                                           android:textSize="@dimen/_11sdp" />
+
+                                       <TextView
+                                           android:id="@+id/tv_ballScorecardTotal"
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:fontFamily="@font/opensans_semibold"
+                                           android:gravity="center"
+                                           android:text="20.0"
+                                           android:textAllCaps="true"
+                                           android:textColor="@color/black"
+                                           android:textSize="@dimen/_10sdp" />
+
+                                       <ImageView
+                                           android:layout_width="@dimen/_12sdp"
+                                           android:layout_height="@dimen/_10sdp"
+                                           android:layout_gravity="center_vertical"
+                                           android:layout_marginTop="@dimen/_2sdp"
+                                           android:contentDescription="@string/app_name"
+                                           android:rotation="-25"
+                                           android:src="@drawable/line_corve" />
+
+                                       <TextView
+                                           android:id="@+id/tv_tolal_overScorecardTotal"
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:layout_marginStart="-3dp"
+                                           android:fontFamily="@font/opensans_semibold"
+                                           android:gravity="center"
+                                           android:text="20 Ov"
+                                           android:textColor="@color/black"
+                                           android:textSize="@dimen/_10sdp" />
+
+                                       <TextView
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:layout_marginStart="@dimen/_2sdp"
+                                           android:fontFamily="@font/opensans_regular"
+                                           android:text=")"
+                                           android:textColor="@color/black"
+                                           android:textSize="@dimen/_11sdp" />
+
+                                   </LinearLayout>
+                               </RelativeLayout>
+
+                               <LinearLayout
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:orientation="vertical"
+                                   android:visibility="visible">
+
+                                   <TextView
+                                       android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:layout_centerVertical="true"
+                                       android:layout_gravity="center_vertical"
+                                       android:layout_marginStart="@dimen/_10sdp"
+                                       android:layout_marginTop="@dimen/_5sdp"
+                                       android:fontFamily="@font/opensans_bold"
+                                       android:gravity="center"
+                                       android:text="Yet to bat"
+                                       android:textColor="@color/black"
+                                       android:textSize="@dimen/_10sdp" />
+
+                                   <TextView
+                                       android:id="@+id/tvDidNotBatPlayerName"
+                                       android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:layout_centerVertical="true"
+                                       android:layout_gravity="start"
+                                       android:layout_marginStart="@dimen/_10sdp"
+                                       android:fontFamily="@font/opensans_bold"
+                                       android:gravity="start"
+                                       android:text="Sabir Khan,Saha,WP,Saif, M,
+Sai Kishore,R , Saldanha, C  ,Sandeep Warrier, S , Sandeep Sharma"
+                                       android:textColor="@color/verified_user_color"
+                                       android:textSize="@dimen/_8sdp" />
+                               </LinearLayout>
+
+                               <LinearLayout
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:orientation="vertical">
+
+                                   <TextView
+                                       android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:layout_centerVertical="true"
+                                       android:layout_gravity="center_vertical"
+                                       android:layout_marginStart="@dimen/_10sdp"
+                                       android:layout_marginTop="@dimen/_5sdp"
+                                       android:fontFamily="@font/opensans_bold"
+                                       android:gravity="center"
+                                       android:text="Fall of wickets"
+                                       android:textColor="@color/black"
+                                       android:textSize="@dimen/_10sdp" />
+
+                                   <TextView
+                                       android:id="@+id/tvWicketsPlayerName"
+                                       android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:layout_centerVertical="true"
+                                       android:layout_gravity="start"
+                                       android:layout_marginStart="@dimen/_10sdp"
+                                       android:fontFamily="@font/opensans_bold"
+                                       android:gravity="start"
+                                       android:text="Sabir Khan,Saha,WP,Saif, M,
+Sai Kishore,R , Saldanha, C  ,Sandeep Warrier, S , Sandeep Sharma"
+                                       android:textColor="@color/verified_user_color"
+                                       android:textSize="@dimen/_8sdp" />
+                               </LinearLayout>
+
+                           </LinearLayout>
+                           <!--Bowling1-->
+                           <LinearLayout
+                               android:id="@+id/li_bowler1"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:layout_marginTop="@dimen/_5sdp"
+                               android:orientation="vertical"
+                               android:visibility="visible">
+
+                               <View
+                                   android:id="@+id/vBowler"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="@dimen/_3sdp"
+                                   android:background="@color/dim_sky" />
+
+                               <LinearLayout
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:background="@color/verified_user_color"
+                                   android:orientation="horizontal"
+                                   android:padding="@dimen/_5sdp"
+                                   android:weightSum="3">
+
+                                   <LinearLayout
+                                       android:layout_width="0dp"
+                                       android:layout_height="wrap_content"
+                                       android:layout_gravity="center_vertical"
+                                       android:layout_weight="1.2"
+                                       android:orientation="horizontal">
+
+                                       <LinearLayout
+                                           android:layout_width="match_parent"
+                                           android:layout_height="wrap_content"
+                                           android:orientation="horizontal">
+
+                                           <TextView
+                                               android:layout_width="wrap_content"
+                                               android:layout_height="wrap_content"
+                                               android:layout_alignParentStart="true"
+                                               android:layout_centerVertical="true"
+                                               android:layout_marginStart="@dimen/_10sdp"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:text="Bowling"
+                                               android:textAllCaps="true"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+
+                                       </LinearLayout>
+                                   </LinearLayout>
+
+                                   <LinearLayout
+                                       android:layout_width="0dp"
+                                       android:layout_height="wrap_content"
+                                       android:layout_marginStart="@dimen/_10sdp"
+                                       android:layout_weight="1.8"
+                                       android:orientation="horizontal">
+
+                                       <LinearLayout
+                                           android:layout_width="match_parent"
+                                           android:layout_height="wrap_content"
+                                           android:orientation="horizontal">
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_gravity="center_vertical"
+                                               android:layout_weight="1"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="O"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_weight="1"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="M"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_weight="1"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="R"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_weight="1"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="W"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_weight="2"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="Econ"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+                                       </LinearLayout>
+                                   </LinearLayout>
+
+                               </LinearLayout>
+
+                               <androidx.recyclerview.widget.RecyclerView
+                                   android:id="@+id/rvBowlerTeam1"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:layout_marginStart="@dimen/_5sdp"
+                                   android:layout_marginEnd="@dimen/_5sdp">
+
+                               </androidx.recyclerview.widget.RecyclerView>
+
+
+                           </LinearLayout>
+                       </LinearLayout>
+                   </LinearLayout>
+               </androidx.core.widget.NestedScrollView>
+
+               <View
+                   android:layout_width="match_parent"
+                   android:layout_height="@dimen/_4sdp"
+                   android:layout_marginTop="@dimen/_5sdp"
+                   android:background="@color/lightgrey_dim" />
+
+               <!--second team score details-->
+
+               <RelativeLayout
+                   android:id="@+id/rl_team2Details"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="@dimen/_10sdp"
+                   android:layout_marginTop="@dimen/_5sdp"
+                   android:layout_marginEnd="@dimen/_10sdp"
+                   android:visibility="visible">
+
+                   <LinearLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal">
+
+                       <de.hdodenhof.circleimageview.CircleImageView
+                           android:id="@+id/imageFinal2"
+                           android:layout_width="@dimen/_20sdp"
+                           android:layout_height="@dimen/_20sdp"
+                           android:layout_gravity="center_vertical"
+                           android:src="@drawable/placeholder_user"
+                           tools:ignore="ImageContrastCheck" />
+
+                       <TextView
+                           android:id="@+id/tvTeamNameScorecardFinal2"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="center_vertical"
+                           android:fontFamily="@font/opensans_semibold"
+                           android:gravity="center"
+                           android:padding="@dimen/_5sdp"
+                           android:text="ROYAL CHALLENGERS"
+                           android:textAllCaps="true"
+                           android:textColor="@color/black"
+                           android:textSize="@dimen/_12sdp" />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_alignParentEnd="true"
+                       android:layout_centerVertical="true">
+
+                       <ImageView
+                           android:id="@+id/img_down_arrow2"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@drawable/arrow_circle_down_black_24dp"
+                           android:visibility="visible"
+                           app:tint="@color/verified_user_color" />
+
+                       <ImageView
+                           android:id="@+id/img_up_arrow2"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@drawable/arrow_circle_up_black_24dp"
+                           android:visibility="gone"
+                           app:tint="@color/verified_user_color" />
+
+                   </LinearLayout>
+
+
+               </RelativeLayout>
+
+               <androidx.core.widget.NestedScrollView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginBottom="@dimen/_10sdp">
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical">
+
+                       <LinearLayout
+                           android:id="@+id/liTeam2Details"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:orientation="vertical"
+                           android:visibility="gone">
+                           <!--Batsman1-->
+                           <LinearLayout
+                               android:id="@+id/li_batsman2"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:layout_marginTop="@dimen/_5sdp"
+                               android:orientation="vertical"
+                               android:visibility="visible">
+
+                               <View
+                                   android:id="@+id/vBatsman2"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="@dimen/_3sdp"
+                                   android:background="@color/dim_sky" />
+
+                               <LinearLayout
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:background="@color/verified_user_color"
+                                   android:orientation="horizontal"
+                                   android:padding="@dimen/_5sdp"
+                                   android:weightSum="3">
+
+                                   <LinearLayout
+                                       android:layout_width="0dp"
+                                       android:layout_height="wrap_content"
+                                       android:layout_gravity="center_vertical"
+                                       android:layout_weight="1.2"
+                                       android:orientation="horizontal">
+
+                                       <LinearLayout
+                                           android:layout_width="match_parent"
+                                           android:layout_height="wrap_content"
+                                           android:orientation="horizontal">
+
+                                           <TextView
+                                               android:layout_width="wrap_content"
+                                               android:layout_height="wrap_content"
+                                               android:layout_alignParentStart="true"
+                                               android:layout_centerVertical="true"
+                                               android:layout_marginStart="@dimen/_10sdp"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:text="Batsman"
+                                               android:textAllCaps="true"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+
+                                       </LinearLayout>
+                                   </LinearLayout>
+
+                                   <LinearLayout
+                                       android:layout_width="0dp"
+                                       android:layout_height="wrap_content"
+                                       android:layout_marginStart="@dimen/_10sdp"
+                                       android:layout_weight="1.8"
+                                       android:orientation="horizontal">
+
+                                       <LinearLayout
+                                           android:layout_width="match_parent"
+                                           android:layout_height="wrap_content"
+                                           android:orientation="horizontal">
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_gravity="center_vertical"
+                                               android:layout_weight="1"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="R"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_weight="1"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="B"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_weight="1"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="4s"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_weight="1"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="6s"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_weight="2"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="SR"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+                                       </LinearLayout>
+                                   </LinearLayout>
+
+                               </LinearLayout>
+
+                               <androidx.recyclerview.widget.RecyclerView
+                                   android:id="@+id/rvBatsmanTeam2"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:layout_marginStart="@dimen/_5sdp"
+                                   android:layout_marginEnd="@dimen/_5sdp">
+
+                               </androidx.recyclerview.widget.RecyclerView>
+
+                               <RelativeLayout
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:background="@color/lightgrey_dim"
+                                   android:padding="@dimen/_5sdp">
+
+                                   <TextView
+                                       android:id="@+id/tvTotal2"
+                                       android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:layout_centerVertical="true"
+                                       android:layout_gravity="center_vertical"
+                                       android:layout_marginStart="@dimen/_10sdp"
+                                       android:fontFamily="@font/opensans_bold"
+                                       android:gravity="center"
+                                       android:text="Total :"
+                                       android:textColor="@color/black"
+                                       android:textSize="@dimen/_10sdp" />
+
+                                   <LinearLayout
+                                       android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:layout_centerVertical="true"
+                                       android:layout_marginStart="@dimen/_90sdp"
+                                       android:layout_toRightOf="@+id/tvTotal2"
+                                       android:orientation="horizontal">
+
+                                       <TextView
+                                           android:id="@+id/tv_runScorecardTotal2"
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:fontFamily="@font/opensans_semibold"
+                                           android:gravity="center"
+                                           android:text="180"
+                                           android:textAllCaps="true"
+                                           android:textColor="@color/black"
+                                           android:textSize="@dimen/_14sdp" />
+
+                                       <ImageView
+                                           android:layout_width="@dimen/_12sdp"
+                                           android:layout_height="@dimen/_16sdp"
+                                           android:layout_gravity="center_vertical"
+                                           android:contentDescription="@string/app_name"
+                                           android:rotation="-25"
+                                           android:src="@drawable/line_corve" />
+
+                                       <TextView
+                                           android:id="@+id/tv_wicketScorecardTotal2"
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:layout_marginStart="-3dp"
+                                           android:fontFamily="@font/opensans_semibold"
+                                           android:gravity="center"
+                                           android:text="0"
+                                           android:textAllCaps="true"
+                                           android:textColor="@color/black"
+                                           android:textSize="@dimen/_14sdp" />
+
+                                       <TextView
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:layout_marginStart="@dimen/_5sdp"
+                                           android:fontFamily="@font/opensans_regular"
+                                           android:text="("
+                                           android:textColor="@color/black"
+                                           android:textSize="@dimen/_11sdp" />
+
+                                       <TextView
+                                           android:id="@+id/tv_ballScorecardTotal2"
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:fontFamily="@font/opensans_semibold"
+                                           android:gravity="center"
+                                           android:text="20.0"
+                                           android:textAllCaps="true"
+                                           android:textColor="@color/black"
+                                           android:textSize="@dimen/_10sdp" />
+
+                                       <ImageView
+                                           android:layout_width="@dimen/_12sdp"
+                                           android:layout_height="@dimen/_10sdp"
+                                           android:layout_gravity="center_vertical"
+                                           android:layout_marginTop="@dimen/_2sdp"
+                                           android:contentDescription="@string/app_name"
+                                           android:rotation="-25"
+                                           android:src="@drawable/line_corve" />
+
+                                       <TextView
+                                           android:id="@+id/tv_tolal_overScorecardTotal2"
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:layout_marginStart="-3dp"
+                                           android:fontFamily="@font/opensans_semibold"
+                                           android:gravity="center"
+                                           android:text="20 Ov"
+                                           android:textColor="@color/black"
+                                           android:textSize="@dimen/_10sdp" />
+
+                                       <TextView
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:layout_marginStart="@dimen/_2sdp"
+                                           android:fontFamily="@font/opensans_regular"
+                                           android:text=")"
+                                           android:textColor="@color/black"
+                                           android:textSize="@dimen/_11sdp" />
+
+                                   </LinearLayout>
+                               </RelativeLayout>
+
+                               <LinearLayout
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:orientation="vertical">
+
+                                   <TextView
+                                       android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:layout_centerVertical="true"
+                                       android:layout_gravity="center_vertical"
+                                       android:layout_marginStart="@dimen/_10sdp"
+                                       android:layout_marginTop="@dimen/_5sdp"
+                                       android:fontFamily="@font/opensans_bold"
+                                       android:gravity="center"
+                                       android:text="Dit not bat"
+                                       android:textColor="@color/black"
+                                       android:textSize="@dimen/_10sdp" />
+
+                                   <TextView
+                                       android:id="@+id/tvDidNotBatPlayerName2"
+                                       android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:layout_centerVertical="true"
+                                       android:layout_gravity="start"
+                                       android:layout_marginStart="@dimen/_10sdp"
+                                       android:fontFamily="@font/opensans_bold"
+                                       android:gravity="start"
+                                       android:text="Sabir Khan,Saha,WP,Saif, M,
+Sai Kishore,R , Saldanha, C  ,Sandeep Warrier, S , Sandeep Sharma"
+                                       android:textColor="@color/verified_user_color"
+                                       android:textSize="@dimen/_8sdp" />
+                               </LinearLayout>
+
+
+                           </LinearLayout>
+
+                           <!--Bowling1-->
+                           <LinearLayout
+                               android:id="@+id/li_bowler2"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:layout_marginTop="@dimen/_5sdp"
+                               android:orientation="vertical"
+                               android:visibility="visible">
+
+                               <View
+                                   android:id="@+id/vBowler2"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="@dimen/_3sdp"
+                                   android:background="@color/dim_sky" />
+
+                               <LinearLayout
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:background="@color/verified_user_color"
+                                   android:orientation="horizontal"
+                                   android:padding="@dimen/_5sdp"
+                                   android:weightSum="3">
+
+                                   <LinearLayout
+                                       android:layout_width="0dp"
+                                       android:layout_height="wrap_content"
+                                       android:layout_gravity="center_vertical"
+                                       android:layout_weight="1.2"
+                                       android:orientation="horizontal">
+
+                                       <LinearLayout
+                                           android:layout_width="match_parent"
+                                           android:layout_height="wrap_content"
+                                           android:orientation="horizontal">
+
+                                           <TextView
+                                               android:layout_width="wrap_content"
+                                               android:layout_height="wrap_content"
+                                               android:layout_alignParentStart="true"
+                                               android:layout_centerVertical="true"
+                                               android:layout_marginStart="@dimen/_10sdp"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:text="Bowler"
+                                               android:textAllCaps="true"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+
+                                       </LinearLayout>
+                                   </LinearLayout>
+
+                                   <LinearLayout
+                                       android:layout_width="0dp"
+                                       android:layout_height="wrap_content"
+                                       android:layout_marginStart="@dimen/_10sdp"
+                                       android:layout_weight="1.8"
+                                       android:orientation="horizontal">
+
+                                       <LinearLayout
+                                           android:layout_width="match_parent"
+                                           android:layout_height="wrap_content"
+                                           android:orientation="horizontal">
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_gravity="center_vertical"
+                                               android:layout_weight="1"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="O"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_weight="1"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="M"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_weight="1"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="R"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_weight="1"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="W"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+
+                                           <TextView
+                                               android:layout_width="0dp"
+                                               android:layout_height="wrap_content"
+                                               android:layout_weight="2"
+                                               android:fontFamily="@font/opensans_regular"
+                                               android:gravity="center"
+                                               android:text="Econ"
+                                               android:textColor="@color/white"
+                                               android:textSize="@dimen/_12sdp" />
+                                       </LinearLayout>
+                                   </LinearLayout>
+
+                               </LinearLayout>
+
+                               <androidx.recyclerview.widget.RecyclerView
+                                   android:id="@+id/rvBowlerTeam2"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:layout_marginStart="@dimen/_5sdp"
+                                   android:layout_marginEnd="@dimen/_5sdp">
+
+                               </androidx.recyclerview.widget.RecyclerView>
+
+
+                           </LinearLayout>
+                       </LinearLayout>
+                   </LinearLayout>
+               </androidx.core.widget.NestedScrollView>
+           </LinearLayout>
+       </androidx.core.widget.NestedScrollView>
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_80sdp"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/_2sdp"
+    android:paddingEnd="@dimen/_1sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tv_run_childd"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/circle_camera"
+        android:backgroundTint="@color/smokewhite"
+        android:gravity="center_horizontal"
+        android:text="2"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_9sdp"
+        app:fontFamily="@font/opensans_semibold" />
+
+</RelativeLayout>

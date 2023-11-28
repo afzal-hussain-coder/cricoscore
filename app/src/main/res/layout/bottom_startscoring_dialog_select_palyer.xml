@@ -1,0 +1,1239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/li_bottom_scoring"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2sdp"
+        android:background="@color/light_gray" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mb_end_over"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:backgroundTint="@color/verified_user_color"
+        android:fontFamily="@font/opensans_bold"
+        android:text="@string/end_over"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_8sdp"
+        android:visibility="gone"
+        app:cornerRadius="@dimen/_50sdp" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingTop="@dimen/_7sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp">
+
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_toLeftOf="@+id/li_end"
+                android:paddingBottom="@dimen/_2sdp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/li1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv1_WD"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:visibility="gone"
+                                android:textColor="@color/purple_700"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                            <TextView
+                                android:id="@+id/tv1_NB"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:visibility="gone"
+                                android:textColor="@color/verified_user_color"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                            <TextView
+                                android:id="@+id/tv1_xtra"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:visibility="gone"
+                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:textColor="@color/green"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+
+                            <TextView
+                                android:id="@+id/tv1Ball"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:textColor="#315370"
+                                android:textSize="@dimen/_10sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+
+                            <TextView
+                                android:id="@+id/tv1Run"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:background="@drawable/circle_camera"
+                                android:backgroundTint="@color/smokewhite"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_9sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/li2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv2_WD"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:visibility="gone"
+                                android:textColor="@color/purple_700"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                            <TextView
+                                android:id="@+id/tv2_NB"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:visibility="gone"
+                                android:textColor="@color/verified_user_color"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                            <TextView
+                                android:id="@+id/tv2_xtra"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:visibility="gone"
+                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:textColor="@color/green"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+
+                            <TextView
+                                android:id="@+id/tv2ball"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="#315370"
+                                android:textSize="@dimen/_10sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+
+                            <TextView
+                                android:id="@+id/tv2Run"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:background="@drawable/circle_camera"
+                                android:backgroundTint="@color/smokewhite"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_9sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/li3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv3_WD"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:visibility="gone"
+                                android:textColor="@color/purple_700"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                            <TextView
+                                android:id="@+id/tv3_NB"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:visibility="gone"
+                                android:textColor="@color/verified_user_color"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                            <TextView
+                                android:id="@+id/tv3_xtra"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:visibility="gone"
+                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:textColor="@color/green"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+
+                            <TextView
+                                android:id="@+id/tv3Ball"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="#315370"
+                                android:textSize="@dimen/_10sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+
+                            <TextView
+                                android:id="@+id/tv3Run"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:background="@drawable/circle_camera"
+                                android:backgroundTint="@color/smokewhite"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_9sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/li4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/tv4_WD"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:visibility="gone"
+                                android:textColor="@color/purple_700"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                            <TextView
+                                android:id="@+id/tv4_NB"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:visibility="gone"
+                                android:textColor="@color/verified_user_color"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                            <TextView
+                                android:id="@+id/tv4_xtra"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:visibility="gone"
+                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:textColor="@color/green"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+
+                            <TextView
+                                android:id="@+id/tv4Ball"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="#315370"
+                                android:textSize="@dimen/_10sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+
+                            <TextView
+                                android:id="@+id/tv4Run"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:background="@drawable/circle_camera"
+                                android:backgroundTint="@color/smokewhite"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_9sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/li5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/tv5_WD"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:visibility="gone"
+                                android:textColor="@color/purple_700"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                            <TextView
+                                android:id="@+id/tv5_NB"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:visibility="gone"
+                                android:textColor="@color/verified_user_color"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                            <TextView
+                                android:id="@+id/tv5_xtra"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:visibility="gone"
+                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:textColor="@color/green"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+
+                            <TextView
+                                android:id="@+id/tv5Ball"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="#315370"
+                                android:textSize="@dimen/_10sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+
+                            <TextView
+                                android:id="@+id/tv5Run"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:background="@drawable/circle_camera"
+                                android:backgroundTint="@color/smokewhite"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_9sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/li6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv6_WD"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:visibility="gone"
+                                android:textColor="@color/purple_700"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                            <TextView
+                                android:id="@+id/tv6_NB"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:visibility="gone"
+                                android:textColor="@color/verified_user_color"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                            <TextView
+                                android:id="@+id/tv6_xtra"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="0.1"
+                                android:visibility="gone"
+                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:textColor="@color/green"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+
+                            <TextView
+                                android:id="@+id/tv6Ball"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="#315370"
+                                android:textSize="@dimen/_10sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+
+                            <TextView
+                                android:id="@+id/tv6Run"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:background="@drawable/circle_camera"
+                                android:backgroundTint="@color/smokewhite"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_9sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+
+            <LinearLayout
+                android:id="@+id/li_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/baseline_reply_24"
+                    app:tint="@color/verified_user_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="18"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    app:fontFamily="@font/opensans_semibold" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="#1A000000" />
+
+        <LinearLayout
+            android:id="@+id/li_keyboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:weightSum="6">
+            <!--main keypad-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_zero"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/add_post_background_left"
+                        android:gravity="center"
+                        android:padding="@dimen/_10sdp"
+                        android:text="0"
+                        android:textColor="@color/verified_user_color"
+                        android:textSize="@dimen/_12sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <TextView
+                        android:id="@+id/tv_one"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/add_post_background_left"
+                        android:gravity="center"
+                        android:padding="@dimen/_10sdp"
+                        android:text="1"
+                        android:textColor="@color/verified_user_color"
+                        android:textSize="@dimen/_12sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <TextView
+                        android:id="@+id/tv_two"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/add_post_background_left"
+                        android:gravity="center"
+                        android:padding="@dimen/_10sdp"
+                        android:text="2"
+                        android:textColor="@color/verified_user_color"
+                        android:textSize="@dimen/_12sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_three"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/add_post_background_left"
+                        android:gravity="center"
+                        android:padding="@dimen/_10sdp"
+                        android:text="3"
+                        android:textColor="@color/verified_user_color"
+                        android:textSize="@dimen/_12sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <TextView
+                        android:id="@+id/tv_four"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/add_post_background_left"
+                        android:gravity="center"
+                        android:padding="@dimen/_10sdp"
+                        android:text="4"
+                        android:textColor="@color/verified_user_color"
+                        android:textSize="@dimen/_12sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <TextView
+                        android:id="@+id/tv_six"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/add_post_background_left"
+                        android:gravity="center"
+                        android:padding="@dimen/_10sdp"
+                        android:text="6"
+                        android:textColor="@color/verified_user_color"
+                        android:textSize="@dimen/_12sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/li_forCommon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_NB"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_weight="2"
+                        android:background="@drawable/add_post_background_left"
+                        android:gravity="center"
+                        android:padding="@dimen/_10sdp"
+                        android:text="NB"
+                        android:textColor="@color/verified_user_color"
+                        android:textSize="@dimen/_12sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <TextView
+                        android:id="@+id/tv_extras"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_weight="2"
+                        android:background="@drawable/add_post_background_left"
+                        android:gravity="center"
+                        android:padding="@dimen/_10sdp"
+                        android:text="EXTRAS"
+                        android:textColor="@color/verified_user_color"
+                        android:textSize="@dimen/_12sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_WD"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_weight="2"
+                        android:background="@drawable/add_post_background_left"
+                        android:gravity="center"
+                        android:padding="@dimen/_10sdp"
+                        android:text="WD"
+                        android:textColor="@color/verified_user_color"
+                        android:textSize="@dimen/_12sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <TextView
+                        android:id="@+id/tv_wicket"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_weight="2"
+                        android:background="@drawable/add_post_background_left"
+                        android:gravity="center"
+                        android:padding="@dimen/_10sdp"
+                        android:text="WICKET"
+                        android:textColor="@color/verified_user_color"
+                        android:textSize="@dimen/_12sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!--linear wicket-->
+            <LinearLayout
+                android:id="@+id/li_wi"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:background="@drawable/add_post_background_left"
+                android:backgroundTint="@color/smokewhite"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:text="Out How?"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    app:fontFamily="@font/opensans_bold" />
+
+                <com.cricoscore.Utils.SelectStatusType
+                    android:id="@+id/drop_tvSelectWicketType"
+                    style="@style/formDropDownn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@drawable/dropbox_status_main"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:drawableTint="@color/dark_grey"
+                    android:fontFamily="@font/opensans_regular"
+                    android:gravity="center"
+                    android:hint="Select out ways"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/dark_grey"
+                    android:textSize="@dimen/_10sdp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/mb_cancel_wi"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_28sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:backgroundTint="@color/light_gray"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="@string/cancel"
+                        android:textColor="@color/dim_grey"
+                        android:textSize="@dimen/_8sdp"
+                        app:cornerRadius="@dimen/_10sdp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/mb_submit_wi"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_28sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:backgroundTint="#315370"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="@string/submit"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_8sdp"
+                        app:cornerRadius="@dimen/_10sdp" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <!--linear nb-->
+            <LinearLayout
+                android:id="@+id/li_nb"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:background="@drawable/add_post_background_left"
+                android:backgroundTint="@color/smokewhite"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="No Ball"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    app:fontFamily="@font/opensans_bold" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/_2sdp"
+                        android:text="NB"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_regular" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/editboxx"
+                        android:backgroundTint="#315370"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_2sdp"
+                        android:paddingEnd="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_2sdp"
+                        android:text="1"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/_2sdp"
+                        android:text="+"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp"
+                        app:fontFamily="@font/opensans_regular" />
+
+                    <TextView
+                        android:id="@+id/tv_extraNoBallRun"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:background="@drawable/editboxx"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_2sdp"
+                        android:paddingEnd="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_2sdp"
+                        android:text="0"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/_2sdp"
+                        android:text="="
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp"
+                        app:fontFamily="@font/opensans_regular" />
+
+                    <TextView
+                        android:id="@+id/tv_extraNoBulFinalRun"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/_2sdp"
+                        android:text="1"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                </LinearLayout>
+
+                <RadioGroup
+                    android:id="@+id/radio_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radio_from_bat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="From Bat"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_8sdp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_bye"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="Bye"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_8sdp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_leg_bye"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="Leg Bye"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_8sdp" />
+                </RadioGroup>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/mb_add_cancel_nb"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_28sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:backgroundTint="@color/light_gray"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="@string/cancel"
+                        android:textColor="@color/dim_grey"
+                        android:textSize="@dimen/_8sdp"
+                        app:cornerRadius="@dimen/_10sdp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/mb_submit_nb"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_28sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:backgroundTint="#315370"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="@string/submit"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_8sdp"
+                        app:cornerRadius="@dimen/_10sdp" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+            <!--linear wide ball-->
+            <LinearLayout
+                android:id="@+id/li_wd"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:background="@drawable/add_post_background_left"
+                android:backgroundTint="@color/smokewhite"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:text="Wide Ball"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    app:fontFamily="@font/opensans_bold" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/_5sdp"
+                        android:text="WD"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/rounded_bg"
+                        android:backgroundTint="#315370"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="1"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/_5sdp"
+                        android:text="+"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp"
+                        app:fontFamily="@font/opensans_bold" />
+
+                    <TextView
+                        android:id="@+id/tv_extraRunWD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:background="@drawable/editboxx"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="0"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/_5sdp"
+                        android:text="="
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp"
+                        app:fontFamily="@font/opensans_bold" />
+
+                    <TextView
+                        android:id="@+id/tv_finalRunWD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/_5sdp"
+                        android:text="1"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/mb_cancel_wd"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_28sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:backgroundTint="@color/light_gray"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="@string/cancel"
+                        android:textColor="@color/dim_grey"
+                        android:textSize="@dimen/_8sdp"
+                        app:cornerRadius="@dimen/_10sdp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/mb_submit_wd"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_28sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:backgroundTint="#315370"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="@string/submit"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_8sdp"
+                        app:cornerRadius="@dimen/_10sdp" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/li_startInningEndSession"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="2">
+            <LinearLayout
+                android:id="@+id/li_startSecondInning"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/green"
+                android:background="@drawable/add_post_background_left"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_StartsecondInning"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:gravity="center_vertical"
+                    android:text="@string/startSecondInning"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14sdp">
+
+                </TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/li_endScoringSession"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/purple_700"
+                android:background="@drawable/add_post_background_left"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:gravity="center_vertical"
+                    android:text="@string/endScoringSession"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14sdp">
+
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

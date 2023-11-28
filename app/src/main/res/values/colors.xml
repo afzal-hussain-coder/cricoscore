@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#800000</color>
+    <color name="purple_500">#800000</color>
+    <color name="purple_700">#800000</color>
+    <color name="teal_200">#800000</color>
+    <color name="teal_700">#800000</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="smokewhite">#F5F5F5</color>
+    <color name="creamewhite">#FCFBF4</color>
+
+
+    <color name="dim_grey">#696969</color>
+    <color name="dark_grey">#A9A9A9</color>
+    <color name="light_gray">#F8F7FB</color>
+    <color name="lightgrey_dim">#EBEAEC</color>
+    <color name="verified_user_color">#55ACEE</color>
+    <color name="green">#4CAF50</color>
+    <color name="black_semi_transparent">#B1000000</color>
+    <color name="black_light_tranparent">#20000000</color>
+    <color name="dim_sky">#246596</color>
+
+   <!-- #00000 original color code by Ankush-->
+
+
+</resources>

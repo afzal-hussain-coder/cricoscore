@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/creamewhite"
+    tools:context=".Activity.AddTournamentActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_below="@+id/toolbar"
+        android:background="@drawable/banner_placeholder">
+
+        <ImageView
+            android:id="@+id/cover_img"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_230sdp"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:padding="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:src="@drawable/ic_add_a_photo_black_24dp"
+            app:tint="@color/purple_700" />
+
+        <RelativeLayout
+            android:id="@+id/middle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_30sdp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_pic"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_centerInParent="true"
+                android:padding="@dimen/_4sdp"
+                android:src="@drawable/placeholder_user" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-30dp"
+                android:layout_marginTop="@dimen/_55sdp"
+                android:layout_toEndOf="@+id/profile_pic"
+                android:background="@drawable/circle_camera"
+                android:padding="@dimen/_4sdp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_add_a_photo_black_24dp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_top"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.cricoscore.Utils.SelectTournamentType
+                android:id="@+id/drop_tType"
+                style="@style/formDropDown"
+                app:boxBackgroundColor="@color/smokewhite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/editboxx"
+                android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
+                android:padding="@dimen/_10sdp"
+                android:hint="Select Tournament Type"
+                android:textColor="@color/black"
+                android:textColorHint="@color/dark_grey"
+                android:textSize="@dimen/_10sdp"
+                android:fontFamily="@font/opensans_regular" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_awards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                app:chipSpacingHorizontal="@dimen/_5sdp" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/OutlinedRoundBox"
+                    android:layout_width="match_parent"
+                    app:boxBackgroundColor="@color/white"
+                    android:layout_height="wrap_content"
+                    android:hint="Add Awards,Prizes"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textColorHint="@color/dark_grey"
+                    app:boxStrokeColor="@color/purple_500"
+                    app:hintTextColor="@color/purple_500"
+                    app:startIconDrawable="@drawable/prize"
+                    app:startIconTint="@null">
+
+                    <!--this is the actual edit text which takes the input-->
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text_tAddAwards"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textSize="@dimen/_10sdp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/black"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/iv_done"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_gravity="end|center_vertical"
+                    android:src="@drawable/done_black_24dp"
+                    app:tint="@color/green" />
+            </FrameLayout>
+
+
+            <com.cricoscore.Utils.SelectTournamentType
+                android:id="@+id/drop_tAwards"
+                style="@style/formDropDown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/editboxx"
+                android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
+                android:padding="@dimen/_10sdp"
+                android:hint="Select Ball Type"
+                android:textColor="@color/black"
+                android:textColorHint="@color/dark_grey"
+                android:textSize="@dimen/_10sdp"
+                android:fontFamily="@font/opensans_regular" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/OutlinedRoundBox"
+                app:boxBackgroundColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:textColorHint="@color/dark_grey"
+                app:boxStrokeColor="@color/purple_500"
+                app:hintTextColor="@color/purple_500"
+                android:layout_marginTop="@dimen/_5sdp"
+                app:startIconDrawable="@drawable/sports_cricket_black_24dp"
+                app:startIconTint="@null">
+
+                <!--this is the actual edit text which takes the input-->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_tName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:textSize="@dimen/_10sdp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:id="@+id/li_start_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/editboxx"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp">
+
+                    <TextView
+                        android:id="@+id/tv_start_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:hint="@string/start_date"
+                        android:drawableLeft="@drawable/event_black_24dp"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_grey"
+                        android:textSize="@dimen/_10sdp"
+                        android:fontFamily="@font/opensans_regular" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/li_end_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/editboxx"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp">
+
+                    <TextView
+                        android:id="@+id/tv_end_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_10sdp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="center_vertical"
+                        android:hint="@string/end_date"
+                        android:drawableLeft="@drawable/event_black_24dp"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_grey"
+                      />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--state-->
+            <com.cricoscore.Utils.SelectTournamentType
+                android:id="@+id/drop_tState"
+                style="@style/formDropDown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/editboxx"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
+                android:padding="@dimen/_10sdp"
+                android:hint="Select State"
+                android:textColor="@color/black"
+                android:textColorHint="@color/dark_grey"
+                android:textSize="@dimen/_10sdp"
+                android:fontFamily="@font/opensans_regular" />
+            <!--city-->
+            <com.cricoscore.Utils.SelectTournamentType
+                android:id="@+id/drop_tCity"
+                style="@style/formDropDown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/editboxx"
+                android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
+                android:padding="@dimen/_10sdp"
+                android:hint="Select City"
+                android:textColor="@color/black"
+                android:textColorHint="@color/dark_grey"
+                android:textSize="@dimen/_10sdp"
+                android:fontFamily="@font/opensans_regular" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/OutlinedRoundBox"
+                app:boxBackgroundColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Type here exact location"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:textColorHint="@color/dark_grey"
+                app:boxStrokeColor="@color/purple_500"
+                app:hintTextColor="@color/purple_500"
+                app:startIconDrawable="@drawable/my_location_black_24dp"
+                app:startIconTint="@null">
+
+                <!--this is the actual edit text which takes the input-->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:textSize="@dimen/_10sdp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/OutlinedRoundBox"
+                app:boxBackgroundColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Type here exact ground name if any"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:textColorHint="@color/dark_grey"
+                app:boxStrokeColor="@color/purple_500"
+                app:hintTextColor="@color/purple_500"
+                app:startIconDrawable="@drawable/my_location_black_24dp"
+                app:startIconTint="@null">
+
+                <!--this is the actual edit text which takes the input-->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_groundName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:textSize="@dimen/_10sdp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/OutlinedRoundBox"
+                app:boxBackgroundColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tournament fees"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:textColorHint="@color/dark_grey"
+                app:boxStrokeColor="@color/purple_500"
+                app:hintTextColor="@color/purple_500"
+                app:startIconDrawable="@drawable/money_black_24dp"
+                app:startIconTint="@null">
+
+                <!--this is the actual edit text which takes the input-->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_tfees"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textSize="@dimen/_10sdp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:textColor="@color/black"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/OutlinedRoundBox"
+                app:boxBackgroundColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Discount if any (optional):"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:textColorHint="@color/dark_grey"
+                app:boxStrokeColor="@color/purple_500"
+                app:hintTextColor="@color/purple_500"
+                app:startIconDrawable="@drawable/discount_black_24dp"
+                app:startIconTint="@null">
+
+                <!--this is the actual edit text which takes the input-->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_tDiscount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textSize="@dimen/_10sdp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:textColor="@color/black"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/OutlinedRoundBox"
+                app:boxBackgroundColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Number of Team"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:textColorHint="@color/dark_grey"
+                app:boxStrokeColor="@color/purple_500"
+                app:hintTextColor="@color/purple_500"
+                app:startIconDrawable="@drawable/numbers_black_24dp"
+                app:startIconTint="@null">
+
+                <!--this is the actual edit text which takes the input-->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_tNoOfTeam"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textSize="@dimen/_10sdp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:textColor="@color/black"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/OutlinedRoundBox"
+                app:boxBackgroundColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Sponsored By (optional)"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:textColorHint="@color/dark_grey"
+                app:boxStrokeColor="@color/purple_500"
+                app:hintTextColor="@color/purple_500"
+                app:startIconDrawable="@drawable/account_circle_black_24dp"
+                app:startIconTint="@null">
+
+                <!--this is the actual edit text which takes the input-->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_tSponsored"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textSize="@dimen/_10sdp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:textColor="@color/black"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="@dimen/_10sdp"
+                 android:orientation="vertical">
+
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:textColor="@color/purple_700"
+                     android:fontFamily="@font/opensans_semibold"
+                     android:textSize="@dimen/_10sdp"
+                     android:text="@string/organizer_contact_details"/>
+
+                 <LinearLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:baselineAligned="false"
+                     android:layout_marginTop="@dimen/_5sdp"
+                     android:orientation="horizontal"
+                     android:weightSum="2">
+                     <com.google.android.material.textfield.TextInputLayout
+                         style="@style/OutlinedRoundBox"
+                         app:boxBackgroundColor="@color/white"
+                         android:layout_width="0dp"
+                         android:layout_height="wrap_content"
+                         android:hint="Name"
+                         android:layout_weight="1"
+                         android:layout_marginEnd="@dimen/_5sdp"
+                         android:textColorHint="@color/dark_grey"
+                         app:boxStrokeColor="@color/purple_500"
+                         app:hintTextColor="@color/purple_500"
+                         app:startIconDrawable="@drawable/account_circle_black_24dp"
+                         app:startIconTint="@null">
+
+                         <!--this is the actual edit text which takes the input-->
+                         <com.google.android.material.textfield.TextInputEditText
+                             android:id="@+id/edit_text_tOrganizerName"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:imeOptions="actionNext"
+                             android:inputType="text"
+                             android:maxLines="1"
+                             android:textSize="@dimen/_10sdp"
+                             android:fontFamily="@font/opensans_regular"
+                             android:textColor="@color/black"
+                             tools:ignore="TouchTargetSizeCheck" />
+
+                     </com.google.android.material.textfield.TextInputLayout>
+                     <com.google.android.material.textfield.TextInputLayout
+                         style="@style/OutlinedRoundBox"
+                         app:boxBackgroundColor="@color/white"
+                         android:layout_width="0dp"
+                         android:layout_height="wrap_content"
+                         android:hint="Phone"
+                         android:layout_weight="1"
+                         android:textColorHint="@color/dark_grey"
+                         app:boxStrokeColor="@color/purple_500"
+                         android:layout_marginStart="@dimen/_5sdp"
+                         app:hintTextColor="@color/purple_500"
+                         app:startIconDrawable="@drawable/phone_android_black_24dp"
+                         app:startIconTint="@null">
+
+                         <!--this is the actual edit text which takes the input-->
+                         <com.google.android.material.textfield.TextInputEditText
+                             android:id="@+id/edit_text_tOrganizer_phone"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:imeOptions="actionNext"
+                             android:inputType="phone"
+                             android:textSize="@dimen/_10sdp"
+                             android:fontFamily="@font/opensans_regular"
+                             android:maxLength="10"
+                             android:maxLines="1"
+                             android:textColor="@color/black"
+                             tools:ignore="TouchTargetSizeCheck" />
+
+                     </com.google.android.material.textfield.TextInputLayout>
+
+
+                 </LinearLayout>
+                 <com.google.android.material.textfield.TextInputLayout
+                     android:id="@+id/filledTextField_email_signup"
+                     style="@style/OutlinedRoundBox"
+                     app:boxBackgroundColor="@color/white"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="@dimen/_7sdp"
+                     android:hint="Email id"
+                     android:textColorHint="@color/dark_grey"
+                     app:hintTextColor="@color/purple_500"
+                     app:boxStrokeColor="@color/purple_500"
+                     app:startIconTint="@null"
+                     app:startIconDrawable="@drawable/mail_outline_black_24dp">
+
+                     <!--this is the actual edit text which takes the input-->
+                     <com.google.android.material.textfield.TextInputEditText
+                         android:id="@+id/edit_text_email_signup"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:maxLines="1"
+                         android:textSize="@dimen/_10sdp"
+                         android:fontFamily="@font/opensans_regular"
+                         android:imeOptions="actionNext"
+                         android:inputType="textEmailAddress"
+                         android:textColor="@color/black"/>
+
+                 </com.google.android.material.textfield.TextInputLayout>
+
+             </LinearLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mb_submit"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                app:cornerRadius="@dimen/_50sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColor="@color/white"
+                android:text="@string/submit"
+                android:fontFamily="@font/opensans_bold"
+                android:textSize="@dimen/_10sdp"
+                android:backgroundTint="@color/purple_500"
+                />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/creamewhite"
+    tools:context=".Activity.AddTournamentActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <RelativeLayout
+        android:id="@+id/middle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="@dimen/_25sdp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_pic"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_centerInParent="true"
+            android:padding="@dimen/_4sdp"
+            android:src="@drawable/placeholder_user" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-30dp"
+            android:layout_marginTop="@dimen/_55sdp"
+            android:layout_toEndOf="@+id/profile_pic"
+            android:background="@drawable/circle_camera"
+            android:padding="@dimen/_4sdp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_add_a_photo_black_24dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/middle"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_10sdp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/OutlinedRoundBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Type Team Name"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:textColorHint="@color/dark_grey"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeColor="@color/purple_500"
+                app:hintTextColor="@color/purple_500"
+                app:startIconDrawable="@drawable/team"
+                app:startIconTint="@null">
+
+                <!--this is the actual edit text which takes the input-->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_teamName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_regular"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/OutlinedRoundBox"
+                android:id="@+id/filledTextField_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Type City"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:textColorHint="@color/dark_grey"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeColor="@color/purple_500"
+                app:hintTextColor="@color/purple_500"
+                app:startIconDrawable="@drawable/location_black_24dp"
+                app:startIconTint="@null">
+
+                <!--this is the actual edit text which takes the input-->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_regular"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginBottom="@dimen/_2sdp"
+                app:cardBackgroundColor="@color/smokewhite"
+                app:cardCornerRadius="@dimen/_5sdp"
+                app:cardElevation="@dimen/_2sdp"
+                app:cardUseCompatPadding="true"
+                tools:ignore="NamespaceTypo">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="@string/select_tournament_to_add_the_team"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp" />
+                    <com.cricoscore.Utils.SelectTournamentType
+                        android:id="@+id/drop_tournamentName"
+                        style="@style/formDropDown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:background="@drawable/editboxx"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
+                        android:padding="@dimen/_10sdp"
+                        android:hint="Select Tournament"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_grey"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:fontFamily="@font/opensans_regular" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:layout_marginBottom="@dimen/_2sdp"
+                app:cardBackgroundColor="@color/smokewhite"
+                app:cardCornerRadius="@dimen/_5sdp"
+                app:cardElevation="@dimen/_2sdp"
+                app:cardUseCompatPadding="true"
+                tools:ignore="NamespaceTypo">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/txt_forgot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="@string/select_match_to_add__the_team"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp" />
+                    <com.cricoscore.Utils.SelectTournamentType
+                        android:id="@+id/drop_matchName"
+                        style="@style/formDropDown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:background="@drawable/editboxx"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
+                        android:padding="@dimen/_10sdp"
+                        android:hint="Select Match"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_grey"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:fontFamily="@font/opensans_regular" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mbSubmit"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                app:cornerRadius="@dimen/_50sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColor="@color/white"
+                android:text="@string/submit"
+                android:fontFamily="@font/opensans_bold"
+                android:textSize="@dimen/_10sdp"
+                android:backgroundTint="@color/purple_500"
+                />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

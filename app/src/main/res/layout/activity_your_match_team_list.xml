@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/creamewhite"
+    tools:context=".Activity.AddTournamentActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            app:cardBackgroundColor="@color/smokewhite"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardElevation="@dimen/_2sdp"
+            app:cardUseCompatPadding="true"
+            tools:ignore="NamespaceTypo">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/txt_forgot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@string/select_match_to_add_team"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+                <com.cricoscore.Utils.SelectTournamentType
+                    android:id="@+id/drop_tournamentName"
+                    style="@style/formDropDown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@drawable/editboxx"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:padding="@dimen/_10sdp"
+                    android:hint="Select Match"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/dark_grey"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:fontFamily="@font/opensans_regular" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mb_submit"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:visibility="gone"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:backgroundTint="@color/purple_500"
+                    android:fontFamily="@font/opensans_bold"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:text="@string/submit"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10sdp"
+                    app:cornerRadius="@dimen/_50sdp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_teamList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fadingEdge="vertical"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,776 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_mDetails"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Activity.MatchDetailsActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar">
+
+        <FrameLayout
+            android:id="@+id/fl_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/purple_700"
+                android:padding="@dimen/_20sdp">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:id="@+id/li_teamOne"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_pic"
+                        android:layout_width="@dimen/_55sdp"
+                        android:layout_height="@dimen/_55sdp"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:padding="@dimen/_4sdp"
+                        android:src="@drawable/placeholder_user" />
+
+                    <TextView
+                        android:id="@+id/tvTNameOne"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:focusable="false"
+                        android:gravity="center"
+                        android:text="Team A"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <TextView
+                        android:id="@+id/tvClickOne"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Click to enable"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_6sdp"
+                        android:visibility="gone"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_32sdp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/circle_camera"
+                        android:backgroundTint="@color/smokewhite"
+                        android:fontFamily="@font/opensans_bold"
+                        android:gravity="center"
+                        android:text="vs"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp">
+
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/li_teamTwo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/im_teamTwo_logo"
+                        android:layout_width="@dimen/_55sdp"
+                        android:layout_height="@dimen/_55sdp"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:padding="@dimen/_4sdp"
+                        android:src="@drawable/placeholder_user" />
+
+                    <TextView
+                        android:id="@+id/tvTName_teamTwo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Team B"
+                        android:textColor="@color/lightgrey_dim"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <TextView
+                        android:id="@+id/tvClicktwo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Click to enable"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_6sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/li_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fl_top"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@color/dark_grey"
+            android:padding="@dimen/_5sdp">
+
+            <TextView
+                android:id="@+id/tv_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/opensans_semibold"
+                android:gravity="center_horizontal"
+                android:text="@string/select_the_final_playing_squad_for_both_teams"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10sdp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/li_bottom"
+            android:layout_below="@+id/li_info"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/li_team1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_tp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true">
+
+                        <TextView
+                            android:id="@+id/tvTNameA_enable"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="Team A"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14sdp"
+                            app:fontFamily="@font/opensans_semibold" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/mb_add_player"
+                            style="@style/Widget.MaterialComponents.Button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_horizontal"
+                            android:backgroundTint="@color/purple_500"
+                            android:fontFamily="@font/opensans_bold"
+                            android:text="Add New Player"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_8sdp"
+                            app:cornerRadius="@dimen/_50sdp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_team_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rl_tp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:visibility="gone">
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:layout_toLeftOf="@+id/rl_team_logo"
+                                android:orientation="vertical">
+
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/OutlinedRoundBox"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Player Name"
+                                    android:textColorHint="@color/dark_grey"
+                                    app:boxBackgroundColor="@color/white"
+                                    app:boxStrokeColor="@color/purple_500"
+                                    app:hintTextColor="@color/purple_500"
+                                    app:startIconDrawable="@drawable/player_icon"
+                                    app:startIconTint="@null">
+
+                                    <!--this is the actual edit text which takes the input-->
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/edit_text_pName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/_30sdp"
+                                        android:fontFamily="@font/opensans_regular"
+                                        android:imeOptions="actionNext"
+                                        android:inputType="text"
+                                        android:maxLines="1"
+                                        android:paddingTop="@dimen/_5sdp"
+                                        android:paddingBottom="@dimen/_5sdp"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/_10sdp"
+                                        tools:ignore="TouchTargetSizeCheck" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/OutlinedRoundBox"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:hint="Player Mobile Number"
+                                    android:textColorHint="@color/dark_grey"
+                                    app:boxBackgroundColor="@color/white"
+                                    app:boxStrokeColor="@color/purple_500"
+                                    app:hintTextColor="@color/purple_500"
+                                    app:startIconDrawable="@drawable/phone_android_black_24dp"
+                                    app:startIconTint="@null">
+
+                                    <!--this is the actual edit text which takes the input-->
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/edit_text_pMobile"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/_30sdp"
+                                        android:fontFamily="@font/opensans_regular"
+                                        android:imeOptions="actionNext"
+                                        android:inputType="phone"
+                                        android:maxLines="1"
+                                        android:paddingTop="@dimen/_5sdp"
+                                        android:paddingBottom="@dimen/_5sdp"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/_10sdp"
+                                        tools:ignore="TouchTargetSizeCheck" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/rl_team_logo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginTop="@dimen/_5sdp">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/iv_team_logo"
+                                    android:layout_width="@dimen/_60sdp"
+                                    android:layout_height="@dimen/_60sdp"
+                                    android:src="@drawable/placeholder_user"
+                                    tools:ignore="ImageContrastCheck" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="-20dp"
+                                    android:layout_toEndOf="@+id/iv_team_logo"
+                                    android:background="@drawable/circle_camera"
+                                    android:backgroundTint="@color/light_gray"
+                                    android:padding="@dimen/_4sdp">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/_18sdp"
+                                        android:layout_height="@dimen/_18sdp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_add_a_photo_black_24dp" />
+                                </LinearLayout>
+                            </RelativeLayout>
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/smokewhite"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp">
+
+                    <TextView
+                        android:id="@+id/tvTNameA_seleted"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Select Captain"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp"
+                        app:fontFamily="@font/opensans_regular" />
+
+                    <com.cricoscore.Utils.SelectStatusType
+                        android:id="@+id/drop_select_captain"
+                        style="@style/formDropDownn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_toRightOf="@+id/tvTNameA_seleted"
+                        android:background="@drawable/dropbox_status_main"
+                        android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
+                        android:drawableTint="@color/dark_grey"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="center"
+                        android:hint="Select Captain"
+                        android:paddingEnd="@dimen/_5sdp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_grey"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_player"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/li_team2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_tp2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true">
+
+                        <TextView
+                            android:id="@+id/tvTNameA_enable2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="Team Name"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14sdp"
+                            app:fontFamily="@font/opensans_semibold" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/mb_add_player2"
+                            style="@style/Widget.MaterialComponents.Button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_horizontal"
+                            android:backgroundTint="@color/purple_500"
+                            android:fontFamily="@font/opensans_bold"
+                            android:text="Add New Player"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_8sdp"
+                            app:cornerRadius="@dimen/_50sdp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_team_add2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rl_tp2"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:visibility="gone">
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:layout_toLeftOf="@+id/rl_team_logo2"
+                                android:orientation="vertical">
+
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/OutlinedRoundBox"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Player Name"
+                                    android:textColorHint="@color/dark_grey"
+                                    app:boxBackgroundColor="@color/white"
+                                    app:boxStrokeColor="@color/purple_500"
+                                    app:hintTextColor="@color/purple_500"
+                                    app:startIconDrawable="@drawable/player_icon"
+                                    app:startIconTint="@null">
+
+                                    <!--this is the actual edit text which takes the input-->
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/edit_text_pName2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/_30sdp"
+                                        android:fontFamily="@font/opensans_regular"
+                                        android:imeOptions="actionNext"
+                                        android:inputType="text"
+                                        android:maxLines="1"
+                                        android:paddingTop="@dimen/_5sdp"
+                                        android:paddingBottom="@dimen/_5sdp"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/_10sdp"
+                                        tools:ignore="TouchTargetSizeCheck" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/OutlinedRoundBox"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:hint="Player Mobile Number"
+                                    android:textColorHint="@color/dark_grey"
+                                    app:boxBackgroundColor="@color/white"
+                                    app:boxStrokeColor="@color/purple_500"
+                                    app:hintTextColor="@color/purple_500"
+                                    app:startIconDrawable="@drawable/phone_android_black_24dp"
+                                    app:startIconTint="@null">
+
+                                    <!--this is the actual edit text which takes the input-->
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/edit_text_pMobile2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/_30sdp"
+                                        android:fontFamily="@font/opensans_regular"
+                                        android:imeOptions="actionNext"
+                                        android:inputType="phone"
+                                        android:maxLines="1"
+                                        android:paddingTop="@dimen/_5sdp"
+                                        android:paddingBottom="@dimen/_5sdp"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/_10sdp"
+                                        tools:ignore="TouchTargetSizeCheck" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/rl_team_logo2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginTop="@dimen/_5sdp">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/iv_team_logo2"
+                                    android:layout_width="@dimen/_60sdp"
+                                    android:layout_height="@dimen/_60sdp"
+                                    android:src="@drawable/placeholder_user"
+                                    tools:ignore="ImageContrastCheck" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="-20dp"
+                                    android:layout_toEndOf="@+id/iv_team_logo2"
+                                    android:background="@drawable/circle_camera"
+                                    android:backgroundTint="@color/light_gray"
+                                    android:padding="@dimen/_4sdp">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/_18sdp"
+                                        android:layout_height="@dimen/_18sdp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_add_a_photo_black_24dp" />
+                                </LinearLayout>
+                            </RelativeLayout>
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/smokewhite"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp">
+
+                    <TextView
+                        android:id="@+id/tvTNameA_seleted2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Select Captain"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <com.cricoscore.Utils.SelectStatusType
+                        android:id="@+id/drop_select_captain2"
+                        style="@style/formDropDownn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_toRightOf="@+id/tvTNameA_seleted2"
+                        android:background="@drawable/dropbox_status_main"
+                        android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
+                        android:drawableTint="@color/dark_grey"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="center"
+                        android:hint="Select Captain"
+                        android:paddingEnd="@dimen/_5sdp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_grey"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_playe2r"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/li_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/smokewhite"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_over"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@color/white"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="How many over per innings?"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    app:fontFamily="@font/opensans_regular" />
+
+                <com.cricoscore.Utils.SelectStatusType
+                    android:id="@+id/drop_select_over"
+                    style="@style/formDropDownn"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_40sdp"
+                    android:background="@drawable/dropbox_status_main"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:drawableTint="@color/dark_grey"
+                    android:fontFamily="@font/opensans_regular"
+                    android:gravity="center"
+                    android:hint="0"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/dark_grey"
+                    android:textSize="@dimen/_10sdp" />
+            </RelativeLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mb_create"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:backgroundTint="@color/purple_500"
+                android:fontFamily="@font/opensans_bold"
+                android:text="@string/submit_final_details"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_8sdp"
+                android:visibility="visible"
+                app:cornerRadius="@dimen/_50sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvTNameA"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Team A"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <TextView
+                        android:id="@+id/tvTNameA_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/verified_user_color"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvTNameB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Team B"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <TextView
+                        android:id="@+id/tvTNameB_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/verified_user_color"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

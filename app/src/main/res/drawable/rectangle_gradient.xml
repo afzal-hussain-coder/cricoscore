@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" >
+
+    <!-- You can use gradient with below attributes-->
+    <gradient
+        android:centerColor="@color/dim_grey"
+        android:endColor="@color/white"
+        android:gradientRadius="@dimen/_35sdp"
+        android:startColor="@color/light_gray"
+        android:type="radial" >
+    </gradient>
+
+
+
+    <!-- Set the same value for both width and height to get a circular shape -->
+    <!--<size android:width="@dimen/_20sdp" android:height="@dimen/_20sdp"/>-->
+
+
+</shape>

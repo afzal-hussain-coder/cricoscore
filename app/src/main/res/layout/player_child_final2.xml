@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <CheckBox
+        android:id="@+id/cb2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true">
+
+    </CheckBox>
+    <TextView
+        android:id="@+id/tvTNameTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/cb2"
+        android:layout_centerVertical="true"
+        android:text="Ravichandran Ashwin"
+        android:layout_marginStart="@dimen/_2sdp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:focusable="false"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10sdp"
+        app:fontFamily="@font/opensans_semibold" />
+</RelativeLayout>

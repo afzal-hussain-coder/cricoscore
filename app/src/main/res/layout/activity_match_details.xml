@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_mDetails"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Activity.MatchDetailsActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardElevation="@dimen/_2sdp"
+            app:cardUseCompatPadding="true"
+            tools:ignore="NamespaceTypo">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/rl_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/img_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_60sdp"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/banner_placeholder"
+                        android:scaleType="centerCrop"
+                        app:riv_corner_radius_top_left="@dimen/_10sdp"
+                        app:riv_corner_radius_top_right="@dimen/_10sdp"
+                        tools:ignore="ImageContrastCheck" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_profile"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_40sdp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/image"
+                        android:layout_width="@dimen/_45sdp"
+                        android:layout_height="@dimen/_45sdp"
+                        android:src="@drawable/placeholder_user"
+                        app:civ_border_width="@dimen/_4sdp"
+                        tools:ignore="ImageContrastCheck" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/middle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_banner"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_toRightOf="@+id/rl_profile"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvTName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Match Name"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvtLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/middle"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:drawableLeft="@drawable/location_black_24dp"
+                    android:drawablePadding="@dimen/_3sdp"
+                    android:gravity="center_vertical"
+                    android:text="Bindra Stadium I.S, Sukhna Path, Sector 63, Sahibzada Ajit Singh Nagar, Chandigarh, Punjab 160062"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    app:fontFamily="@font/opensans_regular" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvtLocation">
+
+                    <TextView
+                        android:id="@+id/tvdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:drawableLeft="@drawable/event_black_24dp"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:gravity="center_vertical"
+                        android:text="30-Mar-23 to 31-Sep-23"
+                        android:textColor="@color/dim_grey"
+                        android:textSize="@dimen/_9sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <LinearLayout
+                        android:id="@+id/li_teamCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="Total team count"
+                            android:textColor="@color/purple_700"
+                            android:textSize="@dimen/_8sdp"
+                            app:fontFamily="@font/opensans_semibold" />
+
+                        <TextView
+                            android:id="@+id/tvtNumberOfTeam"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:gravity="center_vertical"
+                            android:text="# 0"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_10sdp"
+                            app:fontFamily="@font/opensans_regular" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/li_info_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_date"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_bold"
+                                android:text="Match Type"
+                                android:textColor="@color/dark_grey"
+                                android:textSize="@dimen/_6sdp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:text="Corporate Match"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_10sdp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_bold"
+                                android:text="Match Fees"
+                                android:textColor="@color/dark_grey"
+                                android:textSize="@dimen/_6sdp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:text="\u20B9 200"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_10sdp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_bold"
+                                android:text="Discount"
+                                android:textColor="@color/dark_grey"
+                                android:textSize="@dimen/_6sdp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:text="\u20B9 100"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_10sdp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:fontFamily="@font/opensans_bold"
+                                android:text="Sponsored By"
+                                android:textColor="@color/dark_grey"
+                                android:textSize="@dimen/_6sdp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:text="Criconet"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_10sdp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_bold"
+                                android:text="Ball Type"
+                                android:textColor="@color/dark_grey"
+                                android:textSize="@dimen/_6sdp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:text="Leather Ball"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_10sdp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_bold"
+                                android:text="Awards,Prizes"
+                                android:textColor="@color/dark_grey"
+                                android:textSize="@dimen/_6sdp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:text="Silver Cup,Gold Coin"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_10sdp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_bold"
+                                android:text="Number of Teams"
+                                android:textColor="@color/dark_grey"
+                                android:textSize="@dimen/_6sdp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:text="# 20"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_10sdp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_bold"
+                                android:text="Organizer contact details"
+                                android:textColor="@color/dark_grey"
+                                android:textSize="@dimen/_6sdp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:text="Afzal Hussain"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_8sdp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:text="hafzal446@gmail.com"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_7sdp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:text="8799736451"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_6sdp" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:id="@+id/li_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/mcv"
+            android:background="@color/dark_grey"
+            android:padding="@dimen/_5sdp">
+
+            <TextView
+                android:id="@+id/tv_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/opensans_semibold"
+                android:gravity="center_horizontal"
+                android:text="@string/select_team_for_schedule"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10sdp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/li_info"
+            android:layout_marginEnd="@dimen/_5sdp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mb_schedule_match"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:backgroundTint="@color/purple_500"
+                android:fontFamily="@font/opensans_bold"
+                android:text="@string/schedule_match"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_8sdp"
+                android:visibility="gone"
+                app:cornerRadius="@dimen/_50sdp" />
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_teamList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_schedule"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:fadingEdge="vertical"
+            android:orientation="horizontal">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

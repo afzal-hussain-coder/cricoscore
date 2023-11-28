@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_80sdp"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/_5sdp"
+    android:paddingEnd="@dimen/_5sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tv_ball_child"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:text="0.1"
+        android:textColor="#315370"
+        android:textSize="@dimen/_10sdp"
+        app:fontFamily="@font/opensans_semibold" />
+
+    <!--<TextView
+        android:id="@+id/tv_run_child"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@drawable/circle_camera"
+        android:backgroundTint="@color/smokewhite"
+        android:gravity="center"
+        android:text="2"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_9sdp"
+        app:fontFamily="@font/opensans_semibold" />-->
+
+</LinearLayout>
