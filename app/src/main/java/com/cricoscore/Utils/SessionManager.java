@@ -13,151 +13,121 @@ public class SessionManager {
     private static String TOKEN = "TOKEN";
     private static String SESSION_CHECK_LOGIN = "SESSION_CHECK_LOGIN";
     private static String check_agreement = "CHECK_AGREEMENT";
-    private static String USERID="USERID";
+    private static String USERID = "USERID";
     private static String OTP = "OTP";
-    private static String USERNAME ="USERNAME";
-    private static String EMAIL ="EMAIL";
-    private static String PHONE_NUMBER ="PHONE";
-    private static String FIRSTNAME ="FIRSTNAME";
-    private static String LASTNAME ="LASTNAME";
-    private static String USER_STATUS ="USER_STATUS";
-    private static String USER_AVATAR ="USER_AVATAR";
-    private static String USER_COVER ="USER_COVER";
-    private static String IS_MOBILE_VERIFIED ="IS_MOBILE_VERIFIED";
-    private static String IS_EMAIL_VERIFIED ="IS_EMAIL_VERIFIED";
+    private static String USERNAME = "USERNAME";
+    private static String EMAIL = "EMAIL";
+    private static String PHONE_NUMBER = "PHONE";
+    private static String FIRSTNAME = "FIRSTNAME";
+    private static String LASTNAME = "LASTNAME";
+    private static String USER_STATUS = "USER_STATUS";
+    private static String USER_AVATAR = "USER_AVATAR";
+    private static String USER_COVER = "USER_COVER";
+    private static String IS_MOBILE_VERIFIED = "IS_MOBILE_VERIFIED";
+    private static String IS_EMAIL_VERIFIED = "IS_EMAIL_VERIFIED";
 
-
-
-
-
-    public static void savePreference(SharedPreferences prefs, String key, Boolean value) {
-        Editor e = prefs.edit();
-        e.putBoolean(key, value);
-        e.commit();
+    public static void save_check_login(Boolean value) {
+        SharedPreferencesManager.savePreferenceBoolean(SESSION_CHECK_LOGIN, value);
     }
 
-    public static void savePreference(SharedPreferences prefs, String key, int value) {
-        Editor e = prefs.edit();
-        e.putInt(key, value);
-        e.commit();
+    public static Boolean get_check_login() {
+        return SharedPreferencesManager.getPreferenceBoolean(SESSION_CHECK_LOGIN, false);
     }
 
-    public static void savePreference(SharedPreferences prefs, String key, String value) {
-        Editor e = prefs.edit();
-        e.putString(key, value);
-        e.commit();
+    public static void saveToken(String value) {
+        SharedPreferencesManager.savePreferenceString(TOKEN, value);
     }
 
-    public static void clearPreferences(SharedPreferences prefs) {
-        Editor e = prefs.edit();
-        e.clear();
-        e.commit();
+    public static String getToken() {
+
+        return SharedPreferencesManager.getPreferenceString(TOKEN);
     }
 
-    public static void save_check_login(SharedPreferences prefs, Boolean value) {
-        SessionManager.savePreference(prefs, SESSION_CHECK_LOGIN, value);
+    public static void saveUserId(Integer value) {
+        SharedPreferencesManager.savePreferenceInt(USERID, value);
     }
 
-    public static Boolean get_check_login(SharedPreferences prefs) {
-        return prefs.getBoolean(SESSION_CHECK_LOGIN, false);
+    public static Integer getUserId() {
+
+        return SharedPreferencesManager.getPreferenceInt(USERID, 0);
     }
 
-    public static void saveToken(SharedPreferences prefs, String value) {
-        SessionManager.savePreference(prefs, TOKEN, value);
+    public static void saveOtp(Integer value) {
+        SharedPreferencesManager.savePreferenceInt(OTP, value);
     }
 
-    public static String getToken(SharedPreferences prefs) {
+    public static Integer getOtp() {
 
-        return prefs.getString(TOKEN, "");
+        return SharedPreferencesManager.getPreferenceInt(OTP, 0);
     }
 
-    public static void saveUserId(SharedPreferences prefs, Integer value) {
-        SessionManager.savePreference(prefs, USERID, value);
+    public static void saveUserName(String value) {
+        SharedPreferencesManager.savePreferenceString(USERNAME, value);
     }
 
-    public static int getUserId(SharedPreferences prefs) {
-
-        return prefs.getInt(USERID, 0);
+    public static String getUserName() {
+        return SharedPreferencesManager.getPreferenceString(USERNAME);
     }
 
-    public static void saveOtp(SharedPreferences prefs, Integer value) {
-        SessionManager.savePreference(prefs, OTP, value);
+    public static void saveEmail(String value) {
+        SharedPreferencesManager.savePreferenceString(EMAIL, value);
     }
 
-    public static int getOtp(SharedPreferences prefs) {
-
-        return prefs.getInt(OTP,0);
+    public static String getEmail() {
+        return SharedPreferencesManager.getPreferenceString(EMAIL);
     }
 
-    public static void saveUserName(SharedPreferences prefs, String value) {
-        SessionManager.savePreference(prefs, USERNAME, value);
+    public static void savePhone(String value) {
+        SharedPreferencesManager.savePreferenceString(PHONE_NUMBER, value);
     }
 
-    public static String getUserName(SharedPreferences prefs) {
+    public static String getPhone() {
 
-        return prefs.getString(USERNAME, "");
+        return SharedPreferencesManager.getPreferenceString(PHONE_NUMBER);
     }
 
-    public static void saveEmail(SharedPreferences prefs, String value) {
-        SessionManager.savePreference(prefs, EMAIL, value);
+    public static void saveFirstName(String value) {
+        SharedPreferencesManager.savePreferenceString(FIRSTNAME, value);
     }
 
-    public static String getEmail(SharedPreferences prefs) {
+    public static String getFirstName() {
 
-        return prefs.getString(EMAIL, "");
+        return SharedPreferencesManager.getPreferenceString(FIRSTNAME);
     }
 
-    public static void savePhone(SharedPreferences prefs, String value) {
-        SessionManager.savePreference(prefs, PHONE_NUMBER, value);
+    public static void saveLastName(String value) {
+        SharedPreferencesManager.savePreferenceString(LASTNAME, value);
     }
 
-    public static String getPhone(SharedPreferences prefs) {
+    public static String getLastName() {
 
-        return prefs.getString(PHONE_NUMBER, "");
+        return SharedPreferencesManager.getPreferenceString(LASTNAME);
     }
 
-    public static void saveFirstName(SharedPreferences prefs, String value) {
-        SessionManager.savePreference(prefs, FIRSTNAME, value);
+    public static void saveUserStatus(String value) {
+        SharedPreferencesManager.savePreferenceString(USER_STATUS, value);
     }
 
-    public static String getFirstName(SharedPreferences prefs) {
+    public static String getUserStatus() {
 
-        return prefs.getString(FIRSTNAME, "");
+        return SharedPreferencesManager.getPreferenceString(USER_STATUS);
     }
 
-    public static void saveLastName(SharedPreferences prefs, String value) {
-        SessionManager.savePreference(prefs, LASTNAME, value);
+    public static void saveIsEmailVerified(String value) {
+        SharedPreferencesManager.savePreferenceString(IS_EMAIL_VERIFIED, value);
     }
 
-    public static String getLastName(SharedPreferences prefs) {
+    public static String getIsEmailVerified() {
 
-        return prefs.getString(LASTNAME, "");
+        return SharedPreferencesManager.getPreferenceString(IS_EMAIL_VERIFIED);
     }
 
-    public static void saveUserStatus(SharedPreferences prefs, String value) {
-        SessionManager.savePreference(prefs, USER_STATUS, value);
+    public static void saveIsPhoneVerified(String value) {
+        SharedPreferencesManager.savePreferenceString(IS_MOBILE_VERIFIED, value);
     }
 
-    public static String getUserStatus(SharedPreferences prefs) {
+    public static String getIsPhoneVerified() {
 
-        return prefs.getString(USER_STATUS, "");
-    }
-
-    public static void saveIsEmailVerified(SharedPreferences prefs, String value) {
-        SessionManager.savePreference(prefs, IS_EMAIL_VERIFIED, value);
-    }
-
-    public static String getIsEmailVerified(SharedPreferences prefs) {
-
-        return prefs.getString(IS_EMAIL_VERIFIED, "");
-    }
-
-    public static void saveIsPhoneVerified(SharedPreferences prefs, String value) {
-        SessionManager.savePreference(prefs, IS_MOBILE_VERIFIED, value);
-    }
-
-    public static String getIsPhoneVerified(SharedPreferences prefs) {
-
-        return prefs.getString(IS_MOBILE_VERIFIED, "");
+        return SharedPreferencesManager.getPreferenceString(IS_MOBILE_VERIFIED);
     }
 }

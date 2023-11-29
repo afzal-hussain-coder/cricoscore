@@ -3,25 +3,22 @@ package com.cricoscore.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ProgressBar;
 
-import com.cricoscore.CricoscopeApplication;
 import com.cricoscore.R;
 import com.cricoscore.Utils.GenericKeyEvent;
 import com.cricoscore.Utils.Global;
@@ -29,6 +26,8 @@ import com.cricoscore.Utils.SessionManager;
 import com.cricoscore.Utils.Toaster;
 import com.cricoscore.databinding.ActivityLoginBinding;
 import com.cricoscore.view_model.ForgetPasswordViewModel;
+import com.cricoscore.view_model.ResetPasswordViewModel;
+import com.cricoscore.view_model.LoginThroughOtpViewModel;
 import com.cricoscore.view_model.LoginViewModel;
 import com.cricoscore.view_model.SignUpViewModel;
 import com.cricoscore.view_model.VerifyOtpModel;
@@ -40,16 +39,17 @@ public class LoginActivity extends AppCompatActivity {
     Animation anim_right;
     SignUpViewModel authViewModel;
     LoginViewModel loginViewModel;
+    LoginThroughOtpViewModel loginThroughOtpViewModel;
+    ResetPasswordViewModel resetPasswordViewModel;
     ForgetPasswordViewModel forgetPasswordViewModel;
     VerifyOtpModel verifyOtpModel;
-    ProgressBar progressBar;
     ActivityLoginBinding activityLoginBinding;
-    SharedPreferences preferences;
     Context mContext;
     Activity mActivity;
 
-    boolean isVerifiedStatus=false;
+    boolean isVerifiedStatus = false;
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +59,6 @@ public class LoginActivity extends AppCompatActivity {
         mActivity = this;
 
         anim_right = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in_right_layout);
-        preferences = PreferenceManager.getDefaultSharedPreferences(CricoscopeApplication.getContext());
-
 
         /**
          * @SignUp Result
@@ -68,16 +66,17 @@ public class LoginActivity extends AppCompatActivity {
          */
         authViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
         authViewModel.getSignUpResult().observe(this, s -> {
-            if (s == true) {
+            if (s) {
 
-                char[] charArray = String.valueOf(SessionManager.getOtp(preferences)).toCharArray();
+                char[] charArray = String.valueOf(SessionManager.getOtp()).toCharArray();
 
                 activityLoginBinding.e1.setText(String.valueOf(charArray[0]));
                 activityLoginBinding.e2.setText(String.valueOf(charArray[1]));
                 activityLoginBinding.e3.setText(String.valueOf(charArray[2]));
                 activityLoginBinding.e4.setText(String.valueOf(charArray[3]));
 
-                activityLoginBinding.tvOtpMobileNumber.setText(SessionManager.getPhone(preferences));
+                activityLoginBinding.tvOtpMobileNumber.setText(SessionManager.getPhone());
+
                 activityLoginBinding.topLoginSignup.setVisibility(View.GONE);
                 activityLoginBinding.top.setVisibility(View.GONE);
                 activityLoginBinding.liSignUpLayout.setVisibility(View.GONE);
@@ -100,15 +99,15 @@ public class LoginActivity extends AppCompatActivity {
          */
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         loginViewModel.getLoginResult().observe(this, s -> {
-            if (s == true) {
+            if (s) {
 
-                if (SessionManager.getIsEmailVerified(preferences).equalsIgnoreCase("1")
-                        || SessionManager.getIsPhoneVerified(preferences).equalsIgnoreCase("1")) {
+                if (SessionManager.getIsEmailVerified().equalsIgnoreCase("1")
+                        || SessionManager.getIsPhoneVerified().equalsIgnoreCase("1")) {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class)
                             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     finish();
                 } else {
-                    activityLoginBinding.tvOtpMobileNumber.setText(SessionManager.getPhone(preferences));
+                    activityLoginBinding.tvOtpMobileNumber.setText(SessionManager.getPhone());
                     activityLoginBinding.topLoginSignup.setVisibility(View.GONE);
                     activityLoginBinding.top.setVisibility(View.GONE);
                     activityLoginBinding.liSignInLayout.setVisibility(View.GONE);
@@ -126,6 +125,38 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * @Login through mobile number Result
+         * @s --> Check result
+         */
+        loginThroughOtpViewModel = new ViewModelProvider(this).get(LoginThroughOtpViewModel.class);
+        loginThroughOtpViewModel.getLoginThroughOtpResult().observe(this, aBoolean -> {
+            if (aBoolean) {
+
+                char[] charArray = String.valueOf(SessionManager.getOtp()).toCharArray();
+
+                activityLoginBinding.e1.setText(String.valueOf(charArray[0]));
+                activityLoginBinding.e2.setText(String.valueOf(charArray[1]));
+                activityLoginBinding.e3.setText(String.valueOf(charArray[2]));
+                activityLoginBinding.e4.setText(String.valueOf(charArray[3]));
+
+
+                activityLoginBinding.liOtpLogin.setVisibility(View.GONE);
+                activityLoginBinding.topLoginSignup.setVisibility(View.GONE);
+                activityLoginBinding.top.setVisibility(View.GONE);
+                activityLoginBinding.liOtpLatout.setVisibility(View.VISIBLE);
+                activityLoginBinding.liOtpLatout.startAnimation(anim_right);
+            }
+        });
+
+        loginThroughOtpViewModel.getLoginThroughOtpProgress().observe(this, integer -> {
+            if (integer == 0) {
+                Global.showLoader(getSupportFragmentManager());
+            } else {
+                Global.hideLoder();
+            }
+        });
+
 
         /**
          * @verified Otp Result
@@ -133,15 +164,15 @@ public class LoginActivity extends AppCompatActivity {
          */
         verifyOtpModel = new ViewModelProvider(this).get(VerifyOtpModel.class);
         verifyOtpModel.getVerifyOtpResult().observe(this, aBoolean -> {
-            if (aBoolean == true) {
+            if (aBoolean) {
 
-                if(isVerifiedStatus==true){
+                if (isVerifiedStatus == true) {
 
                     activityLoginBinding.liResetPassword.startAnimation(anim_right);
                     activityLoginBinding.liResetPassword.setVisibility(View.VISIBLE);
                     activityLoginBinding.liOtpLatout.setVisibility(View.GONE);
 
-                }else{
+                } else {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class)
                             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     finish();
@@ -164,9 +195,9 @@ public class LoginActivity extends AppCompatActivity {
 
         forgetPasswordViewModel = new ViewModelProvider(this).get(ForgetPasswordViewModel.class);
         forgetPasswordViewModel.getForgetPasswordResult().observe(this, aBoolean -> {
-            if (aBoolean == true) {
+            if (aBoolean) {
                 isVerifiedStatus = true;
-                char[] charArray = String.valueOf(SessionManager.getOtp(preferences)).toCharArray();
+                char[] charArray = String.valueOf(SessionManager.getOtp()).toCharArray();
 
                 activityLoginBinding.e1.setText(String.valueOf(charArray[0]));
                 activityLoginBinding.e2.setText(String.valueOf(charArray[1]));
@@ -174,16 +205,13 @@ public class LoginActivity extends AppCompatActivity {
                 activityLoginBinding.e4.setText(String.valueOf(charArray[3]));
 
 
+                activityLoginBinding.liForgotLayout.setVisibility(View.GONE);
                 activityLoginBinding.topLoginSignup.setVisibility(View.GONE);
                 activityLoginBinding.top.setVisibility(View.GONE);
-                activityLoginBinding.tvOtpMobileNumber.setVisibility(View.GONE);
-                activityLoginBinding.rlEditOtpNumber.setVisibility(View.GONE);
-                activityLoginBinding.liForgotLayout.setVisibility(View.GONE);
-                activityLoginBinding.tvPhoneMessage.setText("Your email address");
+                activityLoginBinding.liEditPhone.setVisibility(View.GONE);
+                activityLoginBinding.tvPhoneMessage.setText(R.string.code_verification_msg_your_email);
                 activityLoginBinding.liOtpLatout.setVisibility(View.VISIBLE);
                 activityLoginBinding.liOtpLatout.startAnimation(anim_right);
-            }else{
-
             }
         });
         forgetPasswordViewModel.getForgetPasswordProgress().observe(this, integer -> {
@@ -195,7 +223,34 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+        /*
+          Reset Password
+         */
 
+        resetPasswordViewModel = new ViewModelProvider(this).get(ResetPasswordViewModel.class);
+        resetPasswordViewModel.getResetPasswordResult().observe(this,responseStatus -> {
+            if(responseStatus.isStatus()){
+
+                new Handler().postDelayed(() -> {
+                    Toaster.customToast(responseStatus.getMessage());
+                    activityLoginBinding.liResetPassword.setVisibility(View.GONE);
+                    activityLoginBinding.tvContinue.setText(getResources().getString(R.string.singn_in_to_continue));
+                    activityLoginBinding.topLoginSignup.setVisibility(View.VISIBLE);
+                    activityLoginBinding.top.setVisibility(View.VISIBLE);
+                    activityLoginBinding.liSignInLayout.setVisibility(View.VISIBLE);
+                    activityLoginBinding.liSignInLayout.startAnimation(anim_right);
+                },100);
+
+            }
+        });
+
+        resetPasswordViewModel.getResetPasswordProgress().observe(this, integer -> {
+            if (integer == 0) {
+                Global.showLoader(getSupportFragmentManager());
+            } else {
+                Global.hideLoder();
+            }
+        });
 
 
         // click of simple #Login In Text
@@ -438,7 +493,7 @@ public class LoginActivity extends AppCompatActivity {
 
         activityLoginBinding.mbLogin.setOnClickListener(v -> {
 
-            if (activityLoginBinding.editTextUsername.getText().toString().isEmpty()
+            if (Objects.requireNonNull(activityLoginBinding.editTextUsername.getText()).toString().isEmpty()
                     && activityLoginBinding.editTextUsername.getText().toString().length() < 3) {
                 activityLoginBinding.filledTextFieldUsername.setErrorEnabled(true);
                 activityLoginBinding.filledTextFieldUsername.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
@@ -689,7 +744,7 @@ public class LoginActivity extends AppCompatActivity {
 
         activityLoginBinding.mbSignUp.setOnClickListener(v -> {
 
-            if (activityLoginBinding.editTextUsernameSignup.getText().toString().isEmpty()
+            if (Objects.requireNonNull(activityLoginBinding.editTextUsernameSignup.getText()).toString().isEmpty()
                     || activityLoginBinding.editTextUsernameSignup.getText().toString().length() < 3) {
                 activityLoginBinding.filledTextFieldUsernameSignup.setErrorEnabled(true);
                 activityLoginBinding.filledTextFieldUsernameSignup.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
@@ -697,7 +752,7 @@ public class LoginActivity extends AppCompatActivity {
                 activityLoginBinding.filledTextFieldUsernameSignup.setBoxStrokeErrorColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldUsernameSignup.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldUsernameSignup.setError("Sorry, your username must be between 3 and 30 characters long.");
-            } else if (activityLoginBinding.editTextEmailSignup.getText().toString().isEmpty()) {
+            } else if (Objects.requireNonNull(activityLoginBinding.editTextEmailSignup.getText()).toString().isEmpty()) {
                 activityLoginBinding.filledTextFieldEmailSignup.setErrorEnabled(true);
                 activityLoginBinding.filledTextFieldEmailSignup.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldEmailSignup.setErrorIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
@@ -711,7 +766,7 @@ public class LoginActivity extends AppCompatActivity {
                 activityLoginBinding.filledTextFieldEmailSignup.setBoxStrokeErrorColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldEmailSignup.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldEmailSignup.setError("Enter a valid email");
-            } else if (activityLoginBinding.editTextPhoneSignup.getText().toString().isEmpty()) {
+            } else if (Objects.requireNonNull(activityLoginBinding.editTextPhoneSignup.getText()).toString().isEmpty()) {
                 activityLoginBinding.filledTextFieldPhoneSignup.setErrorEnabled(true);
                 activityLoginBinding.filledTextFieldPhoneSignup.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldPhoneSignup.setErrorIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
@@ -823,6 +878,11 @@ public class LoginActivity extends AppCompatActivity {
                 activityLoginBinding.filledTextFieldForgotEmail.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldForgotEmail.setError("Enter a valid email");
             } else {
+                if (Global.isOnline(mContext)) {
+                    forgetPasswordViewModel.getForgetPassword(activityLoginBinding.editTextForgotPasswordEmail.getText().toString());
+                } else {
+                    Global.showDialog(mActivity);
+                }
 
             }
         });
@@ -867,7 +927,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         activityLoginBinding.mbRequestOtp.setOnClickListener(v -> {
-            if (activityLoginBinding.editTextMobileThroughOtp.getText().toString().isEmpty()) {
+            if (Objects.requireNonNull(activityLoginBinding.editTextMobileThroughOtp.getText()).toString().isEmpty()) {
                 activityLoginBinding.filledTextFieldThroughOtp.setErrorEnabled(true);
                 activityLoginBinding.filledTextFieldThroughOtp.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldThroughOtp.setBoxStrokeErrorColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
@@ -881,15 +941,10 @@ public class LoginActivity extends AppCompatActivity {
                 activityLoginBinding.filledTextFieldThroughOtp.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldThroughOtp.setError("Enter a 10-digit phone number");
             } else {
-                activityLoginBinding.topLoginSignup.setVisibility(View.GONE);
-                activityLoginBinding.top.setVisibility(View.GONE);
-                activityLoginBinding.liOtpLogin.setVisibility(View.GONE);
-                activityLoginBinding.liOtpLatout.setVisibility(View.VISIBLE);
-                activityLoginBinding.liOtpLatout.startAnimation(anim_right);
 
-                if(Global.isOnline(mContext)){
-                    loginViewModel.getLoginThroughOtp(activityLoginBinding.editTextMobileThroughOtp.getText().toString());
-                }else{
+                if (Global.isOnline(mContext)) {
+                    loginThroughOtpViewModel.getLoginThroughOtp(activityLoginBinding.editTextMobileThroughOtp.getText().toString());
+                } else {
                     Global.showDialog(mActivity);
                 }
 
@@ -951,9 +1006,9 @@ public class LoginActivity extends AppCompatActivity {
                 activityLoginBinding.filledTextFieldForgotEmail.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldForgotEmail.setError("Enter valid email");
             } else {
-                if(Global.isOnline(mContext)){
+                if (Global.isOnline(mContext)) {
                     forgetPasswordViewModel.getForgetPassword(activityLoginBinding.editTextForgotPasswordEmail.getText().toString());
-                }else{
+                } else {
                     Global.showDialog(mActivity);
                 }
 
@@ -1044,24 +1099,23 @@ public class LoginActivity extends AppCompatActivity {
                 Toaster.customToast("OTP Required");
             } else {
 
-                if(isVerifiedStatus == true){
+                if (isVerifiedStatus == true) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         if (Global.isOnline(mContext)) {
-                            verifyOtpModel.emailVerifyOtp(SessionManager.getUserId(preferences), SessionManager.getOtp(preferences));
+                            verifyOtpModel.emailVerifyOtp(SessionManager.getUserId(), SessionManager.getOtp());
                         } else {
                             Global.showDialog(mActivity);
                         }
                     }
-                }else{
+                } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         if (Global.isOnline(mContext)) {
-                            verifyOtpModel.verifyOtp(SessionManager.getUserId(preferences), SessionManager.getOtp(preferences));
+                            verifyOtpModel.verifyOtp(SessionManager.getUserId(), SessionManager.getOtp());
                         } else {
                             Global.showDialog(mActivity);
                         }
                     }
                 }
-
 
 
             }
@@ -1070,8 +1124,149 @@ public class LoginActivity extends AppCompatActivity {
         //end submit otp
 
 
-        // Reset Password
+        // Reset Password Event
 
+        activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setTag("InVisible");
+        activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setEndIconOnClickListener(v -> {
+            if (activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.getTag().equals("InVisible")) {
+                activityLoginBinding.editTextCurrentPasswordResetPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setEndIconDrawable(getResources().getDrawable(R.drawable.visibility_black_24dp));
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setTag("Visible");
+            } else {
+                activityLoginBinding.editTextCurrentPasswordResetPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setEndIconDrawable(getResources().getDrawable(R.drawable.visibility_off_black_24dp));
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setTag("InVisible");
+            }
+        });
+
+        activityLoginBinding.filledTextFieldConPasswordResetPassword.setTag("InVisible");
+        activityLoginBinding.filledTextFieldConPasswordResetPassword.setEndIconOnClickListener(v -> {
+            if (activityLoginBinding.filledTextFieldConPasswordResetPassword.getTag().equals("InVisible")) {
+                activityLoginBinding.editTextConPasswordResetPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setEndIconDrawable(getResources().getDrawable(R.drawable.visibility_black_24dp));
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setTag("Visible");
+            } else {
+                activityLoginBinding.editTextConPasswordResetPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setEndIconDrawable(getResources().getDrawable(R.drawable.visibility_off_black_24dp));
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setTag("InVisible");
+            }
+        });
+
+        activityLoginBinding.editTextCurrentPasswordResetPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setErrorEnabled(false);
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setEndIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) {
+                    activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setErrorEnabled(false);
+                    activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+                    activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setEndIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setErrorEnabled(false);
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setEndIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            }
+        });
+
+        activityLoginBinding.editTextCurrentPasswordResetPassword.setOnFocusChangeListener((v, hasFocus) -> {
+
+            if (hasFocus) {
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setEndIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            } else {
+                if (activityLoginBinding.editTextCurrentPasswordResetPassword.getText().length() == 0) {
+                    activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setEndIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_grey)));
+                    activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_grey)));
+                } else {
+                    activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setEndIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_grey)));
+                    activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_grey)));
+                }
+            }
+        });
+
+        activityLoginBinding.editTextConPasswordResetPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setErrorEnabled(false);
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setEndIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) {
+                    activityLoginBinding.filledTextFieldConPasswordResetPassword.setErrorEnabled(false);
+                    activityLoginBinding.filledTextFieldConPasswordResetPassword.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+                    activityLoginBinding.filledTextFieldConPasswordResetPassword.setEndIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setErrorEnabled(false);
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setEndIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            }
+        });
+
+        activityLoginBinding.editTextConPasswordResetPassword.setOnFocusChangeListener((v, hasFocus) -> {
+
+            if (hasFocus) {
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setEndIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            } else {
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setEndIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_grey)));
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_grey)));
+            }
+        });
+
+
+        activityLoginBinding.mbResetPassword.setOnClickListener(view -> {
+
+            if (Objects.requireNonNull(activityLoginBinding.editTextCurrentPasswordResetPassword.getText()).toString().isEmpty()) {
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setErrorEnabled(true);
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setErrorIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setBoxStrokeErrorColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setError("Current password is required");
+            } else if (!Global.isPasswordValidMethod(activityLoginBinding.editTextCurrentPasswordResetPassword.getText().toString())) {
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setErrorEnabled(true);
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setErrorIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setBoxStrokeErrorColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                activityLoginBinding.filledTextFieldCurrentPasswordResetPassword.setError("Please choose a stronger password. Try a mix of letters, numbers, and symbols.");
+            } else if (!Global.isMatchPassword(activityLoginBinding.editTextCurrentPasswordResetPassword.getText().toString(), Objects.requireNonNull(activityLoginBinding.editTextConPasswordResetPassword.getText()).toString())) {
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setErrorEnabled(true);
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setErrorIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setBoxStrokeErrorColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                activityLoginBinding.filledTextFieldConPasswordResetPassword.setError("Password doesn't match");
+            } else {
+
+                if (Global.isOnline(mContext)) {
+                    resetPasswordViewModel.getResetPassword(SessionManager.getUserId(),
+                            activityLoginBinding.editTextCurrentPasswordResetPassword.getText().toString(),
+                            activityLoginBinding.editTextConPasswordResetPassword.getText().toString());
+                } else {
+                    Global.showDialog(mActivity);
+                }
+
+            }
+        });
 
 
     }

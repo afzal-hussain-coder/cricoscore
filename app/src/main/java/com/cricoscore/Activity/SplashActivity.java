@@ -25,10 +25,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class SplashActivity extends AppCompatActivity {
-    SharedPreferences prefs;
     boolean permission = false;
     int PERMISSION_ALL = 1;
     Context mContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +38,7 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 
-        mContext=this;
-        prefs = PreferenceManager.getDefaultSharedPreferences(SplashActivity.this);
+        mContext = this;
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -69,7 +68,6 @@ public class SplashActivity extends AppCompatActivity {
         int modify_audio_settings = ContextCompat.checkSelfPermission(this, Manifest.permission.MODIFY_AUDIO_SETTINGS);
         int vibrate = ContextCompat.checkSelfPermission(this, Manifest.permission.VIBRATE);
         int phoneCallPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
-
 
 
         List<String> listPermissionsNeeded = new ArrayList<>();
@@ -134,15 +132,16 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // TODO Auto-generated method stub
-                if (SessionManager.get_check_login(prefs)) {
-                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                if (SessionManager.get_check_login()==true) {
+
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
 
                 } else {
-                        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
 
                 }
             }

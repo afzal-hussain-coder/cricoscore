@@ -1,34 +1,23 @@
 package com.cricoscore.view_model;
-
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.cricoscore.ApiResponse.SignUpResponse;
 import com.cricoscore.ApiResponse.UserProfileResponse;
-import com.cricoscore.CricoscopeApplication;
-import com.cricoscore.ParamBody.LoginBody;
 import com.cricoscore.Utils.SessionManager;
 import com.cricoscore.model.AuthModel.AuthData;
-import com.cricoscore.repository.LoginRepository;
 import com.cricoscore.repository.UserProfileRepository;
 
 public class UserProfileViewModel extends ViewModel {
-    private UserProfileRepository userProfileRepository;
+    private final UserProfileRepository userProfileRepository;
     MutableLiveData<Integer> mProgressMutableData = new MutableLiveData<>();
     MutableLiveData<Boolean> mSignUpResultMutableData = new MutableLiveData<>();
-    SharedPreferences prefs;
 
     UserProfileViewModel(){
         mProgressMutableData.postValue(View.GONE);
         mSignUpResultMutableData.postValue(false);
         userProfileRepository = new UserProfileRepository();
-        prefs = PreferenceManager.getDefaultSharedPreferences(CricoscopeApplication.getContext());
     }
 
     public void getUserProfile(String token,Integer userId){
@@ -38,23 +27,21 @@ public class UserProfileViewModel extends ViewModel {
             @Override
             public void onResponse(UserProfileResponse userProfileResponse, Boolean status) {
                 mProgressMutableData.postValue(View.GONE);
-                if(status==false){
+                if(!status){
                     AuthData authData = userProfileResponse.getData();
-                    SessionManager.saveToken(prefs, authData.getToken());
-                    SessionManager.saveUserId(prefs, authData.getUser_id());
-                    SessionManager.saveUserName(prefs, authData.getUsername());
-                    SessionManager.saveEmail(prefs, authData.getEmail());
-                    SessionManager.saveUserStatus(prefs, authData.getStatus());
-                    SessionManager.savePhone(prefs, authData.getPhone_number());
-                    SessionManager.saveFirstName(prefs, authData.getFirst_name());
-                    SessionManager.saveLastName(prefs, authData.getLast_name());
-                    SessionManager.saveIsEmailVerified(prefs, authData.getIs_email_verified());
-                    SessionManager.saveIsPhoneVerified(prefs, authData.getIs_mobile_verified());
-                    SessionManager.saveOtp(prefs,authData.getOtp());
+                    //SessionManager.saveToken(authData.getToken());
+                    SessionManager.saveUserId(authData.getUser_id());
+                    SessionManager.saveUserName(authData.getUsername());
+                    SessionManager.saveEmail(authData.getEmail());
+                    SessionManager.saveUserStatus(authData.getStatus());
+                    SessionManager.savePhone(authData.getPhone_number());
+                    SessionManager.saveFirstName(authData.getFirst_name());
+                    SessionManager.saveLastName(authData.getLast_name());
+                    SessionManager.saveIsEmailVerified(authData.getIs_email_verified());
+                    SessionManager.saveIsPhoneVerified(authData.getIs_mobile_verified());
+                    SessionManager.saveOtp(authData.getOtp());
                     mSignUpResultMutableData.postValue(userProfileResponse.getStatus());
-                }else{
-                    mSignUpResultMutableData.postValue(false);
-                }
+                }else mSignUpResultMutableData.postValue(false);
             }
 
             @Override

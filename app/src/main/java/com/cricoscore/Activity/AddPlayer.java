@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.cricoscore.R;
 import com.cricoscore.Utils.DataModel;
 import com.cricoscore.Utils.SelectTournamentType;
+import com.cricoscore.Utils.SessionManager;
+import com.cricoscore.Utils.Toaster;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -34,6 +36,8 @@ public class AddPlayer extends AppCompatActivity {
         setContentView(R.layout.activity_add_player);
         mActivity = this;
         mContext = this;
+
+        Toaster.customToast(SessionManager.getUserId()+"//"+SessionManager.getToken()+"?"+SessionManager.getEmail());
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

@@ -32,6 +32,7 @@ import com.cricoscore.Utils.DataModel;
 import com.cricoscore.Utils.Global;
 import com.cricoscore.Utils.SelectStatusType;
 import com.cricoscore.Utils.SessionManager;
+import com.cricoscore.Utils.SharedPreferencesManager;
 import com.cricoscore.Utils.Toaster;
 import com.cricoscore.model.Drawer;
 import com.cricoscore.view_model.SignUpViewModel;
@@ -49,15 +50,12 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Drawer> drawerList;
     Activity mActivity;
     Context mContext;
-
-
     TabLayout tabLayout;
     private ViewPager2 viewPager2;
     private TabAdapter adapter;
     SelectStatusType drop_pStatus;
     private ArrayList<DataModel> option_status_list = new ArrayList<>();
     String filterTypeStatus="";
-    SharedPreferences prefs;
 
     UserProfileViewModel userProfileViewModel;
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -68,12 +66,13 @@ public class MainActivity extends AppCompatActivity {
 
         mActivity = this;
         mContext = this;
-        prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
 
         userProfileViewModel =  new ViewModelProvider(this).get(UserProfileViewModel.class);
 
         userProfileViewModel.getUserProfileResult().observe(this,aBoolean -> {
-
+         if(aBoolean){
+             txt_nav_name.setText(SessionManager.getUserName());
+         }
         });
         userProfileViewModel.getUserProfileLoader().observe(this, integer -> {
             if (integer == 0) {
@@ -83,9 +82,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         if(Global.isOnline(mContext)){
-            userProfileViewModel.getUserProfile(SessionManager.getToken(prefs),SessionManager.getUserId(prefs));
+            userProfileViewModel.getUserProfile(SessionManager.getToken(),SessionManager.getUserId());
         }else{
             Global.showDialog(mActivity);
         }
@@ -140,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                     txt_nav_name.setText(Global.capitalizeFirstLatterOfString(SessionManager.get_name(prefs)));
                 }*/
 
-                txt_nav_name.setText(SessionManager.getUserName(prefs));
+                //txt_nav_name.setText(SessionManager.getUserName(prefs));
 
             }
         };
@@ -287,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
             alertDialog.setMessage(getResources().getString(R.string.Do_you_really_want_to_logout));
             alertDialog.setPositiveButton(getResources().getString(R.string.Yes),
                     (dialog, which) -> {
-                        SessionManager.clearPreferences(prefs);
+                        SharedPreferencesManager.clearPreferences();
                         Intent intent = new Intent(mActivity, LoginActivity.class);
                         startActivity(intent);
                         finish();

@@ -69,7 +69,7 @@ public class Global {
     public static final String USER_PROFILE ="/user/profile/";
     public static final String LOGIN_THROUGH_OTP ="loginWithMobile";
     public static final String FORGET_PASSWORD ="forgotpass";
-    public static final String RESET_PASSWORD ="reSetPassword";
+    public static final String RESET_PASSWORD ="user/reSetPassword";
     public static final String VERIFY_EMAIL_OTP="user/verifyEmailOTP";
 
     private static LoadingDialogFragment loadingDialogFragment = new LoadingDialogFragment();
