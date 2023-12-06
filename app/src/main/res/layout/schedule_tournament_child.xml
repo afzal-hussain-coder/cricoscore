@@ -311,7 +311,7 @@
                     app:fontFamily="@font/opensans_semibold" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/mb_start_tournament"
+                    android:id="@+id/mb_select_playing_xi"
                     style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_30sdp"
@@ -533,6 +533,7 @@
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
                         android:background="@drawable/editboxx"
                         android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
                         android:fontFamily="@font/opensans_regular"

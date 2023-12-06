@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/dropbox_status_main"
             android:gravity="center"
-            android:hint="Select status"
+            android:hint="Select Status"
             android:paddingEnd="@dimen/_5sdp"
             android:drawableTint="@color/dark_grey"
             android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"

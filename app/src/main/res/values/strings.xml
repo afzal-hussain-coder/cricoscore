@@ -98,4 +98,9 @@
     <string name="No">No</string>
     <string name="Do_you_really_want_to_logout">Do you really want to logout?</string>
     <string name="resetpassword">Reset Password</string>
+    <string name="selection_of_team">Select toss winning team</string>
+    <string name="selection_of_team_error">Choose toss winning team</string>
+    <string name="Decision_to_choose">Decision to choose batting or bowling</string>
+    <string name="username_msg">Sorry, your username must be between 3 to 21 characters</string>
+
 </resources>

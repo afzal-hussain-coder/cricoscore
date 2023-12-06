@@ -158,7 +158,7 @@ public class ScheduleTournamentAdapter extends RecyclerView.Adapter<ScheduleTour
             rl_player_add = itemView.findViewById(R.id.rl_player_add);
             mb_add_player_first = itemView.findViewById(R.id.mb_add_player_first);
             mb_add_player2 = itemView.findViewById(R.id.mb_add_player2);
-            mb_start_tournament = itemView.findViewById(R.id.mb_start_tournament);
+            mb_start_tournament = itemView.findViewById(R.id.mb_submit_final);
             rl_select_player = itemView.findViewById(R.id.rl_select_player);
             edit_text_pName = itemView.findViewById(R.id.edit_text_pName);
             edit_text_pMobile = itemView.findViewById(R.id.edit_text_pMobile);

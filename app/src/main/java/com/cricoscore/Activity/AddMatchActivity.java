@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,10 +15,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cricoscore.CustomeCamera.CustomeCameraActivity;
 import com.cricoscore.R;
 import com.cricoscore.Utils.DataModel;
 import com.cricoscore.Utils.Global;
 import com.cricoscore.Utils.SelectTournamentType;
+import com.cricoscore.databinding.ActivityAddMatchBinding;
+import com.cricoscore.databinding.ActivityAddTournamentBinding;
+import com.cricoscore.databinding.ToolbarBinding;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
@@ -30,6 +35,8 @@ import java.util.Date;
 import java.util.Objects;
 
 public class AddMatchActivity extends AppCompatActivity {
+
+    ActivityAddMatchBinding activityAddMatchBinding;
     private Context mContext;
     private Activity mActivity;
     private int year, month, day, hour, minute;
@@ -44,43 +51,57 @@ public class AddMatchActivity extends AppCompatActivity {
     private ArrayList<DataModel> option_state = new ArrayList<>();
     private ArrayList<DataModel> option_city = new ArrayList<>();
     private String filterType = "";
-    SelectTournamentType selectTournamentType, drop_tBallType, drop_tState, drop_tCity;
+    public static Uri image_uri=null;
+    private int logo=0,banner=0;
 
-    TextInputEditText edit_text_tAddAwards;
-    ChipGroup chip_group_awards;
-    ImageView iv_done;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_match);
+        activityAddMatchBinding = ActivityAddMatchBinding.inflate(getLayoutInflater());
+        setContentView(activityAddMatchBinding.getRoot());
+
         mActivity = this;
         mContext = this;
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        ToolbarBinding toolbarBinding = activityAddMatchBinding.toolbar;
+        setSupportActionBar(toolbarBinding.toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-        TextView mTitle = toolbar.findViewById(R.id.toolbartext);
-        mTitle.setText(getResources().getString(R.string.addMatch));
-        toolbar.setNavigationOnClickListener(v -> finish());
+        toolbarBinding.toolbartext.setText(getResources().getString(R.string.addMatch));
+        toolbarBinding.toolbar.setNavigationOnClickListener(v -> finish());
 
         initializeView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(image_uri!=null){
+
+            if(logo==1){
+                activityAddMatchBinding.profilePic.setImageURI(image_uri);
+                image_uri = null;
+            }else if(banner==2){
+                activityAddMatchBinding.coverImg.setImageURI(image_uri);
+                image_uri = null;
+            }
+        }
+    }
+
     private void initializeView() {
-        selectTournamentType = findViewById(R.id.drop_mType);
 
         option.add(new DataModel("Age dependent match (U-16 , U-19 etc.)"));
         option.add(new DataModel("Corporate Match"));
         option.add(new DataModel("Open Match"));
 
-        selectTournamentType.setOptionList(option);
+        activityAddMatchBinding.dropMType.setOptionList(option);
 //        filterType = option.get(0).getName();
 //        selectTournamentType.setText(filterType);
 
-        selectTournamentType.setClickListener(new SelectTournamentType.onClickInterface() {
+        activityAddMatchBinding.dropMType.setClickListener(new SelectTournamentType.onClickInterface() {
             @Override
             public void onClickAction() {
             }
@@ -103,17 +124,14 @@ public class AddMatchActivity extends AppCompatActivity {
             }
         });
 
-
-        drop_tBallType = findViewById(R.id.drop_mAwards);
-
         option_ball_type.add(new DataModel("Leather"));
         option_ball_type.add(new DataModel("Tennis"));
         option_ball_type.add(new DataModel("Rubber"));
         option_ball_type.add(new DataModel("Other"));
 
 
-        drop_tBallType.setOptionList(option_ball_type);
-        drop_tBallType.setClickListener(new SelectTournamentType.onClickInterface() {
+        activityAddMatchBinding.dropMAwards.setOptionList(option_ball_type);
+        activityAddMatchBinding.dropMAwards.setClickListener(new SelectTournamentType.onClickInterface() {
             @Override
             public void onClickAction() {
             }
@@ -129,14 +147,13 @@ public class AddMatchActivity extends AppCompatActivity {
             }
         });
 
-        drop_tState = findViewById(R.id.drop_mState);
         option_state.add(new DataModel("Bihar"));
         option_state.add(new DataModel("Punjab"));
         option_state.add(new DataModel("Haryana"));
         option_state.add(new DataModel("Delhi"));
         option_state.add(new DataModel("Chennai"));
-        drop_tState.setOptionList(option_state);
-        drop_tState.setClickListener(new SelectTournamentType.onClickInterface() {
+        activityAddMatchBinding.dropMState.setOptionList(option_state);
+        activityAddMatchBinding.dropMState.setClickListener(new SelectTournamentType.onClickInterface() {
             @Override
             public void onClickAction() {
             }
@@ -152,14 +169,13 @@ public class AddMatchActivity extends AppCompatActivity {
             }
         });
 
-        drop_tCity = findViewById(R.id.drop_mCity);
         option_city.add(new DataModel("Patna"));
         option_city.add(new DataModel("Gurgaon"));
         option_city.add(new DataModel("Samastipur"));
         option_city.add(new DataModel("Dhanbad"));
         option_city.add(new DataModel("Hajipur"));
-        drop_tCity.setOptionList(option_city);
-        drop_tCity.setClickListener(new SelectTournamentType.onClickInterface() {
+        activityAddMatchBinding.dropMCity.setOptionList(option_city);
+        activityAddMatchBinding.dropMCity.setClickListener(new SelectTournamentType.onClickInterface() {
             @Override
             public void onClickAction() {
             }
@@ -175,10 +191,8 @@ public class AddMatchActivity extends AppCompatActivity {
             }
         });
 
-        tv_date = findViewById(R.id.tv_start_date);
-        tv_end_date = findViewById(R.id.tv_end_date);
 
-        findViewById(R.id.li_start_date).setOnClickListener(v -> {
+        activityAddMatchBinding.liStartDate.setOnClickListener(v -> {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             final Calendar c = Calendar.getInstance();
 
@@ -202,7 +216,7 @@ public class AddMatchActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                tv_date.setText(Global.convertUTCDateToLocall(date));
+                activityAddMatchBinding.tvStartDate.setText(Global.convertUTCDateToMM(date));
             }, year, month, day);
             picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
             picker.getDatePicker().setMaxDate(twoDaysLater.getTimeInMillis());
@@ -211,7 +225,7 @@ public class AddMatchActivity extends AppCompatActivity {
 
         });
 
-        findViewById(R.id.li_end_date).setOnClickListener(v -> {
+        activityAddMatchBinding.liEndDate.setOnClickListener(v -> {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             final Calendar c = Calendar.getInstance();
 
@@ -235,7 +249,7 @@ public class AddMatchActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                tv_end_date.setText(Global.convertUTCDateToLocall(date));
+                activityAddMatchBinding.tvEndDate.setText(Global.convertUTCDateToMM(date));
             }, year, month, day);
             picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
             picker.getDatePicker().setMaxDate(twoDaysLater.getTimeInMillis());
@@ -244,12 +258,7 @@ public class AddMatchActivity extends AppCompatActivity {
 
         });
 
-
-        chip_group_awards = findViewById(R.id.chip_group_awards);
-
-        iv_done = findViewById(R.id.iv_done);
-        edit_text_tAddAwards = findViewById(R.id.edit_text_mAddAwards);
-        edit_text_tAddAwards.addTextChangedListener(new TextWatcher() {
+        activityAddMatchBinding.editTextMAddAwards.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -258,12 +267,12 @@ public class AddMatchActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!s.toString().isEmpty()) {
-                    iv_done.setVisibility(View.VISIBLE);
+                    activityAddMatchBinding.ivDone.setVisibility(View.VISIBLE);
                     if (s.length() > 1 && s.toString().charAt(s.toString().length() - 1) == ',') {
                         addChipToGroup(s.toString().replace(",", ""));
                     }
                 }else{
-                    iv_done.setVisibility(View.GONE);
+                    activityAddMatchBinding.ivDone.setVisibility(View.GONE);
                 }
             }
 
@@ -271,19 +280,19 @@ public class AddMatchActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (!s.toString().isEmpty()) {
                     if (s.toString().length() == 1 && s.toString().charAt(s.toString().length() - 1) == ',') {
-                        edit_text_tAddAwards.setText("");
+                        activityAddMatchBinding.editTextMAddAwards.setText("");
                     } else if (s.toString().length() > 1 && s.toString().charAt(s.toString().length() - 1) == ',') {
-                        edit_text_tAddAwards.setText("");
+                        activityAddMatchBinding.editTextMAddAwards.setText("");
                     }
                 }
             }
         });
 
-        iv_done.setOnClickListener(v -> {
-            if (edit_text_tAddAwards.getText().toString().length() > 1 ) {
-                addChipToGroup(edit_text_tAddAwards.getText().toString());
-                edit_text_tAddAwards.setText("");
-                iv_done.setVisibility(View.GONE);
+        activityAddMatchBinding.ivDone.setOnClickListener(v -> {
+            if (activityAddMatchBinding.editTextMAddAwards.getText().toString().length() > 1 ) {
+                addChipToGroup(activityAddMatchBinding.editTextMAddAwards.getText().toString());
+                activityAddMatchBinding.editTextMAddAwards.setText("");
+                activityAddMatchBinding.ivDone.setVisibility(View.GONE);
             }
         });
        /* findViewById(R.id.li_time).setOnClickListener(v -> {
@@ -319,9 +328,23 @@ public class AddMatchActivity extends AppCompatActivity {
 
             timePickerDialog.show();
         });*/
-        findViewById(R.id.mb_submit).setOnClickListener(v -> {
+        activityAddMatchBinding.mbSubmit.setOnClickListener(v -> {
             startActivity(new Intent(mContext,MainActivity.class));
             finish();
+        });
+
+        activityAddMatchBinding.middle.setOnClickListener(view -> {
+            logo = 1;
+            banner = 0;
+            startActivity(new Intent(mContext, CustomeCameraActivity.class)
+                    .putExtra("FROM","AddMatchActivity"));
+        });
+
+        activityAddMatchBinding.coverImg.setOnClickListener(view -> {
+            logo = 0;
+            banner = 2;
+            startActivity(new Intent(mContext, CustomeCameraActivity.class)
+                    .putExtra("FROM","AddMatchActivity"));
         });
 
     }
@@ -338,9 +361,9 @@ public class AddMatchActivity extends AppCompatActivity {
         chip.setChipBackgroundColorResource(R.color.purple_700);
         chip.setCloseIconTintResource(R.color.white);
         chip.setTextColor(mContext.getResources().getColor(R.color.white));
-        chip_group_awards.addView(chip);
+        activityAddMatchBinding.chipGroupAwards.addView(chip);
         chip.setOnCloseIconClickListener(v -> {
-            chip_group_awards.removeView(chip);
+            activityAddMatchBinding.chipGroupAwards.removeView(chip);
         });
     }
 

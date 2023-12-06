@@ -1,6 +1,8 @@
 package com.cricoscore.Fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,17 +14,30 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.cricoscore.Activity.YourMatchTeamListActivity;
+import com.cricoscore.Activity.YourTeamListActivity;
 import com.cricoscore.Adapter.MatchAdapter;
+import com.cricoscore.CustomeCamera.CustomeCameraActivity;
 import com.cricoscore.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class MatchFragment extends Fragment {
 
     RecyclerView rv_home;
+    CircleImageView iv_team_logo;
+    public static Uri image_uri=null;
+
     public MatchFragment() {
         // Required empty public constructor
     }
@@ -44,7 +59,21 @@ public class MatchFragment extends Fragment {
         rv_home.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_home.setHasFixedSize(true);
 
-        rv_home.setAdapter(new MatchAdapter(getActivity(),getMatchList()));
+        rv_home.setAdapter(new MatchAdapter(getActivity(), getMatchList(), new MatchAdapter.getImageCallListener() {
+            @Override
+            public void addTeamLogo() {
+                showBottomSheetDialog(null);
+            }
+        }));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(image_uri!=null){
+            iv_team_logo.setImageURI(image_uri);
+            image_uri = null;
+        }
     }
 
     public List<Match> getMatchList(){
@@ -122,6 +151,36 @@ public class MatchFragment extends Fragment {
             this.address = address;
             this.date = date;
         }
+    }
+
+    public void showBottomSheetDialog(Uri image_uri) {
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity(), R.style.BottomSheetDialogTheme);
+        bottomSheetDialog.setContentView(R.layout.add_team_bottom_dialog);
+
+        RelativeLayout rl_team_logo = bottomSheetDialog.findViewById(R.id.rl_team_logo);
+        TextView tv_select_team_from_list = bottomSheetDialog.findViewById(R.id.tv_select_team_from_list);
+        iv_team_logo = bottomSheetDialog.findViewById(R.id.iv_team_logo);
+        TextInputEditText edit_text_teamName = bottomSheetDialog.findViewById(R.id.edit_text_teamName);
+        TextInputEditText edit_text_city = bottomSheetDialog.findViewById(R.id.edit_text_city);
+        MaterialButton mb_submit = bottomSheetDialog.findViewById(R.id.mb_submit);
+
+        rl_team_logo.setOnClickListener(view -> {
+            getActivity().startActivity(new Intent(getActivity(), CustomeCameraActivity.class)
+                    .putExtra("FROM","MatchFragment"));
+        });
+
+
+        tv_select_team_from_list.setOnClickListener(v -> {
+            getActivity().startActivity(new Intent(getActivity(), YourMatchTeamListActivity.class));
+            bottomSheetDialog.dismiss();
+        });
+
+        mb_submit.setOnClickListener(view -> {
+            bottomSheetDialog.dismiss();
+        });
+
+        bottomSheetDialog.show();
+
     }
 
 }

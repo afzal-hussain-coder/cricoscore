@@ -30,8 +30,9 @@ public class LoginViewModel extends ViewModel {
             public void onResponse(SignUpResponse signUpResponse, Boolean status) {
                 mProgressMutableData.postValue(View.GONE);
                 if(!status){
+
                     AuthData authData = signUpResponse.getData();
-                    //SessionManager.saveToken(authData.getToken());
+                    SessionManager.saveToken(authData.getToken());
                     SessionManager.saveUserId(authData.getUser_id());
                     SessionManager.saveUserName(authData.getUsername());
                     SessionManager.saveEmail(authData.getEmail());

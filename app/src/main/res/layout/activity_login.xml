@@ -168,7 +168,7 @@
                             style="@style/OutlinedRoundBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Username"
+                            android:hint="Username/Email"
                             android:textColorHint="@color/dark_grey"
                             app:boxBackgroundColor="@color/white"
                             app:boxStrokeColor="@color/green"

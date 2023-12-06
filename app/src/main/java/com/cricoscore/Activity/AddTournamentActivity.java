@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -19,10 +20,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cricoscore.CustomeCamera.CustomeCameraActivity;
 import com.cricoscore.R;
 import com.cricoscore.Utils.DataModel;
 import com.cricoscore.Utils.Global;
 import com.cricoscore.Utils.SelectTournamentType;
+import com.cricoscore.databinding.ActivityAddTournamentBinding;
+import com.cricoscore.databinding.ToolbarBinding;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
@@ -50,48 +54,63 @@ public class AddTournamentActivity extends AppCompatActivity {
     private ArrayList<DataModel> option_ball_type = new ArrayList<>();
     private ArrayList<DataModel> option_state = new ArrayList<>();
     private ArrayList<DataModel> option_city = new ArrayList<>();
+    public static Uri image_uri=null;
+    private int logo=0,banner=0;
     private String filterType = "";
-    SelectTournamentType selectTournamentType, drop_tBallType, drop_tState, drop_tCity;
 
-    TextInputEditText edit_text_tAddAwards;
-    ChipGroup chip_group_awards;
-    ImageView iv_done;
+
+    ActivityAddTournamentBinding activityAddTournamentBinding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_tournament);
+
+        activityAddTournamentBinding = ActivityAddTournamentBinding.inflate(getLayoutInflater());
+        setContentView(activityAddTournamentBinding.getRoot());
 
         mActivity = this;
         mContext = this;
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        ToolbarBinding toolbarBinding = activityAddTournamentBinding.toolbar;
+        setSupportActionBar(toolbarBinding.toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-        TextView mTitle = toolbar.findViewById(R.id.toolbartext);
-        mTitle.setText(getResources().getString(R.string.addTournament));
-        toolbar.setNavigationOnClickListener(v -> finish());
+        toolbarBinding.toolbartext.setText(getResources().getString(R.string.addTournament));
+        toolbarBinding.toolbar.setNavigationOnClickListener(v -> finish());
 
 
         initializeView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(image_uri!=null){
+
+            if(logo==1){
+                activityAddTournamentBinding.profilePic.setImageURI(image_uri);
+                image_uri = null;
+            }else if(banner==2){
+                activityAddTournamentBinding.coverImg.setImageURI(image_uri);
+                image_uri = null;
+            }
+        }
+    }
+
     private void initializeView() {
-        selectTournamentType = findViewById(R.id.drop_tType);
 
         option.add(new DataModel("Age dependent tournament (U-16 , U-19 etc.)"));
         option.add(new DataModel("Corporate Tournament"));
         option.add(new DataModel("Open Tournament"));
 
-        selectTournamentType.setOptionList(option);
+        activityAddTournamentBinding.dropTType.setOptionList(option);
 //        filterType = option.get(0).getName();
-//        selectTournamentType.setText(filterType);
+//        activityAddTournamentBinding.dropTType.setText(filterType);
 
-        selectTournamentType.setClickListener(new SelectTournamentType.onClickInterface() {
+        activityAddTournamentBinding.dropTType.setClickListener(new SelectTournamentType.onClickInterface() {
             @Override
             public void onClickAction() {
             }
@@ -115,16 +134,13 @@ public class AddTournamentActivity extends AppCompatActivity {
         });
 
 
-        drop_tBallType = findViewById(R.id.drop_tAwards);
 
         option_ball_type.add(new DataModel("Leather"));
         option_ball_type.add(new DataModel("Tennis"));
         option_ball_type.add(new DataModel("Rubber"));
         option_ball_type.add(new DataModel("Other"));
-
-
-        drop_tBallType.setOptionList(option_ball_type);
-        drop_tBallType.setClickListener(new SelectTournamentType.onClickInterface() {
+        activityAddTournamentBinding.dropTAwards.setOptionList(option_ball_type);
+        activityAddTournamentBinding.dropTAwards.setClickListener(new SelectTournamentType.onClickInterface() {
             @Override
             public void onClickAction() {
             }
@@ -140,14 +156,13 @@ public class AddTournamentActivity extends AppCompatActivity {
             }
         });
 
-        drop_tState = findViewById(R.id.drop_tState);
         option_state.add(new DataModel("Bihar"));
         option_state.add(new DataModel("Punjab"));
         option_state.add(new DataModel("Haryana"));
         option_state.add(new DataModel("Delhi"));
         option_state.add(new DataModel("Chennai"));
-        drop_tState.setOptionList(option_state);
-        drop_tState.setClickListener(new SelectTournamentType.onClickInterface() {
+        activityAddTournamentBinding.dropTState.setOptionList(option_state);
+        activityAddTournamentBinding.dropTState.setClickListener(new SelectTournamentType.onClickInterface() {
             @Override
             public void onClickAction() {
             }
@@ -163,14 +178,13 @@ public class AddTournamentActivity extends AppCompatActivity {
             }
         });
 
-        drop_tCity = findViewById(R.id.drop_tCity);
         option_city.add(new DataModel("Patna"));
         option_city.add(new DataModel("Gurgaon"));
         option_city.add(new DataModel("Samastipur"));
         option_city.add(new DataModel("Dhanbad"));
         option_city.add(new DataModel("Hajipur"));
-        drop_tCity.setOptionList(option_city);
-        drop_tCity.setClickListener(new SelectTournamentType.onClickInterface() {
+        activityAddTournamentBinding.dropTCity.setOptionList(option_city);
+        activityAddTournamentBinding.dropTCity.setClickListener(new SelectTournamentType.onClickInterface() {
             @Override
             public void onClickAction() {
             }
@@ -186,10 +200,7 @@ public class AddTournamentActivity extends AppCompatActivity {
             }
         });
 
-        tv_date = findViewById(R.id.tv_start_date);
-        tv_end_date = findViewById(R.id.tv_end_date);
-
-        findViewById(R.id.li_start_date).setOnClickListener(v -> {
+        activityAddTournamentBinding.liStartDate.setOnClickListener(v -> {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             final Calendar c = Calendar.getInstance();
 
@@ -213,7 +224,7 @@ public class AddTournamentActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                tv_date.setText(Global.convertUTCDateToLocall(date));
+                activityAddTournamentBinding.tvStartDate.setText(Global.convertUTCDateToMM(date));
             }, year, month, day);
             picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
             picker.getDatePicker().setMaxDate(twoDaysLater.getTimeInMillis());
@@ -222,7 +233,7 @@ public class AddTournamentActivity extends AppCompatActivity {
 
         });
 
-        findViewById(R.id.li_end_date).setOnClickListener(v -> {
+        activityAddTournamentBinding.liEndDate.setOnClickListener(v -> {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             final Calendar c = Calendar.getInstance();
 
@@ -246,7 +257,7 @@ public class AddTournamentActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                tv_end_date.setText(Global.convertUTCDateToLocall(date));
+                activityAddTournamentBinding.tvEndDate.setText(Global.convertUTCDateToMM(date));
             }, year, month, day);
             picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
             picker.getDatePicker().setMaxDate(twoDaysLater.getTimeInMillis());
@@ -255,12 +266,7 @@ public class AddTournamentActivity extends AppCompatActivity {
 
         });
 
-
-        chip_group_awards = findViewById(R.id.chip_group_awards);
-
-        iv_done = findViewById(R.id.iv_done);
-        edit_text_tAddAwards = findViewById(R.id.edit_text_tAddAwards);
-        edit_text_tAddAwards.addTextChangedListener(new TextWatcher() {
+        activityAddTournamentBinding.editTextTAddAwards.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -269,12 +275,12 @@ public class AddTournamentActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!s.toString().isEmpty()) {
-                    iv_done.setVisibility(View.VISIBLE);
+                    activityAddTournamentBinding.ivDone.setVisibility(View.VISIBLE);
                     if (s.length() > 1 && s.toString().charAt(s.toString().length() - 1) == ',') {
                         addChipToGroup(s.toString().replace(",", ""));
                     }
                 }else{
-                    iv_done.setVisibility(View.GONE);
+                    activityAddTournamentBinding.ivDone.setVisibility(View.GONE);
                 }
             }
 
@@ -282,19 +288,19 @@ public class AddTournamentActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (!s.toString().isEmpty()) {
                     if (s.toString().length() == 1 && s.toString().charAt(s.toString().length() - 1) == ',') {
-                        edit_text_tAddAwards.setText("");
+                        activityAddTournamentBinding.editTextTAddAwards.setText("");
                     } else if (s.toString().length() > 1 && s.toString().charAt(s.toString().length() - 1) == ',') {
-                        edit_text_tAddAwards.setText("");
+                        activityAddTournamentBinding.editTextTAddAwards.setText("");
                     }
                 }
             }
         });
 
-        iv_done.setOnClickListener(v -> {
-            if (edit_text_tAddAwards.getText().toString().length() > 1 ) {
-                addChipToGroup(edit_text_tAddAwards.getText().toString());
-                edit_text_tAddAwards.setText("");
-                iv_done.setVisibility(View.GONE);
+        activityAddTournamentBinding.ivDone.setOnClickListener(v -> {
+            if (activityAddTournamentBinding.editTextTAddAwards.getText().toString().length() > 1 ) {
+                addChipToGroup(activityAddTournamentBinding.editTextTAddAwards.getText().toString());
+                activityAddTournamentBinding.editTextTAddAwards.setText("");
+                activityAddTournamentBinding.ivDone.setVisibility(View.GONE);
             }
         });
        /* findViewById(R.id.li_time).setOnClickListener(v -> {
@@ -331,9 +337,23 @@ public class AddTournamentActivity extends AppCompatActivity {
             timePickerDialog.show();
         });*/
 
-        findViewById(R.id.mb_submit).setOnClickListener(v -> {
+        activityAddTournamentBinding.mbSubmit.setOnClickListener(v -> {
             startActivity(new Intent(mContext,MainActivity.class));
             finish();
+        });
+
+        activityAddTournamentBinding.middle.setOnClickListener(view -> {
+            logo = 1;
+            banner = 0;
+            startActivity(new Intent(mContext, CustomeCameraActivity.class)
+                    .putExtra("FROM","AddTournamentActivity"));
+        });
+
+        activityAddTournamentBinding.coverImg.setOnClickListener(view -> {
+            logo = 0;
+            banner = 2;
+            startActivity(new Intent(mContext, CustomeCameraActivity.class)
+                    .putExtra("FROM","AddTournamentActivity"));
         });
 
     }
@@ -350,9 +370,9 @@ public class AddTournamentActivity extends AppCompatActivity {
         chip.setChipBackgroundColorResource(R.color.purple_700);
         chip.setCloseIconTintResource(R.color.white);
         chip.setTextColor(mContext.getResources().getColor(R.color.white));
-        chip_group_awards.addView(chip);
+        activityAddTournamentBinding.chipGroupAwards.addView(chip);
         chip.setOnCloseIconClickListener(v -> {
-            chip_group_awards.removeView(chip);
+            activityAddTournamentBinding.chipGroupAwards.removeView(chip);
         });
     }
 

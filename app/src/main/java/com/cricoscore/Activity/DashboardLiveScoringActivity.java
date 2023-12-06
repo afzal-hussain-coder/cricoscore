@@ -107,7 +107,13 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         toolbarBinding.toolbartext.setText("CHENNAI SUPER KING VS ROYAL CHALLENGERS");
-        toolbarBinding.toolbardahsboard.setNavigationOnClickListener(v -> finish());
+        toolbarBinding.toolbardahsboard.setNavigationOnClickListener(v ->
+                {
+                    TossActivity.setIsSaveButtonStatus(true);
+                    finish();
+                }
+
+        );
 
         Animation animationBlink = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.blink);

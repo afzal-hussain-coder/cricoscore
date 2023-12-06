@@ -12,7 +12,7 @@ public class SharedPreferencesManager {
     }
 
     public static void savePreferenceBoolean(String key, Boolean value) {
-        preferences.edit().putBoolean(key, value).commit();
+        preferences.edit().putBoolean(key, value).apply();
     }
 
     public static boolean getPreferenceBoolean(String key, Boolean value) {
@@ -20,7 +20,7 @@ public class SharedPreferencesManager {
     }
 
     public static void savePreferenceInt(String key, int value) {
-        preferences.edit().putInt(key, value).commit();
+        preferences.edit().putInt(key, value).apply();
     }
 
     public static Integer getPreferenceInt(String key, int value) {
@@ -28,14 +28,14 @@ public class SharedPreferencesManager {
     }
 
     public static void savePreferenceString(String key, String value) {
-        preferences.edit().putString(key, value).commit();
+        preferences.edit().putString(key, value).apply();
     }
 
     public static String getPreferenceString(String key) {
        return preferences.getString(key,"");
     }
     public static void clearPreferences() {
-        preferences.edit().clear().commit();
+        preferences.edit().clear().apply();
     }
 
 

@@ -250,11 +250,12 @@
                                 android:textColor="@color/dark_grey"
                                 android:textSize="@dimen/_6sdp" />
 
+                            <!--\u20B9 100-->
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/opensans_semibold"
-                                android:text="\u20B9 100"
+                                android:text="10 %"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10sdp" />
 

@@ -58,6 +58,20 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <activity
+            android:name=".CustomeCamera.CustomeCameraActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Cricoscore.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+
         <activity
             android:name=".Activity.TossActivity"
             android:exported="false"

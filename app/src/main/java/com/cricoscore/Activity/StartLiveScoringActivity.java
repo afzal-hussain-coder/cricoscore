@@ -60,7 +60,7 @@ public class StartLiveScoringActivity extends AppCompatActivity {
 
     private void showBottomSheetDialog() {
 
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(mContext,R.style.BottomSheetDialogTheme);
         bottomSheetDialog.setContentView(R.layout.bottom_dialog_live_scoring);
 
         TextView tvLiveScoring = bottomSheetDialog.findViewById(R.id.tv_Live_Scoring);

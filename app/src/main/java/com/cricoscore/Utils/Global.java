@@ -150,15 +150,15 @@ public class Global {
     }
 
     public static boolean isValidPhoneNumber(String testString) {
-        return (testString.length() >= 8 && testString.length() <= 10 && android.util.Patterns.PHONE.matcher(testString).matches());
+        //testString.length() >= 8 &&
+        return (testString.length() == 10 && android.util.Patterns.PHONE.matcher(testString).matches());
     }
 
     public static  boolean isMatchPassword(String password,String confirmPassword){
-        if(password.equalsIgnoreCase(confirmPassword)){
+        if(password.equals(confirmPassword)){
             return true;
-        }else{
-            return false;
         }
+        return false;
     }
 
 
@@ -623,6 +623,26 @@ public class Global {
             SimpleDateFormat dateFormatprev = new SimpleDateFormat("yyyy-MM-dd");
             Date d = dateFormatprev.parse(date_string);
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+            dueDateAsNormal = dateFormat.format(d);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.d("date", dueDateAsNormal);
+
+        return dueDateAsNormal;
+    }
+
+    public static String convertUTCDateToMM(String date_string) {
+        if (date_string.isEmpty()) {
+            return "";
+        }
+        //02 Jun 2021,01:20:00
+        //oldFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String dueDateAsNormal = "";
+        try {
+            SimpleDateFormat dateFormatprev = new SimpleDateFormat("yyyy-MM-dd");
+            Date d = dateFormatprev.parse(date_string);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
             dueDateAsNormal = dateFormat.format(d);
         } catch (ParseException e) {
             e.printStackTrace();

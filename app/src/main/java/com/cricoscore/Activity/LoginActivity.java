@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                 activityLoginBinding.e3.setText(String.valueOf(charArray[2]));
                 activityLoginBinding.e4.setText(String.valueOf(charArray[3]));
 
-                activityLoginBinding.tvOtpMobileNumber.setText(SessionManager.getPhone());
+                activityLoginBinding.tvOtpMobileNumber.setText("XXXXXX"+SessionManager.getPhone().substring(6,10));
 
                 activityLoginBinding.topLoginSignup.setVisibility(View.GONE);
                 activityLoginBinding.top.setVisibility(View.GONE);
@@ -108,6 +108,16 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                 } else {
                     activityLoginBinding.tvOtpMobileNumber.setText(SessionManager.getPhone());
+
+
+                    char[] charArray = String.valueOf(SessionManager.getOtp()).toCharArray();
+
+                    activityLoginBinding.e1.setText(String.valueOf(charArray[0]));
+                    activityLoginBinding.e2.setText(String.valueOf(charArray[1]));
+                    activityLoginBinding.e3.setText(String.valueOf(charArray[2]));
+                    activityLoginBinding.e4.setText(String.valueOf(charArray[3]));
+
+
                     activityLoginBinding.topLoginSignup.setVisibility(View.GONE);
                     activityLoginBinding.top.setVisibility(View.GONE);
                     activityLoginBinding.liSignInLayout.setVisibility(View.GONE);
@@ -494,13 +504,14 @@ public class LoginActivity extends AppCompatActivity {
         activityLoginBinding.mbLogin.setOnClickListener(v -> {
 
             if (Objects.requireNonNull(activityLoginBinding.editTextUsername.getText()).toString().isEmpty()
-                    && activityLoginBinding.editTextUsername.getText().toString().length() < 3) {
+                    || activityLoginBinding.editTextUsername.getText().toString().length() < 3
+                    || activityLoginBinding.editTextUsername.getText().toString().length() > 21) {
                 activityLoginBinding.filledTextFieldUsername.setErrorEnabled(true);
                 activityLoginBinding.filledTextFieldUsername.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldUsername.setErrorIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldUsername.setBoxStrokeErrorColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldUsername.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
-                activityLoginBinding.filledTextFieldUsername.setError("Sorry, your username must be between 3 and 30 characters long.");
+                activityLoginBinding.filledTextFieldUsername.setError(getResources().getString(R.string.username_msg));
             } else if (activityLoginBinding.editTextPassword.getText().toString().isEmpty()) {
                 activityLoginBinding.filledTextFieldPassword.setErrorEnabled(true);
                 activityLoginBinding.filledTextFieldPassword.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
@@ -745,13 +756,14 @@ public class LoginActivity extends AppCompatActivity {
         activityLoginBinding.mbSignUp.setOnClickListener(v -> {
 
             if (Objects.requireNonNull(activityLoginBinding.editTextUsernameSignup.getText()).toString().isEmpty()
-                    || activityLoginBinding.editTextUsernameSignup.getText().toString().length() < 3) {
+                    || activityLoginBinding.editTextUsernameSignup.getText().toString().length() < 3 ||
+                    activityLoginBinding.editTextUsernameSignup.getText().toString().length()>21) {
                 activityLoginBinding.filledTextFieldUsernameSignup.setErrorEnabled(true);
                 activityLoginBinding.filledTextFieldUsernameSignup.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldUsernameSignup.setErrorIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldUsernameSignup.setBoxStrokeErrorColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldUsernameSignup.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
-                activityLoginBinding.filledTextFieldUsernameSignup.setError("Sorry, your username must be between 3 and 30 characters long.");
+                activityLoginBinding.filledTextFieldUsernameSignup.setError(getResources().getString(R.string.username_msg));
             } else if (Objects.requireNonNull(activityLoginBinding.editTextEmailSignup.getText()).toString().isEmpty()) {
                 activityLoginBinding.filledTextFieldEmailSignup.setErrorEnabled(true);
                 activityLoginBinding.filledTextFieldEmailSignup.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
@@ -889,7 +901,7 @@ public class LoginActivity extends AppCompatActivity {
         // End Forgot password event
 
         /**
-         * OTP event
+         * LOGIN THROUGH OTP event
          */
         activityLoginBinding.editTextMobileThroughOtp.addTextChangedListener(new TextWatcher() {
             @Override
@@ -932,14 +944,14 @@ public class LoginActivity extends AppCompatActivity {
                 activityLoginBinding.filledTextFieldThroughOtp.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldThroughOtp.setBoxStrokeErrorColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldThroughOtp.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
-                activityLoginBinding.filledTextFieldThroughOtp.setError("Phone number is required");
+                activityLoginBinding.filledTextFieldThroughOtp.setError("Mobile number is required");
             } else if (!Global.isValidPhoneNumber(activityLoginBinding.editTextMobileThroughOtp.getText().toString())) {
                 activityLoginBinding.filledTextFieldThroughOtp.setErrorEnabled(true);
                 activityLoginBinding.filledTextFieldThroughOtp.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldThroughOtp.setErrorIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldThroughOtp.setBoxStrokeErrorColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 activityLoginBinding.filledTextFieldThroughOtp.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
-                activityLoginBinding.filledTextFieldThroughOtp.setError("Enter a 10-digit phone number");
+                activityLoginBinding.filledTextFieldThroughOtp.setError("Enter a 10-digit mobile number");
             } else {
 
                 if (Global.isOnline(mContext)) {

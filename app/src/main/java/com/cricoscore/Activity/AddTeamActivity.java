@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
+import com.cricoscore.CustomeCamera.CustomeCameraActivity;
 import com.cricoscore.R;
 import com.cricoscore.Utils.DataModel;
 import com.cricoscore.Utils.SelectTournamentType;
@@ -28,6 +30,7 @@ public class AddTeamActivity extends AppCompatActivity {
     private ArrayList<DataModel> option_tournament_list = new ArrayList<>();
     private ArrayList<DataModel> option_match_list = new ArrayList<>();
     String matchType ="";
+    public static Uri image_uri=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +103,20 @@ public class AddTeamActivity extends AppCompatActivity {
             startActivity(new Intent(mContext,YourTeamListActivity.class));
             finish();
         });
+
+        activityAddTeamBinding.middle.setOnClickListener(view -> {
+            startActivity(new Intent(mContext, CustomeCameraActivity.class)
+                    .putExtra("FROM","AddTeamActivity"));
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(image_uri!=null){
+            activityAddTeamBinding.profilePic.setImageURI(image_uri);
+            image_uri = null;
+        }
     }
 
     @Override

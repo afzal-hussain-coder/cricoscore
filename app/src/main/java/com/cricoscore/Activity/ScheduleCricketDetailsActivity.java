@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.view.animation.AnimationUtils;
 
 import com.cricoscore.Adapter.TeamACreatePlayerListAdapter;
 import com.cricoscore.Adapter.TeamBCreatePlayerListAdapter;
+import com.cricoscore.CustomeCamera.CustomeCameraActivity;
 import com.cricoscore.R;
 import com.cricoscore.Utils.DataModel;
 import com.cricoscore.Utils.SelectStatusType;
@@ -37,6 +39,8 @@ public class ScheduleCricketDetailsActivity extends AppCompatActivity {
     private ArrayList<DataModel> option_status_list = new ArrayList<>();
     private ArrayList<DataModel> option_over_list = new ArrayList<>();
     int teamAPlayerCount,teamBPlayerCount;
+    public static Uri image_uri=null;
+    private int team1=0,team2=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +123,8 @@ public class ScheduleCricketDetailsActivity extends AppCompatActivity {
                 activityScheduleCricketDetailsBinding.rlTeamAdd.setVisibility(View.GONE);
                 activityScheduleCricketDetailsBinding.editTextPMobile.setText("");
                 activityScheduleCricketDetailsBinding.editTextPName.setText("");
-
+                image_uri = null;
+                activityScheduleCricketDetailsBinding.ivTeamLogo.setImageDrawable(getResources().getDrawable(R.drawable.placeholder_user));
 
             }else{
                 activityScheduleCricketDetailsBinding.mbAddPlayer.setText(mContext.getResources().getString(R.string.submit));
@@ -135,7 +140,8 @@ public class ScheduleCricketDetailsActivity extends AppCompatActivity {
                 activityScheduleCricketDetailsBinding.rlTeamAdd2.setVisibility(View.GONE);
                 activityScheduleCricketDetailsBinding.editTextPMobile2.setText("");
                 activityScheduleCricketDetailsBinding.editTextPName2.setText("");
-
+                image_uri = null;
+                activityScheduleCricketDetailsBinding.ivTeamLogo2.setImageDrawable(getResources().getDrawable(R.drawable.placeholder_user));
 
             }else{
                 activityScheduleCricketDetailsBinding.mbAddPlayer2.setText(mContext.getResources().getString(R.string.submit));
@@ -198,8 +204,6 @@ public class ScheduleCricketDetailsActivity extends AppCompatActivity {
 
 
 
-
-
 //        if(teamAPlayerCount>=11 && teamAPlayerCount>=11){
 //            activityScheduleCricketDetailsBinding.rlOver.setVisibility(View.VISIBLE);
 //        }else{
@@ -222,7 +226,7 @@ public class ScheduleCricketDetailsActivity extends AppCompatActivity {
                     activityScheduleCricketDetailsBinding.dropSelectOver.setCompoundDrawableTintList(mContext.getResources().getColorStateList(R.color.black));
                 }
 
-                activityScheduleCricketDetailsBinding.mbCreate.setVisibility(View.VISIBLE);
+                activityScheduleCricketDetailsBinding.mbSubmitFinal.setVisibility(View.VISIBLE);
             }
 
 
@@ -232,9 +236,50 @@ public class ScheduleCricketDetailsActivity extends AppCompatActivity {
         });
 
 
-        activityScheduleCricketDetailsBinding.mbCreate.setOnClickListener(v -> {
-            startActivity(new Intent(mContext,SubmitCricketDetailsActivity.class).putExtra("FROM","2"));
+        activityScheduleCricketDetailsBinding.mbSubmitFinal.setOnClickListener(v -> {
+
+            if(teamAPlayerCount<11){
+                 Toaster.customToast("Select at least 11 players");
+            }else if(teamBPlayerCount<11){
+                Toaster.customToast("Select at least 11 players");
+            }else{
+                startActivity(new Intent(mContext,SubmitCricketDetailsActivity.class).putExtra("FROM","2"));
+            }
+
+
         });
+
+        activityScheduleCricketDetailsBinding.rlTeamLogo.setOnClickListener(view -> {
+            team2 = 0;
+            team1 = 1;
+            mContext.startActivity(new Intent(mContext, CustomeCameraActivity.class)
+                    .putExtra("FROM","ScheduleCricketDetailsActivity"));
+        });
+
+        activityScheduleCricketDetailsBinding.rlTeamLogo2.setOnClickListener(view -> {
+            team1 = 0;
+            team2 = 2;
+            mContext.startActivity(new Intent(mContext, CustomeCameraActivity.class)
+                    .putExtra("FROM","ScheduleCricketDetailsActivity"));
+        });
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(image_uri!=null){
+
+            if(team1==1){
+                activityScheduleCricketDetailsBinding.ivTeamLogo.setImageURI(image_uri);
+                image_uri = null;
+            }else if(team2==2){
+                activityScheduleCricketDetailsBinding.ivTeamLogo2.setImageURI(image_uri);
+                image_uri = null;
+            }
+        }
+
     }
 
 

@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.cricoscore.Adapter.YourTeamListAdapterHorizontal;
 import com.cricoscore.R;
 import com.cricoscore.Utils.Global;
+import com.cricoscore.Utils.Toaster;
 import com.cricoscore.databinding.ActivityTournamentDetailsBinding;
 import com.cricoscore.databinding.ToolbarBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -59,7 +61,8 @@ public class TournamentDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-        toolbarBinding.toolbartext.setText(getResources().getString(R.string.tournament_details));
+        String name = getIntent().getStringExtra("Name") +" Details";
+        toolbarBinding.toolbartext.setText(name);
         toolbarBinding.toolbar.setNavigationOnClickListener(v -> finish());
 
         activityTournamentDetailsBinding.tvInfo.startAnimation((Animation) AnimationUtils.loadAnimation(mContext,R.anim.translate));
@@ -190,7 +193,7 @@ public class TournamentDetailsActivity extends AppCompatActivity {
                 }
 
                 TextView tvSdate = bottomSheetDialog.findViewById(R.id.tv_start_date);
-                tvSdate.setText(Global.convertUTCDateToLocall(date));
+                tvSdate.setText(Global.convertUTCDateToMM(date));
             }, year, month, day);
             picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
             picker.getDatePicker().setMaxDate(twoDaysLater.getTimeInMillis());
@@ -213,7 +216,6 @@ public class TournamentDetailsActivity extends AppCompatActivity {
 
             DatePickerDialog picker = new DatePickerDialog(mActivity, (datePicker, year, month, day) -> {
                 date = year + "-" + (month + 1) + "-" + day;
-
                 try {
                     _currentDate = simpleDateFormat.parse(currentDate);
                     _selectedDate = simpleDateFormat.parse(date);
@@ -223,7 +225,7 @@ public class TournamentDetailsActivity extends AppCompatActivity {
                 }
 
                 TextView tvSdate = bottomSheetDialog.findViewById(R.id.tv_end_date);
-                tvSdate.setText(Global.convertUTCDateToLocall(date));
+                tvSdate.setText(Global.convertUTCDateToMM(date));
             }, year, month, day);
             picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
             picker.getDatePicker().setMaxDate(twoDaysLater.getTimeInMillis());

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_4sdp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/button_bg_top"
+        android:backgroundTint="@color/dark_grey"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_player_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_top"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:visibility="visible">
+
+
+        <RelativeLayout
+            android:id="@+id/rl_select_player"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_select_player_from_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:drawableRight="@drawable/player_icon"
+                android:drawablePadding="@dimen/_5sdp"
+                android:drawableTint="@color/green"
+                android:fontFamily="@font/opensans_semibold"
+                android:gravity="center_vertical"
+                android:text="@string/select_player_from_list"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_10sdp">
+
+            </TextView>
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_select_player"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_team_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_date"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:visibility="visible">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_toLeftOf="@+id/rl_team_logo"
+                        android:orientation="vertical">
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/OutlinedRoundBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Player Name"
+                            android:textColorHint="@color/dark_grey"
+                            app:boxBackgroundColor="@color/white"
+                            app:boxStrokeColor="@color/purple_500"
+                            app:hintTextColor="@color/purple_500"
+                            app:startIconDrawable="@drawable/player_icon"
+                            app:startIconTint="@null">
+
+                            <!--this is the actual edit text which takes the input-->
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edit_text_pName"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_35sdp"
+                                android:fontFamily="@font/opensans_regular"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_5sdp"
+                                android:paddingBottom="@dimen/_5sdp"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_10sdp"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/OutlinedRoundBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:hint="Player Mobile Number"
+                            android:textColorHint="@color/dark_grey"
+                            app:boxBackgroundColor="@color/white"
+                            app:boxStrokeColor="@color/purple_500"
+                            app:hintTextColor="@color/purple_500"
+                            app:startIconDrawable="@drawable/phone_android_black_24dp"
+                            app:startIconTint="@null">
+
+                            <!--this is the actual edit text which takes the input-->
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edit_text_pMobile"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_35sdp"
+                                android:fontFamily="@font/opensans_regular"
+                                android:imeOptions="actionNext"
+                                android:inputType="phone"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_5sdp"
+                                android:paddingBottom="@dimen/_5sdp"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_10sdp"
+                                tools:ignore="TouchTargetSizeCheck" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_team_logo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/_5sdp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_team_logo"
+                            android:layout_width="@dimen/_60sdp"
+                            android:layout_height="@dimen/_60sdp"
+                            android:src="@drawable/placeholder_user"
+                            tools:ignore="ImageContrastCheck" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="-20dp"
+                            android:layout_toEndOf="@+id/iv_team_logo"
+                            android:background="@drawable/circle_camera"
+                            android:backgroundTint="@color/light_gray"
+                            android:padding="@dimen/_4sdp">
+
+                            <ImageView
+                                android:layout_width="@dimen/_18sdp"
+                                android:layout_height="@dimen/_18sdp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_add_a_photo_black_24dp" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <!--state-->
+                <com.cricoscore.Utils.SelectTournamentType
+                    android:id="@+id/drop_pType"
+                    style="@style/formDropDown"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@drawable/editboxx"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:hint="Select Player Type"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/dark_grey"
+                    android:textSize="@dimen/_10sdp" />
+                <!--city-->
+                <com.cricoscore.Utils.SelectTournamentType
+                    android:id="@+id/drop_pRole"
+                    style="@style/formDropDown"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:background="@drawable/editboxx"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:hint="Select Player Role"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/dark_grey"
+                    android:textSize="@dimen/_10sdp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mb_submit"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:backgroundTint="@color/purple_500"
+                    android:fontFamily="@font/opensans_bold"
+                    android:text="@string/submit"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_8sdp"
+                    app:cornerRadius="@dimen/_50sdp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
