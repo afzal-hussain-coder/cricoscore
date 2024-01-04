@@ -37,6 +37,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
@@ -50,8 +51,8 @@
                     android:id="@+id/tvTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="9:30 AM"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:text="9:30 AM"
                     android:textColor="@color/purple_700"
                     android:textSize="@dimen/_10sdp"
                     app:fontFamily="@font/opensans_semibold" />
@@ -76,76 +77,191 @@
 
         </RelativeLayout>
 
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvTName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:padding="@dimen/_5sdp"
+                android:text="Tournament Name"
+                android:textColor="@color/dark_grey"
+                android:textSize="@dimen/_8sdp"
+                app:fontFamily="@font/opensans_semibold" />
+            <TextView
+                android:id="@+id/tvLiveStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingBottom="@dimen/_2sdp"
+                android:paddingStart="@dimen/_7sdp"
+                android:paddingEnd="@dimen/_7sdp"
+                android:background="@drawable/live_bg"
+                android:text="@string/live"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_8sdp"
+                app:fontFamily="@font/opensans_semibold" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/image1"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/placeholder_user"
+                    tools:ignore="ImageContrastCheck" />
+
+                <TextView
+                    android:id="@+id/tvTeamName1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:text="Chennai Super King"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    app:fontFamily="@font/opensans_semibold" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvTeamName1Score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:text="47/1"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    app:fontFamily="@font/opensans_semibold" />
+
+                <TextView
+                    android:id="@+id/tvTeamName1Over"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(4.2 Ov)"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_8sdp"
+                    app:fontFamily="@font/opensans_semibold" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/image2"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/placeholder_user"
+                    tools:ignore="ImageContrastCheck" />
+
+                <TextView
+                    android:id="@+id/tvTeamName2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:text="Royal Challengers Bangalore"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    app:fontFamily="@font/opensans_semibold" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvTeamName2Score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:text="9/0"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp"
+                    app:fontFamily="@font/opensans_semibold" />
+
+                <TextView
+                    android:id="@+id/tvTeamName2Over"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(0.1 Ov)"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_8sdp"
+                    app:fontFamily="@font/opensans_semibold" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="#F0F0F0"/>
         <TextView
-            android:id="@+id/tvTName"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvFinalScore"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:padding="@dimen/_5sdp"
-            android:text="Tournament Name"
-            android:textColor="@color/dark_grey"
+            android:padding="@dimen/_10sdp"
+            android:text="Chennai Super King require 39 runs in 58 balls (Drinks)"
+            android:textColor="@color/purple_700"
             android:textSize="@dimen/_8sdp"
-            app:fontFamily="@font/opensans_semibold" />
+            app:fontFamily="@font/opensans_bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:orientation="horizontal">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/image1"
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
-                android:src="@drawable/placeholder_user"
-                tools:ignore="ImageContrastCheck" />
-
-            <TextView
-                android:id="@+id/tvTeamName1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:text="Chennai Super King"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_10sdp"
-                app:fontFamily="@font/opensans_semibold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:orientation="horizontal">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/image2"
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
-                android:src="@drawable/placeholder_user"
-                tools:ignore="ImageContrastCheck" />
-
-            <TextView
-                android:id="@+id/tvTeamName2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:text="Royal Challengers Bangalore"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_10sdp"
-                app:fontFamily="@font/opensans_semibold" />
-
-        </LinearLayout>
 
     </LinearLayout>
     <!-- </com.google.android.material.card.MaterialCardView>-->

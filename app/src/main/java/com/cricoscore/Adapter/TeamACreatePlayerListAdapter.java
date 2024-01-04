@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricoscore.R;
+import com.cricoscore.Utils.Toaster;
 
 public class TeamACreatePlayerListAdapter extends RecyclerView.Adapter<TeamACreatePlayerListAdapter.MyViewHolder>{
     Context mContext;
@@ -32,13 +33,19 @@ public class TeamACreatePlayerListAdapter extends RecyclerView.Adapter<TeamACrea
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.cb.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked==true){
-                posClick++;
-                itemClickListener.checkedItem(posClick);
+
+            if(posClick>11){
+                Toaster.customToast("Select only 11 players");
             }else{
-                posClick--;
-                itemClickListener.checkedItem(posClick);
+                if(isChecked==true){
+                    posClick++;
+                    itemClickListener.checkedItem(posClick);
+                }else{
+                    posClick--;
+                    itemClickListener.checkedItem(posClick);
+                }
             }
+
         });
     }
 

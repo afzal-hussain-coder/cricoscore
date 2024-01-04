@@ -107,6 +107,16 @@ public class AuthData {
     private String is_mobile_verified = "";
     private String is_email_verified = "";
 
+    public int getEmail_code() {
+        return email_code;
+    }
+
+    public void setEmail_code(int email_code) {
+        this.email_code = email_code;
+    }
+
+    private int email_code;
+
     public int getOtp() {
         return otp;
     }

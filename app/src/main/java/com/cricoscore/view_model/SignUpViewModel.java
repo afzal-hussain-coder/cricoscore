@@ -35,7 +35,7 @@ public class SignUpViewModel extends ViewModel {
 
                     AuthData authData = signUpResponse.getData();
                     SessionManager.saveUserId(authData.getUser_id());
-                    SessionManager.saveOtp(authData.getOtp());
+                    SessionManager.saveOtp(authData.getEmail_code());
                     SessionManager.savePhone(authData.getPhone_number());
                     mSignUpResultMutableData.postValue(signUpResponse.getStatus());
                 } else mSignUpResultMutableData.postValue(false);

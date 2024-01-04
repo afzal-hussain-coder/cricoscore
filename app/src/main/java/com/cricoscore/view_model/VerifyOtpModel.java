@@ -20,6 +20,7 @@ public class VerifyOtpModel extends ViewModel {
         mSignUpResultMutableData.postValue(false);
         verifyOtpRepository = new VerifyOtpRepository();
     }
+
     public void verifyOtp(int user_id, int otp) {
         mProgressMutableData.postValue(View.VISIBLE);
 

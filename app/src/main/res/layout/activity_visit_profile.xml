@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.VisitProfileActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:orientation="vertical">
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:id="@+id/middle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_30sdp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_pic"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/doted_circle"
+                        android:padding="@dimen/_4sdp"
+                        android:src="@drawable/placeholder_user" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="-30dp"
+                        android:layout_marginTop="@dimen/_55sdp"
+                        android:layout_toEndOf="@+id/profile_pic"
+                        android:background="@drawable/circle_camera"
+                        android:padding="@dimen/_4sdp">
+
+                        <ImageView
+                            android:layout_width="@dimen/_18sdp"
+                            android:layout_height="@dimen/_18sdp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_add_a_photo_black_24dp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/li_signUp_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="@dimen/_20sdp"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/filledTextField_username_signup"
+                        style="@style/OutlinedRoundBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Username"
+                        android:textColorHint="@color/dark_grey"
+                        app:boxBackgroundColor="@color/white"
+                        app:boxStrokeColor="@color/green"
+                        app:endIconTint="@color/dark_grey"
+                        app:errorEnabled="false"
+                        app:errorTextAppearance="@style/ErrorTextAppearance"
+                        app:hintTextAppearance="@style/HintTextAppearance"
+                        app:hintTextColor="@color/green"
+                        app:startIconDrawable="@drawable/account_circle_black_24dp"
+                        app:startIconTint="@color/dark_grey">
+
+                        <!--this is the actual edit text which takes the input-->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_text_username_signup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensans_regular"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:textColor="@color/black" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/filledTextField_firstname"
+                        style="@style/OutlinedRoundBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Firstname"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:textColorHint="@color/dark_grey"
+                        app:boxBackgroundColor="@color/white"
+                        app:boxStrokeColor="@color/green"
+                        app:endIconTint="@color/dark_grey"
+                        app:errorEnabled="false"
+                        app:errorTextAppearance="@style/ErrorTextAppearance"
+                        app:hintTextAppearance="@style/HintTextAppearance"
+                        app:hintTextColor="@color/green"
+                        app:startIconDrawable="@drawable/account_circle_black_24dp"
+                        app:startIconTint="@color/dark_grey">
+
+                        <!--this is the actual edit text which takes the input-->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_text_firstname"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensans_regular"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:textColor="@color/black" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/filledTextField_lastname"
+                        style="@style/OutlinedRoundBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Lastname"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:textColorHint="@color/dark_grey"
+                        app:boxBackgroundColor="@color/white"
+                        app:boxStrokeColor="@color/green"
+                        app:endIconTint="@color/dark_grey"
+                        app:errorEnabled="false"
+                        app:errorTextAppearance="@style/ErrorTextAppearance"
+                        app:hintTextAppearance="@style/HintTextAppearance"
+                        app:hintTextColor="@color/green"
+                        app:startIconDrawable="@drawable/account_circle_black_24dp"
+                        app:startIconTint="@color/dark_grey">
+
+                        <!--this is the actual edit text which takes the input-->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_text_lastname"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensans_regular"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:textColor="@color/black" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/filledTextField_email_signup"
+                        style="@style/OutlinedRoundBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:hint="Email id"
+                        android:textColorHint="@color/dark_grey"
+                        app:boxBackgroundColor="@color/white"
+                        app:boxStrokeColor="@color/green"
+                        app:endIconTint="@color/dark_grey"
+                        app:errorEnabled="false"
+                        app:errorTextAppearance="@style/ErrorTextAppearance"
+                        app:hintTextAppearance="@style/HintTextAppearance"
+                        app:hintTextColor="@color/green"
+                        app:startIconDrawable="@drawable/mail_outline_black_24dp"
+                        app:startIconTint="@color/dark_grey">
+
+                        <!--this is the actual edit text which takes the input-->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_text_email_signup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensans_regular"
+                            android:imeOptions="actionNext"
+                            android:inputType="textEmailAddress"
+                            android:maxLines="1"
+                            android:textColor="@color/black" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/filledTextField_phone_signup"
+                        style="@style/OutlinedRoundBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:hint="Mobile number"
+                        android:textColorHint="@color/dark_grey"
+                        app:boxBackgroundColor="@color/white"
+                        app:boxStrokeColor="@color/green"
+                        app:endIconTint="@color/dark_grey"
+                        app:errorTextAppearance="@style/ErrorTextAppearance"
+                        app:hintTextAppearance="@style/HintTextAppearance"
+                        app:hintTextColor="@color/green"
+                        app:startIconDrawable="@drawable/phone_android_black_24dp"
+                        app:startIconTint="@color/dark_grey">
+
+                        <!--this is the actual edit text which takes the input-->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_text_phone_signup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:digits="0123456789"
+                            android:fontFamily="@font/opensans_regular"
+                            android:imeOptions="actionNext"
+                            android:inputType="phone"
+                            android:maxLength="10"
+                            android:maxLines="1"
+                            android:textColor="@color/black" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/filledTextField_password_signup"
+                        style="@style/OutlinedRoundBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:hint="Password"
+                        android:textColorHint="@color/dark_grey"
+                        app:boxBackgroundColor="@color/white"
+                        app:boxStrokeColor="@color/green"
+                        app:endIconDrawable="@drawable/visibility_off_black_24dp"
+                        app:endIconMode="custom"
+                        app:endIconTint="@color/dark_grey"
+                        app:errorTextAppearance="@style/ErrorTextAppearance"
+                        app:hintTextAppearance="@style/HintTextAppearance"
+                        app:hintTextColor="@color/green"
+                        app:startIconDrawable="@drawable/password_black_24dp"
+                        app:startIconTint="@color/dark_grey">
+
+                        <!--this is the actual edit text which takes the input-->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_text_password_signup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensans_regular"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPassword"
+                            android:maxLines="1"
+                            android:textColor="@color/black" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/filledTextField_con_password_signup"
+                        style="@style/OutlinedRoundBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:hint="Confirm Password"
+                        android:textColorHint="@color/dark_grey"
+                        app:boxBackgroundColor="@color/white"
+                        app:boxStrokeColor="@color/green"
+                        app:endIconDrawable="@drawable/visibility_off_black_24dp"
+                        app:endIconMode="custom"
+                        app:endIconTint="@color/dark_grey"
+                        app:errorTextAppearance="@style/ErrorTextAppearance"
+                        app:hintTextAppearance="@style/HintTextAppearance"
+                        app:hintTextColor="@color/green"
+                        app:startIconDrawable="@drawable/password_black_24dp"
+                        app:startIconTint="@color/dark_grey">
+
+                        <!--this is the actual edit text which takes the input-->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_text_con_password_signup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensans_regular"
+                            android:imeOptions="actionDone"
+                            android:inputType="textPassword"
+                            android:maxLines="1"
+                            android:textColor="@color/black" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/mb_submit"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:backgroundTint="@color/purple_500"
+                        android:fontFamily="@font/opensans_bold"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:text="@string/submit"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10sdp"
+                        app:cornerRadius="@dimen/_50sdp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+
+</RelativeLayout>

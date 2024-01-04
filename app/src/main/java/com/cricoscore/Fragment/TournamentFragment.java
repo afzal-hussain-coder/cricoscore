@@ -82,11 +82,11 @@ public class TournamentFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         if(image_uri!=null){
             iv_team_logo.setImageURI(image_uri);
             image_uri = null;
         }
-
 
     }
 

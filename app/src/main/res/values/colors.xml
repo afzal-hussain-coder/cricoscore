@@ -20,8 +20,10 @@
     <color name="black_semi_transparent">#B1000000</color>
     <color name="black_light_tranparent">#20000000</color>
     <color name="dim_sky">#246596</color>
+    <color name="light_red">#993232</color>
+    <color name="lemon_color">#bfff00</color>
 
-   <!-- #00000 original color code by Ankush-->
+    <!-- #00000 original color code by Ankush-->
 
 
 </resources>

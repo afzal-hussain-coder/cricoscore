@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     SelectStatusType drop_pStatus;
     private ArrayList<DataModel> option_status_list = new ArrayList<>();
     String filterTypeStatus="";
+    TextView txt_visit_profile;
 
     UserProfileViewModel userProfileViewModel;
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -151,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        txt_visit_profile = findViewById(R.id.txt_visit_profile);
         txt_nav_name = findViewById(R.id.txt_nav_name);
         drop_pStatus = findViewById(R.id.drop_pStatus);
         option_status_list.add(new DataModel("All"));
@@ -213,6 +215,11 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 tabLayout.selectTab(tabLayout.getTabAt(position));
             }
+        });
+
+        txt_visit_profile.setOnClickListener(view -> {
+            Intent intent = new Intent(mActivity, VisitProfileActivity.class);
+            startActivity(intent);
         });
     }
 

@@ -103,7 +103,7 @@
                             android:layout_marginEnd="@dimen/_5sdp"
                             android:layout_marginBottom="@dimen/_2sdp"
                             android:src="@drawable/cricket_ball"
-                            app:tint="#bfff00" />
+                            app:tint="@color/lemon_color" />
                     </LinearLayout>
 
 

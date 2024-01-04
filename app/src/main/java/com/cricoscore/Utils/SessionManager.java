@@ -25,6 +25,8 @@ public class SessionManager {
     private static String USER_COVER = "USER_COVER";
     private static String IS_MOBILE_VERIFIED = "IS_MOBILE_VERIFIED";
     private static String IS_EMAIL_VERIFIED = "IS_EMAIL_VERIFIED";
+    private static String WWDOTBALL = "WWDOTBALL";
+    private static String WW1SBALL = "WW1SBALL";
 
     public static void save_check_login(Boolean value) {
         SharedPreferencesManager.savePreferenceBoolean(SESSION_CHECK_LOGIN, value);
@@ -129,5 +131,20 @@ public class SessionManager {
     public static String getIsPhoneVerified() {
 
         return SharedPreferencesManager.getPreferenceString(IS_MOBILE_VERIFIED);
+    }
+
+    public static void saveWWDotBoolean(Boolean value) {
+        SharedPreferencesManager.savePreferenceBoolean(WWDOTBALL,value);
+    }
+
+    public static boolean getWWDotBoolean() {
+        return SharedPreferencesManager.getPreferenceBoolean(WWDOTBALL, false);
+    }
+    public static void saveWW1sBoolean(Boolean value) {
+        SharedPreferencesManager.savePreferenceBoolean(WW1SBALL,value);
+    }
+
+    public static boolean getWW1sBoolean() {
+        return SharedPreferencesManager.getPreferenceBoolean(WW1SBALL, false);
     }
 }

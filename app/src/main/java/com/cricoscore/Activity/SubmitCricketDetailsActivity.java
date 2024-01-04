@@ -57,20 +57,22 @@ public class SubmitCricketDetailsActivity extends AppCompatActivity {
 
         toolbarBinding.toolbartext.setText(mContext.getResources().getString(R.string.match_details));
         toolbarBinding.toolbar.setNavigationOnClickListener(v -> {
-            if(getIntent().getStringExtra("FROM").equalsIgnoreCase("1")){
-                startActivity(new Intent(mContext,ScheduleCricketDetailsActivity.class));
+            if(getIntent().getStringExtra("FROM").equalsIgnoreCase("2")){
+                finish();
             }else{
+                //startActivity(new Intent(mContext,ScheduleCricketDetailsActivity.class));
                 finish();
             }
         });
 
         toolbarBinding.imgEdit.setVisibility(View.VISIBLE);
         toolbarBinding.imgEdit.setOnClickListener(v -> {
+            //startActivity(new Intent(mContext,ScheduleCricketDetailsActivity.class));
 
-            if(getIntent().getStringExtra("FROM").equalsIgnoreCase("1")){
-                startActivity(new Intent(mContext,ScheduleCricketDetailsActivity.class));
+            if(getIntent().getStringExtra("FROM").equalsIgnoreCase("2")){
+               finish();
             }else{
-                finish();
+                startActivity(new Intent(mContext,ScheduleCricketDetailsActivity.class));
             }
 
 
@@ -185,7 +187,7 @@ public class SubmitCricketDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(getIntent().getStringExtra("FROM").equalsIgnoreCase("1")){
+        if(getIntent().getStringExtra("FROM").equalsIgnoreCase("2")){
             startActivity(new Intent(mContext,ScheduleCricketDetailsActivity.class));
         }else{
             finish();

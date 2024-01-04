@@ -28,7 +28,7 @@ public interface ApiRequest {
     @POST(Global.SIGNUP)
     Call<SignUpResponse> getSignUp(@Body SignUpBody signUpBody);
 
-    @POST(Global.VERIFY_PHONE_OTP)
+    @POST(Global.VERIFY_OTP)
     Call<SignUpResponse> getVerifyOtp(@Body VerifyOtpBody verifyOtpBody);
 
     @POST(Global.VERIFY_EMAIL_OTP)

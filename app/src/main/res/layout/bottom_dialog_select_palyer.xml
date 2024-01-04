@@ -86,6 +86,49 @@
 
     </LinearLayout>
 
+    <!--First batting style-->
+    <LinearLayout
+        android:id="@+id/liBattingStyle1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/opensans_semibold"
+            android:text="@string/batting_style"
+            android:textColor="@color/purple_700"
+            android:textSize="@dimen/_14sdp">
+
+
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/opensans_regular"
+            android:text="What's the style of Ravis Kumar"
+            android:textColor="@color/dim_grey"
+            android:textSize="@dimen/_14sdp">
+
+
+        </TextView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvBattingStyle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -138,6 +181,48 @@
 
     </LinearLayout>
 
+    <!--First batting2 style-->
+    <LinearLayout
+        android:id="@+id/liBattingStyle2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/opensans_semibold"
+            android:text="@string/batting_style"
+            android:textColor="@color/purple_700"
+            android:textSize="@dimen/_14sdp">
+
+
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/opensans_regular"
+            android:text="What's the style of Ravis Kumar"
+            android:textColor="@color/dim_grey"
+            android:textSize="@dimen/_14sdp">
+
+
+        </TextView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvBattingStyle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -186,6 +271,48 @@
                 android:textColorHint="@color/dark_grey"
                 android:textSize="@dimen/_10sdp" />
         </RelativeLayout>
+
+    </LinearLayout>
+
+    <!--First bowling style-->
+    <LinearLayout
+        android:id="@+id/liBowlingStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/opensans_semibold"
+            android:text="@string/bowling_stayle"
+            android:textColor="@color/purple_700"
+            android:textSize="@dimen/_14sdp">
+
+
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/opensans_regular"
+            android:text="What's the style of Ravis Kumar"
+            android:textColor="@color/dim_grey"
+            android:textSize="@dimen/_14sdp">
+
+
+        </TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvBowlingStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 

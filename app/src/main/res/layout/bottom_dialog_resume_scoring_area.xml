@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <View
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_4sdp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@color/dim_sky"></View>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:fontFamily="@font/opensans_bold"
+        android:gravity="center_horizontal"
+        android:text="@string/what_would_you_like_to_do"
+        android:textColor="@color/purple_700"
+        android:textSize="@dimen/_14sdp">
+
+
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/rb_resumeScoring"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/opensans_semibold"
+            android:text="@string/resume_scoring"></RadioButton>
+        <RadioButton
+            android:id="@+id/rb_startStreaming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/opensans_semibold"
+            android:text="@string/start_streaming"></RadioButton>
+
+        <RadioButton
+            android:id="@+id/rbViewFullScorecard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/opensans_semibold"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/view_full_scorecard"></RadioButton>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_10sdp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mb_save"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:backgroundTint="#246596"
+            android:fontFamily="@font/opensans_bold"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10sdp"
+            app:cornerRadius="@dimen/_50sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mb_cancel"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:backgroundTint="@color/verified_user_color"
+            android:fontFamily="@font/opensans_bold"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10sdp"
+            app:cornerRadius="@dimen/_50sdp" />
+    </RelativeLayout>
+
+
+</LinearLayout>

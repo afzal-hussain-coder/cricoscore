@@ -6,25 +6,18 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.InsetDrawable;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.text.Html;
-import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Base64;
 import android.util.Log;
@@ -32,13 +25,11 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Spinner;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
 import com.cricoscore.R;
-import com.google.android.gms.dynamic.SupportFragmentWrapper;
+import com.cricoscore.model.BattingStyleModel;
+import com.cricoscore.model.ShortAreaSubCategoryModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
@@ -49,10 +40,10 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -65,6 +56,8 @@ public class Global {
     /*API REQUEST END POINTS*/
     public static final String SIGNUP ="singup";
     public static final String VERIFY_PHONE_OTP ="user/verifyPhoneOTP";
+    public static final String VERIFY_OTP ="user/verifyOTP";
+
     public static final String LOGIN ="login";
     public static final String USER_PROFILE ="/user/profile/";
     public static final String LOGIN_THROUGH_OTP ="loginWithMobile";
@@ -765,5 +758,139 @@ public class Global {
     }
 
 
+
+    //Todo MidWicket List
+    public static ArrayList<ShortAreaSubCategoryModel> getMidWicketSubShortArea(Context mContext){
+        ArrayList<ShortAreaSubCategoryModel> midWicketList = new ArrayList<>();
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.flick),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.pull),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.lofted_shot),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.slog_sweep),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.inside_edge),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.punch),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.helicopter),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.defence),R.drawable.batting));
+
+        return  midWicketList;
+    }
+
+    //Todo LongOn List
+    public static ArrayList<ShortAreaSubCategoryModel> getLongOnSubShortArea(Context mContext){
+        ArrayList<ShortAreaSubCategoryModel> midWicketList = new ArrayList<>();
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.straight_drive),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.on_drive),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.lofted_shot),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.punch),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.helicopter),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.defence),R.drawable.batting));
+
+        return  midWicketList;
+    }
+
+    //Todo LongOFF List
+    public static ArrayList<ShortAreaSubCategoryModel> getLongOffSubShortArea(Context mContext){
+        ArrayList<ShortAreaSubCategoryModel> midWicketList = new ArrayList<>();
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.straight_drive),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.off_drive),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.lofted_shot),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.punch),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.helicopter),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.defence),R.drawable.batting));
+
+        return  midWicketList;
+    }
+
+    //Todo DeepCover List
+    public static ArrayList<ShortAreaSubCategoryModel> getDeepCoverSubShortArea(Context mContext){
+        ArrayList<ShortAreaSubCategoryModel> midWicketList = new ArrayList<>();
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.drive),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.back_foot_punch),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.inside_out),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.punch),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.switch_hit),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.defence),R.drawable.batting));
+
+        return  midWicketList;
+    }
+
+    //Todo DeepPoint List
+    public static ArrayList<ShortAreaSubCategoryModel> getDeepPointSubShortArea(Context mContext){
+        ArrayList<ShortAreaSubCategoryModel> midWicketList = new ArrayList<>();
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.late_cut),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.back_foot_punch),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.cut_shot),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.square_drive),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.switch_hit),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.defence),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.upper_cut),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.reverse_sweep),R.drawable.batting));
+
+
+        return  midWicketList;
+    }
+
+    //Todo ThirdMan List
+    public static ArrayList<ShortAreaSubCategoryModel> getThirdManSubShortArea(Context mContext){
+        ArrayList<ShortAreaSubCategoryModel> midWicketList = new ArrayList<>();
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.late_cut),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.outside_edge),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.top_edge),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.reverse_scoop),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.upper_cut),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.reverse_sweep),R.drawable.batting));
+
+
+        return  midWicketList;
+    }
+
+    //Todo DeepFineLeg List
+    public static ArrayList<ShortAreaSubCategoryModel> getDeepFineLegSubShortArea(Context mContext){
+        ArrayList<ShortAreaSubCategoryModel> midWicketList = new ArrayList<>();
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.leg_glance),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.inside_edge),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.top_edge),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.pull),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.hook),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.dilscoop_ramp_shot),R.drawable.batting));
+
+
+        return  midWicketList;
+    }
+
+    //Todo DeepSquareLeg List
+    public static ArrayList<ShortAreaSubCategoryModel> getDeepSquareLegSubShortArea(Context mContext){
+        ArrayList<ShortAreaSubCategoryModel> midWicketList = new ArrayList<>();
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.flick),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.inside_edge),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.top_edge),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.defence),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.sweep),R.drawable.batting));
+        midWicketList.add(new ShortAreaSubCategoryModel(mContext.getResources().getString(R.string.dilscoop_ramp_shot),R.drawable.batting));
+
+
+        return  midWicketList;
+    }
+
+    //Todo BowlingStyle List
+    public static ArrayList<String> getBowlingStyleList(Context mContext){
+        ArrayList<String> midWicketList = new ArrayList<>();
+        midWicketList.add(mContext.getResources().getString(R.string.right_arm_fast));
+        midWicketList.add(mContext.getResources().getString(R.string.right_arm_midium));
+        midWicketList.add(mContext.getResources().getString(R.string.left_arm_fast));
+        midWicketList.add(mContext.getResources().getString(R.string.left_arm_midium));
+        midWicketList.add(mContext.getResources().getString(R.string.slow_left_arm_orthodox));
+        midWicketList.add(mContext.getResources().getString(R.string.slow_leftc_arm_chinaman));
+        midWicketList.add(mContext.getResources().getString(R.string.right_arm_off_break));
+        midWicketList.add(mContext.getResources().getString(R.string.right_arm_leg_break));
+        return  midWicketList;
+    }
+
+    //Todo BattingStyle List
+    public static ArrayList<BattingStyleModel> getBattingStyleList(Context mContext){
+        ArrayList<BattingStyleModel> midWicketList = new ArrayList<>();
+        midWicketList.add(new BattingStyleModel(mContext.getResources().getString(R.string.left_hand_bat),R.drawable.batting));
+        midWicketList.add(new BattingStyleModel(mContext.getResources().getString(R.string.right_hand_bat),R.drawable.batting));
+        return  midWicketList;
+    }
 
 }

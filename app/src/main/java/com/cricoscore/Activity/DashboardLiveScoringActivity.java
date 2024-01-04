@@ -1,37 +1,59 @@
 package com.cricoscore.Activity;
 
+import androidx.activity.OnBackPressedDispatcherKt;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.window.OnBackInvokedDispatcher;
 
 import com.cricoscore.Adapter.BatsmanScorecardAdapter;
+import com.cricoscore.Adapter.BattingStyleAdapter;
 import com.cricoscore.Adapter.BowlerScorecardAdapter;
+import com.cricoscore.Adapter.BowlingStyleAdapter;
 import com.cricoscore.Adapter.ScoringBallAdapter;
 import com.cricoscore.Adapter.ScoringRunAdapter;
+import com.cricoscore.Adapter.ShortAreaSubCategoryAdapter;
 import com.cricoscore.R;
 import com.cricoscore.Utils.DataModel;
+import com.cricoscore.Utils.Global;
 import com.cricoscore.Utils.SelectStatusType;
+import com.cricoscore.Utils.SessionManager;
 import com.cricoscore.Utils.Toaster;
 import com.cricoscore.databinding.ActivityDashboardLiveScoringBinding;
 import com.cricoscore.databinding.BottomStartscoringDialogSelectPalyerBinding;
 import com.cricoscore.databinding.DashboardToolbarBinding;
 import com.cricoscore.model.BallModel;
 import com.cricoscore.model.RunModel;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -46,21 +68,21 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
     Activity mActivity;
 
     TextToSpeech textToSpeech;
-    int typedRun=0;
+    int typedRun = 0;
     String wayOfOut = "";
-    int totalOver=10;
-    int increaseOver =0;
-    int increaseBall=0;
-    float typedBall=0.1f;
+    int totalOver = 14;
+    int increaseOver = 0;
+    int increaseBall = 0;
+    float typedBall = 0.1f;
     ScoringBallAdapter scoringBallAdapter;
     ScoringRunAdapter scoringRunAdapter;
-    ArrayList<BallModel>listBall = new ArrayList<>();
-    ArrayList<RunModel>listRun = new ArrayList<>();
+    ArrayList<BallModel> listBall = new ArrayList<>();
+    ArrayList<RunModel> listRun = new ArrayList<>();
     BallModel ballModel;
     RunModel runModel;
     boolean isEmptyRun;
     boolean isBallLayoutVisible;
-//    int WDIncrease =0;
+    //    int WDIncrease =0;
 //    int  WDIncrease2=0;
 //    int  WDIncrease3=0;
 //    int  WDIncrease4=0;
@@ -80,6 +102,10 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
 //    int xtra6=0;
     int number = 1;
 
+    String bowlingStyleType = "";
+    String battingStyle = "";
+    boolean checkBoxStatus;
+    boolean checkBoxDitBallStatus;
 
 
     @Override
@@ -90,6 +116,7 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
 
         mContext = this;
         mActivity = this;
+
 
         textToSpeech = new TextToSpeech(getApplicationContext(), i -> {
 
@@ -109,8 +136,9 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         toolbarBinding.toolbartext.setText("CHENNAI SUPER KING VS ROYAL CHALLENGERS");
         toolbarBinding.toolbardahsboard.setNavigationOnClickListener(v ->
                 {
+                    showBottomStopMatchSheetDialog();
                     TossActivity.setIsSaveButtonStatus(true);
-                    finish();
+                    // finish();
                 }
 
         );
@@ -121,8 +149,6 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         activityDashboardLiveScoringBinding.imgBatting.startAnimation(animationBlink);
         activityDashboardLiveScoringBinding.imgBowling.startAnimation(animationBlink);
         activityDashboardLiveScoringBinding.tvLive.startAnimation(animationBlink);
-
-
 
 
         BottomStartscoringDialogSelectPalyerBinding bottomStartscoringDialogSelectPalyerBinding
@@ -161,11 +187,11 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         activityDashboardLiveScoringBinding.rvBatsmanTeam1.setAdapter(new BatsmanScorecardAdapter(mContext));
 
         activityDashboardLiveScoringBinding.rlTeam1Details.setOnClickListener(v -> {
-            if(activityDashboardLiveScoringBinding.liTeam1Details.getVisibility()==View.GONE){
+            if (activityDashboardLiveScoringBinding.liTeam1Details.getVisibility() == View.GONE) {
                 activityDashboardLiveScoringBinding.liTeam1Details.setVisibility(View.VISIBLE);
                 activityDashboardLiveScoringBinding.imgDownArrow.setVisibility(View.GONE);
                 activityDashboardLiveScoringBinding.imgUpArrow.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 activityDashboardLiveScoringBinding.liTeam1Details.setVisibility(View.GONE);
                 activityDashboardLiveScoringBinding.imgDownArrow.setVisibility(View.VISIBLE);
                 activityDashboardLiveScoringBinding.imgUpArrow.setVisibility(View.GONE);
@@ -185,11 +211,11 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         activityDashboardLiveScoringBinding.rvBatsmanTeam2.setAdapter(new BatsmanScorecardAdapter(mContext));
 
         activityDashboardLiveScoringBinding.rlTeam2Details.setOnClickListener(v -> {
-            if(activityDashboardLiveScoringBinding.liTeam2Details.getVisibility()==View.GONE){
+            if (activityDashboardLiveScoringBinding.liTeam2Details.getVisibility() == View.GONE) {
                 activityDashboardLiveScoringBinding.liTeam2Details.setVisibility(View.VISIBLE);
                 activityDashboardLiveScoringBinding.imgDownArrow2.setVisibility(View.GONE);
                 activityDashboardLiveScoringBinding.imgUpArrow2.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 activityDashboardLiveScoringBinding.liTeam2Details.setVisibility(View.GONE);
                 activityDashboardLiveScoringBinding.imgDownArrow2.setVisibility(View.VISIBLE);
                 activityDashboardLiveScoringBinding.imgUpArrow2.setVisibility(View.GONE);
@@ -212,6 +238,15 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
             activityDashboardLiveScoringBinding.tvScorecard.setBackgroundColor(getResources().getColor(R.color.dim_sky));
         });
 
+        if (getIntent() != null) {
+            if (getIntent().getStringExtra("FROM").equalsIgnoreCase("SCORECARD")) {
+                activityDashboardLiveScoringBinding.liScorecard.setVisibility(View.VISIBLE);
+                activityDashboardLiveScoringBinding.rlStartScoring.setVisibility(View.GONE);
+                activityDashboardLiveScoringBinding.tvStartScoring.setBackgroundColor(getResources().getColor(R.color.verified_user_color));
+                activityDashboardLiveScoringBinding.tvScorecard.setBackgroundColor(getResources().getColor(R.color.dim_sky));
+            }
+        }
+
 
     }
 
@@ -221,6 +256,29 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         bottomSheetDialog.setContentView(R.layout.bottom_dialog_select_palyer);
         if (bottomSheetDialog.getWindow() != null)
             bottomSheetDialog.getWindow().setDimAmount(0);
+        bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
+
+        LinearLayout liBattingStyle1 = bottomSheetDialog.findViewById(R.id.liBattingStyle1);
+        RecyclerView rcvBattingStyle1 = bottomSheetDialog.findViewById(R.id.rcvBattingStyle1);
+
+        rcvBattingStyle1.setLayoutManager(new GridLayoutManager(mContext, 2));
+        rcvBattingStyle1.setHasFixedSize(true);
+        rcvBattingStyle1.setAdapter(new BattingStyleAdapter(mContext, Global.getBattingStyleList(mContext), value -> {
+            battingStyle = value;
+
+        }));
+
+        LinearLayout liBattingStyle2 = bottomSheetDialog.findViewById(R.id.liBattingStyle2);
+        RecyclerView rcvBattingStyle2 = bottomSheetDialog.findViewById(R.id.rcvBattingStyle2);
+
+        rcvBattingStyle2.setLayoutManager(new GridLayoutManager(mContext, 2));
+        rcvBattingStyle2.setHasFixedSize(true);
+        rcvBattingStyle2.setAdapter(new BattingStyleAdapter(mContext, Global.getBattingStyleList(mContext), value -> {
+            battingStyle = value;
+
+        }));
+
+
         ArrayList<DataModel> option_status_list = new ArrayList<>();
         option_status_list.add(new DataModel("Ahuja, KS"));
         option_status_list.add(new DataModel("Ashwin, R"));
@@ -308,6 +366,19 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         bottomSheetDialog.setContentView(R.layout.bottom_dialog_select_palyer);
         if (bottomSheetDialog.getWindow() != null)
             bottomSheetDialog.getWindow().setDimAmount(0);
+        bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
+
+        LinearLayout liBattingStyle1 = bottomSheetDialog.findViewById(R.id.liBattingStyle1);
+        RecyclerView rcvBattingStyle1 = bottomSheetDialog.findViewById(R.id.rcvBattingStyle1);
+
+        rcvBattingStyle1.setLayoutManager(new GridLayoutManager(mContext, 2));
+        rcvBattingStyle1.setHasFixedSize(true);
+        rcvBattingStyle1.setAdapter(new BattingStyleAdapter(mContext, Global.getBattingStyleList(mContext), value -> {
+            battingStyle = value;
+
+        }));
+
+
         ArrayList<DataModel> option_status_list = new ArrayList<>();
         option_status_list.add(new DataModel("Ahuja, KS"));
         option_status_list.add(new DataModel("Ashwin, R"));
@@ -329,6 +400,8 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
             public void onClickDone(String name) {
                 activityDashboardLiveScoringBinding.rlBattingPlayer1.setVisibility(View.VISIBLE);
                 activityDashboardLiveScoringBinding.tvBatsmanName.setText(name);
+                liBattingStyle1.setVisibility(View.VISIBLE);
+
 
             }
 
@@ -345,6 +418,7 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
             bottomSheetDialog.hide();
         });
         bottomSheetDialog.findViewById(R.id.mb_save).setOnClickListener(v -> {
+            liBattingStyle1.setVisibility(View.GONE);
             bottomSheetDialog.hide();
         });
         TextView tv_header = bottomSheetDialog.findViewById(R.id.tv_header);
@@ -362,6 +436,18 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         bottomSheetDialog.setContentView(R.layout.bottom_dialog_select_palyer);
         if (bottomSheetDialog.getWindow() != null)
             bottomSheetDialog.getWindow().setDimAmount(0);
+        bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
+
+        LinearLayout liBattingStyle2 = bottomSheetDialog.findViewById(R.id.liBattingStyle2);
+        RecyclerView rcvBattingStyle2 = bottomSheetDialog.findViewById(R.id.rcvBattingStyle2);
+
+        rcvBattingStyle2.setLayoutManager(new GridLayoutManager(mContext, 2));
+        rcvBattingStyle2.setHasFixedSize(true);
+        rcvBattingStyle2.setAdapter(new BattingStyleAdapter(mContext, Global.getBattingStyleList(mContext), value -> {
+            battingStyle = value;
+
+        }));
+
         ArrayList<DataModel> option_status_list = new ArrayList<>();
         option_status_list.add(new DataModel("Ahuja, KS"));
         option_status_list.add(new DataModel("Ashwin, R"));
@@ -382,6 +468,7 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
             public void onClickDone(String name) {
                 activityDashboardLiveScoringBinding.rlBattingPlayer2.setVisibility(View.VISIBLE);
                 activityDashboardLiveScoringBinding.tvBatsmanName2.setText(name);
+                liBattingStyle2.setVisibility(View.VISIBLE);
             }
 
 
@@ -398,6 +485,7 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
             bottomSheetDialog.hide();
         });
         bottomSheetDialog.findViewById(R.id.mb_save).setOnClickListener(v -> {
+            liBattingStyle2.setVisibility(View.GONE);
             bottomSheetDialog.hide();
         });
 
@@ -414,6 +502,19 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         bottomSheetDialog.setContentView(R.layout.bottom_dialog_select_palyer);
         if (bottomSheetDialog.getWindow() != null)
             bottomSheetDialog.getWindow().setDimAmount(0);
+        bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
+
+        LinearLayout liBowlingStyle = bottomSheetDialog.findViewById(R.id.liBowlingStyle);
+        RecyclerView rcvBowlingStyle = bottomSheetDialog.findViewById(R.id.rcvBowlingStyle);
+
+        rcvBowlingStyle.setLayoutManager(new GridLayoutManager(mContext, 3));
+        rcvBowlingStyle.setHasFixedSize(true);
+        rcvBowlingStyle.setAdapter(new BowlingStyleAdapter(mContext, Global.getBowlingStyleList(mContext), value -> {
+            bowlingStyleType = value;
+
+        }));
+
+
         ArrayList<DataModel> option_status_list = new ArrayList<>();
         option_status_list.add(new DataModel("Ahuja, KS"));
         option_status_list.add(new DataModel("Ashwin, R"));
@@ -474,9 +575,9 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         TextView tv_header = bottomSheetDialog.findViewById(R.id.tv_header);
 
         if (!name.isEmpty()) {
-            if(name.equalsIgnoreCase("ChangeBowler")){
+            if (name.equalsIgnoreCase("ChangeBowler")) {
                 tv_header.setText("Change Bowler");
-            }else{
+            } else {
                 drop_tvSelectBowler.setText(name);
                 tv_header.setText("Replace Bowler");
             }
@@ -493,6 +594,7 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
             public void onClickDone(String name) {
                 activityDashboardLiveScoringBinding.rlBowlingPlayer.setVisibility(View.VISIBLE);
                 activityDashboardLiveScoringBinding.tvBowlerName.setText(name);
+                liBowlingStyle.setVisibility(View.VISIBLE);
             }
 
 
@@ -502,7 +604,11 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         });
 
         bottomSheetDialog.findViewById(R.id.mb_cancel).setOnClickListener(v -> bottomSheetDialog.hide());
-        bottomSheetDialog.findViewById(R.id.mb_save).setOnClickListener(v -> bottomSheetDialog.hide());
+        bottomSheetDialog.findViewById(R.id.mb_save).setOnClickListener(v -> {
+                    liBowlingStyle.setVisibility(View.GONE);
+                    bottomSheetDialog.hide();
+                }
+        );
 
         bottomSheetDialog.show();
     }
@@ -732,7 +838,6 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
             }
 
 
-
             if (li_nb.getVisibility() == View.VISIBLE) {
                 li_nb.setVisibility(View.GONE);
                 tv_NB.setBackgroundResource(R.drawable.add_post_background_left);
@@ -811,9 +916,15 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         });
 
         tv_zero.setOnClickListener(v -> {
+
+            if(SessionManager.getWWDotBoolean()==false){
+                startActivity(new Intent(mContext, WagonWheelActivity.class));
+            }
+
+
             typedRun = 0;
 
-            typedBall = typedBall+0.1f;
+            typedBall = typedBall + 0.1f;
 
             if (li_wd.getVisibility() == View.VISIBLE) {
                 tv_extraRunWD.setText(String.valueOf(typedRun));
@@ -821,29 +932,28 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
             } else if (li_nb.getVisibility() == View.VISIBLE) {
                 tv_extraNoBallRun.setText(String.valueOf(typedRun));
                 tv_extraNoBulFinalRun.setText(String.valueOf(1 + typedRun));
-            }else{
-                if(tv1Run.getText().toString().isEmpty()){
+            } else {
+                if (tv1Run.getText().toString().isEmpty()) {
                     tv1Run.setText(String.valueOf(typedRun));
                     li2.setVisibility(View.VISIBLE);
                     tv2Ball.setText(String.valueOf(typedBall));
-                } else if(tv2Run.getText().toString().isEmpty()){
+                } else if (tv2Run.getText().toString().isEmpty()) {
                     tv2Run.setText(String.valueOf(typedRun));
                     li3.setVisibility(View.VISIBLE);
                     tv3Ball.setText(String.valueOf(typedBall));
-                }else if(tv3Run.getText().toString().isEmpty()){
+                } else if (tv3Run.getText().toString().isEmpty()) {
                     tv3Run.setText(String.valueOf(typedRun));
                     li4.setVisibility(View.VISIBLE);
                     tv4Ball.setText(String.valueOf(typedBall));
-                }else if(tv4Run.getText().toString().isEmpty()){
+                } else if (tv4Run.getText().toString().isEmpty()) {
                     tv4Run.setText(String.valueOf(typedRun));
                     li5.setVisibility(View.VISIBLE);
                     tv5Ball.setText(String.valueOf(typedBall));
-                } else if(tv5Run.getText().toString().isEmpty()){
+                } else if (tv5Run.getText().toString().isEmpty()) {
                     tv5Run.setText(String.valueOf(typedRun));
                     li6.setVisibility(View.VISIBLE);
                     tv6Ball.setText(String.valueOf(typedBall));
-                }
-                else if(tv6Run.getText().toString().isEmpty()){
+                } else if (tv6Run.getText().toString().isEmpty()) {
                     tv6Run.setText(String.valueOf(typedRun));
                 }
             }
@@ -876,37 +986,40 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         });
 
         tv_one.setOnClickListener(v -> {
+            if(SessionManager.getWW1sBoolean()==false){
+                startActivity(new Intent(mContext, WagonWheelActivity.class));
+            }
+
             typedRun = 1;
-            typedBall = typedBall+0.1f;
+            typedBall = typedBall + 0.1f;
             if (li_wd.getVisibility() == View.VISIBLE) {
                 tv_extraRunWD.setText(String.valueOf(typedRun));
                 tv_finalRunWD.setText(String.valueOf(1 + typedRun));
             } else if (li_nb.getVisibility() == View.VISIBLE) {
                 tv_extraNoBallRun.setText(String.valueOf(typedRun));
                 tv_extraNoBulFinalRun.setText(String.valueOf(1 + typedRun));
-            }else{
-                if(tv1Run.getText().toString().isEmpty()){
+            } else {
+                if (tv1Run.getText().toString().isEmpty()) {
                     tv1Run.setText(String.valueOf(typedRun));
                     li2.setVisibility(View.VISIBLE);
                     tv2Ball.setText(String.valueOf(typedBall));
-                } else if(tv2Run.getText().toString().isEmpty()){
+                } else if (tv2Run.getText().toString().isEmpty()) {
                     tv2Run.setText(String.valueOf(typedRun));
                     li3.setVisibility(View.VISIBLE);
                     tv3Ball.setText(String.valueOf(typedBall));
-                }else if(tv3Run.getText().toString().isEmpty()){
+                } else if (tv3Run.getText().toString().isEmpty()) {
                     tv3Run.setText(String.valueOf(typedRun));
                     li4.setVisibility(View.VISIBLE);
                     tv4Ball.setText(String.valueOf(typedBall));
-                }else if(tv4Run.getText().toString().isEmpty()){
+                } else if (tv4Run.getText().toString().isEmpty()) {
                     tv4Run.setText(String.valueOf(typedRun));
                     li5.setVisibility(View.VISIBLE);
                     tv5Ball.setText(String.valueOf(typedBall));
-                } else if(tv5Run.getText().toString().isEmpty()){
+                } else if (tv5Run.getText().toString().isEmpty()) {
                     tv5Run.setText(String.valueOf(typedRun));
                     li6.setVisibility(View.VISIBLE);
                     tv6Ball.setText(String.valueOf(typedBall));
-                }
-                else if(tv6Run.getText().toString().isEmpty()){
+                } else if (tv6Run.getText().toString().isEmpty()) {
                     tv6Run.setText(String.valueOf(typedRun));
                 }
             }
@@ -939,8 +1052,11 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         });
 
         tv_two.setOnClickListener(v -> {
+            if(SessionManager.getWW1sBoolean()==false){
+                startActivity(new Intent(mContext, WagonWheelActivity.class));
+            }
             typedRun = 2;
-            typedBall = typedBall+0.1f;
+            typedBall = typedBall + 0.1f;
 
             if (li_wd.getVisibility() == View.VISIBLE) {
                 tv_extraRunWD.setText(String.valueOf(typedRun));
@@ -948,29 +1064,28 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
             } else if (li_nb.getVisibility() == View.VISIBLE) {
                 tv_extraNoBallRun.setText(String.valueOf(typedRun));
                 tv_extraNoBulFinalRun.setText(String.valueOf(1 + typedRun));
-            }else{
-                if(tv1Run.getText().toString().isEmpty()){
+            } else {
+                if (tv1Run.getText().toString().isEmpty()) {
                     tv1Run.setText(String.valueOf(typedRun));
                     li2.setVisibility(View.VISIBLE);
                     tv2Ball.setText(String.valueOf(typedBall));
-                } else if(tv2Run.getText().toString().isEmpty()){
+                } else if (tv2Run.getText().toString().isEmpty()) {
                     tv2Run.setText(String.valueOf(typedRun));
                     li3.setVisibility(View.VISIBLE);
                     tv3Ball.setText(String.valueOf(typedBall));
-                }else if(tv3Run.getText().toString().isEmpty()){
+                } else if (tv3Run.getText().toString().isEmpty()) {
                     tv3Run.setText(String.valueOf(typedRun));
                     li4.setVisibility(View.VISIBLE);
                     tv4Ball.setText(String.valueOf(typedBall));
-                }else if(tv4Run.getText().toString().isEmpty()){
+                } else if (tv4Run.getText().toString().isEmpty()) {
                     tv4Run.setText(String.valueOf(typedRun));
                     li5.setVisibility(View.VISIBLE);
                     tv5Ball.setText(String.valueOf(typedBall));
-                } else if(tv5Run.getText().toString().isEmpty()){
+                } else if (tv5Run.getText().toString().isEmpty()) {
                     tv5Run.setText(String.valueOf(typedRun));
                     li6.setVisibility(View.VISIBLE);
                     tv6Ball.setText(String.valueOf(typedBall));
-                }
-                else if(tv6Run.getText().toString().isEmpty()){
+                } else if (tv6Run.getText().toString().isEmpty()) {
                     tv6Run.setText(String.valueOf(typedRun));
                 }
             }
@@ -1001,8 +1116,11 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         });
 
         tv_three.setOnClickListener(v -> {
+            if(SessionManager.getWW1sBoolean()==false){
+                startActivity(new Intent(mContext, WagonWheelActivity.class));
+            }
             typedRun = 3;
-            typedBall = typedBall+0.1f;
+            typedBall = typedBall + 0.1f;
 
             if (li_wd.getVisibility() == View.VISIBLE) {
                 tv_extraRunWD.setText(String.valueOf(typedRun));
@@ -1010,29 +1128,28 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
             } else if (li_nb.getVisibility() == View.VISIBLE) {
                 tv_extraNoBallRun.setText(String.valueOf(typedRun));
                 tv_extraNoBulFinalRun.setText(String.valueOf(1 + typedRun));
-            }else{
-                if(tv1Run.getText().toString().isEmpty()){
+            } else {
+                if (tv1Run.getText().toString().isEmpty()) {
                     tv1Run.setText(String.valueOf(typedRun));
                     li2.setVisibility(View.VISIBLE);
                     tv2Ball.setText(String.valueOf(typedBall));
-                } else if(tv2Run.getText().toString().isEmpty()){
+                } else if (tv2Run.getText().toString().isEmpty()) {
                     tv2Run.setText(String.valueOf(typedRun));
                     li3.setVisibility(View.VISIBLE);
                     tv3Ball.setText(String.valueOf(typedBall));
-                }else if(tv3Run.getText().toString().isEmpty()){
+                } else if (tv3Run.getText().toString().isEmpty()) {
                     tv3Run.setText(String.valueOf(typedRun));
                     li4.setVisibility(View.VISIBLE);
                     tv4Ball.setText(String.valueOf(typedBall));
-                }else if(tv4Run.getText().toString().isEmpty()){
+                } else if (tv4Run.getText().toString().isEmpty()) {
                     tv4Run.setText(String.valueOf(typedRun));
                     li5.setVisibility(View.VISIBLE);
                     tv5Ball.setText(String.valueOf(typedBall));
-                } else if(tv5Run.getText().toString().isEmpty()){
+                } else if (tv5Run.getText().toString().isEmpty()) {
                     tv5Run.setText(String.valueOf(typedRun));
                     li6.setVisibility(View.VISIBLE);
                     tv6Ball.setText(String.valueOf(typedBall));
-                }
-                else if(tv6Run.getText().toString().isEmpty()){
+                } else if (tv6Run.getText().toString().isEmpty()) {
                     tv6Run.setText(String.valueOf(typedRun));
                 }
             }
@@ -1064,8 +1181,9 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         });
 
         tv_four.setOnClickListener(v -> {
+            startActivity(new Intent(mContext, WagonWheelActivity.class));
             typedRun = 4;
-            typedBall = typedBall+0.1f;
+            typedBall = typedBall + 0.1f;
 
             if (li_wd.getVisibility() == View.VISIBLE) {
                 tv_extraRunWD.setText(String.valueOf(typedRun));
@@ -1073,29 +1191,28 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
             } else if (li_nb.getVisibility() == View.VISIBLE) {
                 tv_extraNoBallRun.setText(String.valueOf(typedRun));
                 tv_extraNoBulFinalRun.setText(String.valueOf(1 + typedRun));
-            }else{
-                if(tv1Run.getText().toString().isEmpty()){
+            } else {
+                if (tv1Run.getText().toString().isEmpty()) {
                     tv1Run.setText(String.valueOf(typedRun));
                     li2.setVisibility(View.VISIBLE);
                     tv2Ball.setText(String.valueOf(typedBall));
-                } else if(tv2Run.getText().toString().isEmpty()){
+                } else if (tv2Run.getText().toString().isEmpty()) {
                     tv2Run.setText(String.valueOf(typedRun));
                     li3.setVisibility(View.VISIBLE);
                     tv3Ball.setText(String.valueOf(typedBall));
-                }else if(tv3Run.getText().toString().isEmpty()){
+                } else if (tv3Run.getText().toString().isEmpty()) {
                     tv3Run.setText(String.valueOf(typedRun));
                     li4.setVisibility(View.VISIBLE);
                     tv4Ball.setText(String.valueOf(typedBall));
-                }else if(tv4Run.getText().toString().isEmpty()){
+                } else if (tv4Run.getText().toString().isEmpty()) {
                     tv4Run.setText(String.valueOf(typedRun));
                     li5.setVisibility(View.VISIBLE);
                     tv5Ball.setText(String.valueOf(typedBall));
-                } else if(tv5Run.getText().toString().isEmpty()){
+                } else if (tv5Run.getText().toString().isEmpty()) {
                     tv5Run.setText(String.valueOf(typedRun));
                     li6.setVisibility(View.VISIBLE);
                     tv6Ball.setText(String.valueOf(typedBall));
-                }
-                else if(tv6Run.getText().toString().isEmpty()){
+                } else if (tv6Run.getText().toString().isEmpty()) {
                     tv6Run.setText(String.valueOf(typedRun));
                 }
             }
@@ -1128,8 +1245,9 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         });
 
         tv_six.setOnClickListener(v -> {
+            startActivity(new Intent(mContext, WagonWheelActivity.class));
             typedRun = 6;
-            typedBall = typedBall+0.1f;
+            typedBall = typedBall + 0.1f;
 
             if (li_wd.getVisibility() == View.VISIBLE) {
                 tv_extraRunWD.setText(String.valueOf(typedRun));
@@ -1137,29 +1255,28 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
             } else if (li_nb.getVisibility() == View.VISIBLE) {
                 tv_extraNoBallRun.setText(String.valueOf(typedRun));
                 tv_extraNoBulFinalRun.setText(String.valueOf(1 + typedRun));
-            }else{
-                if(tv1Run.getText().toString().isEmpty()){
+            } else {
+                if (tv1Run.getText().toString().isEmpty()) {
                     tv1Run.setText(String.valueOf(typedRun));
                     li2.setVisibility(View.VISIBLE);
                     tv2Ball.setText(String.valueOf(typedBall));
-                } else if(tv2Run.getText().toString().isEmpty()){
+                } else if (tv2Run.getText().toString().isEmpty()) {
                     tv2Run.setText(String.valueOf(typedRun));
                     li3.setVisibility(View.VISIBLE);
                     tv3Ball.setText(String.valueOf(typedBall));
-                }else if(tv3Run.getText().toString().isEmpty()){
+                } else if (tv3Run.getText().toString().isEmpty()) {
                     tv3Run.setText(String.valueOf(typedRun));
                     li4.setVisibility(View.VISIBLE);
                     tv4Ball.setText(String.valueOf(typedBall));
-                }else if(tv4Run.getText().toString().isEmpty()){
+                } else if (tv4Run.getText().toString().isEmpty()) {
                     tv4Run.setText(String.valueOf(typedRun));
                     li5.setVisibility(View.VISIBLE);
                     tv5Ball.setText(String.valueOf(typedBall));
-                } else if(tv5Run.getText().toString().isEmpty()){
+                } else if (tv5Run.getText().toString().isEmpty()) {
                     tv5Run.setText(String.valueOf(typedRun));
                     li6.setVisibility(View.VISIBLE);
                     tv6Ball.setText(String.valueOf(typedBall));
-                }
-                else if(tv6Run.getText().toString().isEmpty()){
+                } else if (tv6Run.getText().toString().isEmpty()) {
                     tv6Run.setText(String.valueOf(typedRun));
                 }
             }
@@ -1356,16 +1473,509 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
 //            }
 
 //           number++;
-//            if(number == 10){
+//            if(number == 14){
 //                mb_end_over.setVisibility(View.GONE);
 //                li_keyboard.setVisibility(View.GONE);
 //                li_startInningEndSession.setVisibility(View.VISIBLE);
-//                tv_StartsecondInning.setText("RCB won by 10 wkts");
+//                tv_StartsecondInning.setText("RCB won by 14 wkts");
 //            }
-
 
             showBottomBowlingSheetDialog("ChangeBowler");
         });
+
+    }
+
+    private void showBottomStopMatchSheetDialog() {
+
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this, R.style.BottomSheetDialogTheme);
+        bottomSheetDialog.setContentView(R.layout.bottom_dialog_stop_scoring_of_match);
+        if (bottomSheetDialog.getWindow() != null)
+            bottomSheetDialog.getWindow().setDimAmount(0);
+        bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
+
+
+        MaterialCardView mcv_drinks = bottomSheetDialog.findViewById(R.id.mcv_drinks);
+        ImageView iv_drinks = bottomSheetDialog.findViewById(R.id.iv_drinks);
+        TextView tvDrinks = bottomSheetDialog.findViewById(R.id.tvDrinks);
+
+        MaterialCardView mcv_rain = bottomSheetDialog.findViewById(R.id.mcv_rain);
+        ImageView ivRain = bottomSheetDialog.findViewById(R.id.ivRain);
+        TextView tvRain = bottomSheetDialog.findViewById(R.id.tvRain);
+
+        MaterialCardView mcv_stumps = bottomSheetDialog.findViewById(R.id.mcv_stumps);
+        ImageView ivStumps = bottomSheetDialog.findViewById(R.id.ivStumps);
+        TextView tvStumps = bottomSheetDialog.findViewById(R.id.tvStumps);
+
+        MaterialCardView mcv_timed_out = bottomSheetDialog.findViewById(R.id.mcv_timed_out);
+        ImageView ivTimedOut = bottomSheetDialog.findViewById(R.id.ivTimedOut);
+        TextView tvTimedOut = bottomSheetDialog.findViewById(R.id.tvTimedOut);
+
+        MaterialCardView mcv_lunch = bottomSheetDialog.findViewById(R.id.mcv_lunch);
+        ImageView ivLunch = bottomSheetDialog.findViewById(R.id.ivLunch);
+        TextView tvLunch = bottomSheetDialog.findViewById(R.id.tvLunch);
+
+        MaterialCardView mcv_others = bottomSheetDialog.findViewById(R.id.mcv_others);
+        ImageView ivOthers = bottomSheetDialog.findViewById(R.id.ivOthers);
+        TextView tvOthers = bottomSheetDialog.findViewById(R.id.tvOthers);
+
+        MaterialCardView mcv_scoring_mistake = bottomSheetDialog.findViewById(R.id.mcv_scoring_mistake);
+        ImageView ivScoringMistake = bottomSheetDialog.findViewById(R.id.ivScoringMistake);
+        TextView tvScoringMistake = bottomSheetDialog.findViewById(R.id.tvScoringMistake);
+
+        MaterialCardView mcv_change_scorer = bottomSheetDialog.findViewById(R.id.mcv_change_scorer);
+        ImageView ivChangeScorer = bottomSheetDialog.findViewById(R.id.ivChangeScorer);
+        TextView tvChangeScorer = bottomSheetDialog.findViewById(R.id.tvChangeScorer);
+
+        mcv_drinks.setOnClickListener(view -> {
+
+            iv_drinks.setColorFilter(ContextCompat.getColor(mContext, R.color.lemon_color));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvDrinks.setTextColor(mContext.getColor(R.color.lemon_color));
+                tvDrinks.setTextSize(20);
+            }
+
+            ivRain.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvRain.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvRain.setTextSize(14);
+            }
+
+            ivStumps.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvStumps.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvStumps.setTextSize(14);
+            }
+            ivLunch.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvLunch.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvLunch.setTextSize(14);
+            }
+            ivTimedOut.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvTimedOut.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvTimedOut.setTextSize(14);
+            }
+            ivOthers.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvOthers.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvOthers.setTextSize(14);
+            }
+            ivScoringMistake.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvScoringMistake.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvScoringMistake.setTextSize(14);
+            }
+            ivChangeScorer.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvChangeScorer.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvChangeScorer.setTextSize(14);
+            }
+
+
+            mcv_drinks.setBackgroundColor(getResources().getColor(R.color.green));
+            mcv_rain.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_stumps.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_timed_out.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_lunch.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_others.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_scoring_mistake.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_change_scorer.setBackgroundColor(getResources().getColor(R.color.white));
+        });
+        mcv_rain.setOnClickListener(view -> {
+
+            ivRain.setColorFilter(ContextCompat.getColor(mContext, R.color.lemon_color));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvRain.setTextColor(mContext.getColor(R.color.lemon_color));
+                tvRain.setTextSize(20);
+            }
+
+
+            iv_drinks.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvDrinks.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvDrinks.setTextSize(14);
+            }
+
+            ivStumps.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvStumps.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvStumps.setTextSize(14);
+            }
+            ivLunch.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvLunch.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvLunch.setTextSize(14);
+            }
+            ivTimedOut.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvTimedOut.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvTimedOut.setTextSize(14);
+            }
+            ivOthers.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvOthers.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvOthers.setTextSize(14);
+            }
+            ivScoringMistake.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvScoringMistake.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvScoringMistake.setTextSize(14);
+            }
+            ivChangeScorer.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvChangeScorer.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvChangeScorer.setTextSize(14);
+            }
+
+            mcv_rain.setBackgroundColor(getResources().getColor(R.color.green));
+            mcv_drinks.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_stumps.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_timed_out.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_lunch.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_others.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_scoring_mistake.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_change_scorer.setBackgroundColor(getResources().getColor(R.color.white));
+        });
+        mcv_stumps.setOnClickListener(view -> {
+
+            ivRain.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvRain.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvRain.setTextSize(14);
+            }
+
+
+            iv_drinks.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvDrinks.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvDrinks.setTextSize(14);
+            }
+
+            ivStumps.setColorFilter(ContextCompat.getColor(mContext, R.color.lemon_color));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvStumps.setTextColor(mContext.getColor(R.color.lemon_color));
+                tvStumps.setTextSize(20);
+            }
+            ivLunch.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvLunch.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvLunch.setTextSize(14);
+            }
+            ivTimedOut.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvTimedOut.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvTimedOut.setTextSize(14);
+            }
+            ivOthers.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvOthers.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvOthers.setTextSize(14);
+            }
+            ivScoringMistake.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvScoringMistake.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvScoringMistake.setTextSize(14);
+            }
+            ivChangeScorer.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvChangeScorer.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvChangeScorer.setTextSize(14);
+            }
+
+            mcv_stumps.setBackgroundColor(getResources().getColor(R.color.green));
+            mcv_drinks.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_rain.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_timed_out.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_lunch.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_others.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_scoring_mistake.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_change_scorer.setBackgroundColor(getResources().getColor(R.color.white));
+        });
+        mcv_timed_out.setOnClickListener(view -> {
+            ivRain.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvRain.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvRain.setTextSize(14);
+            }
+
+
+            iv_drinks.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvDrinks.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvDrinks.setTextSize(14);
+            }
+
+            ivStumps.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvStumps.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvStumps.setTextSize(14);
+            }
+            ivLunch.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvLunch.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvLunch.setTextSize(14);
+            }
+            ivTimedOut.setColorFilter(ContextCompat.getColor(mContext, R.color.lemon_color));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvTimedOut.setTextColor(mContext.getColor(R.color.lemon_color));
+                tvTimedOut.setTextSize(20);
+            }
+            ivOthers.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvOthers.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvOthers.setTextSize(14);
+            }
+            ivScoringMistake.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvScoringMistake.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvScoringMistake.setTextSize(14);
+            }
+            ivChangeScorer.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvChangeScorer.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvChangeScorer.setTextSize(14);
+            }
+
+            mcv_timed_out.setBackgroundColor(getResources().getColor(R.color.green));
+            mcv_drinks.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_rain.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_stumps.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_lunch.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_others.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_scoring_mistake.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_change_scorer.setBackgroundColor(getResources().getColor(R.color.white));
+        });
+        mcv_lunch.setOnClickListener(view -> {
+
+            ivRain.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvRain.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvRain.setTextSize(14);
+            }
+
+
+            iv_drinks.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvDrinks.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvDrinks.setTextSize(14);
+            }
+
+            ivStumps.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvStumps.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvStumps.setTextSize(14);
+            }
+            ivLunch.setColorFilter(ContextCompat.getColor(mContext, R.color.lemon_color));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvLunch.setTextColor(mContext.getColor(R.color.lemon_color));
+                tvLunch.setTextSize(20);
+            }
+            ivTimedOut.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvTimedOut.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvTimedOut.setTextSize(14);
+            }
+            ivOthers.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvOthers.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvOthers.setTextSize(14);
+            }
+            ivScoringMistake.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvScoringMistake.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvScoringMistake.setTextSize(14);
+            }
+            ivChangeScorer.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvChangeScorer.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvChangeScorer.setTextSize(14);
+            }
+
+            mcv_lunch.setBackgroundColor(getResources().getColor(R.color.green));
+            mcv_drinks.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_rain.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_stumps.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_timed_out.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_others.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_scoring_mistake.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_change_scorer.setBackgroundColor(getResources().getColor(R.color.white));
+        });
+        mcv_others.setOnClickListener(view -> {
+            ivRain.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvRain.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvRain.setTextSize(14);
+            }
+
+
+            iv_drinks.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvDrinks.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvDrinks.setTextSize(14);
+            }
+
+            ivStumps.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvStumps.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvStumps.setTextSize(14);
+            }
+            ivLunch.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvLunch.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvLunch.setTextSize(14);
+            }
+            ivTimedOut.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvTimedOut.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvTimedOut.setTextSize(14);
+            }
+            ivOthers.setColorFilter(ContextCompat.getColor(mContext, R.color.lemon_color));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvOthers.setTextColor(mContext.getColor(R.color.lemon_color));
+                tvOthers.setTextSize(20);
+            }
+            ivScoringMistake.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvScoringMistake.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvScoringMistake.setTextSize(14);
+            }
+            ivChangeScorer.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvChangeScorer.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvChangeScorer.setTextSize(14);
+            }
+
+            mcv_others.setBackgroundColor(getResources().getColor(R.color.green));
+            mcv_drinks.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_rain.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_stumps.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_timed_out.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_lunch.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_scoring_mistake.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_change_scorer.setBackgroundColor(getResources().getColor(R.color.white));
+        });
+        mcv_scoring_mistake.setOnClickListener(view -> {
+
+            ivRain.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvRain.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvRain.setTextSize(14);
+            }
+
+
+            iv_drinks.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvDrinks.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvDrinks.setTextSize(14);
+            }
+
+            ivStumps.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvStumps.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvStumps.setTextSize(14);
+            }
+            ivLunch.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvLunch.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvLunch.setTextSize(14);
+            }
+            ivTimedOut.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvTimedOut.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvTimedOut.setTextSize(14);
+            }
+            ivOthers.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvOthers.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvOthers.setTextSize(14);
+            }
+            ivScoringMistake.setColorFilter(ContextCompat.getColor(mContext, R.color.lemon_color));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvScoringMistake.setTextColor(mContext.getColor(R.color.lemon_color));
+                tvScoringMistake.setTextSize(20);
+            }
+            ivChangeScorer.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvChangeScorer.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvChangeScorer.setTextSize(14);
+            }
+
+            mcv_scoring_mistake.setBackgroundColor(getResources().getColor(R.color.green));
+            mcv_drinks.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_rain.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_stumps.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_timed_out.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_lunch.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_others.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_change_scorer.setBackgroundColor(getResources().getColor(R.color.white));
+        });
+
+        mcv_change_scorer.setOnClickListener(view -> {
+            ivRain.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvRain.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvRain.setTextSize(14);
+            }
+
+
+            iv_drinks.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvDrinks.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvDrinks.setTextSize(14);
+            }
+
+            ivStumps.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvStumps.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvStumps.setTextSize(14);
+            }
+            ivLunch.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvLunch.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvLunch.setTextSize(14);
+            }
+            ivTimedOut.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvTimedOut.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvTimedOut.setTextSize(14);
+            }
+            ivOthers.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvOthers.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvOthers.setTextSize(14);
+            }
+            ivScoringMistake.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvScoringMistake.setTextColor(mContext.getColor(R.color.dark_grey));
+                tvScoringMistake.setTextSize(14);
+            }
+            ivChangeScorer.setColorFilter(ContextCompat.getColor(mContext, R.color.lemon_color));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvChangeScorer.setTextColor(mContext.getColor(R.color.lemon_color));
+                tvChangeScorer.setTextSize(20);
+            }
+
+            mcv_change_scorer.setBackgroundColor(getResources().getColor(R.color.green));
+            mcv_drinks.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_rain.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_stumps.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_timed_out.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_lunch.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_others.setBackgroundColor(getResources().getColor(R.color.white));
+            mcv_scoring_mistake.setBackgroundColor(getResources().getColor(R.color.white));
+        });
+
+        bottomSheetDialog.findViewById(R.id.mb_save).setOnClickListener(view -> {
+            startActivity(new Intent(mContext, StartLiveScoringActivity.class));
+            finish();
+        });
+        bottomSheetDialog.findViewById(R.id.mb_cancel).setOnClickListener(view -> {
+            bottomSheetDialog.hide();
+        });
+
+
+        bottomSheetDialog.show();
+
 
     }
 

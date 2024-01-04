@@ -45,7 +45,7 @@ public class StartLiveScoringAdapter extends RecyclerView.Adapter<StartLiveScori
             itemClickListener.itemClick(position);
         });
         holder.mb_view.setOnClickListener(v -> {
-            showBottomSheetDialog();
+            itemClickListener.itemView(position);
         });
 
     }
@@ -81,36 +81,8 @@ public class StartLiveScoringAdapter extends RecyclerView.Adapter<StartLiveScori
 
     public interface ItemClickListener{
         void itemClick(int pos);
+        void itemView(int pos);
     }
 
-    private void showBottomSheetDialog() {
 
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(mContext);
-        bottomSheetDialog.setContentView(R.layout.bottom_dialog_live_scoring);
-
-        TextView tvLiveScoring = bottomSheetDialog.findViewById(R.id.tv_Live_Scoring);
-        TextView tvScoreCard = bottomSheetDialog.findViewById(R.id.tv_Score_Card);
-        TextView tvChangeScorer = bottomSheetDialog.findViewById(R.id.tv_Change_Scorer);
-        tvLiveScoring.setOnClickListener(v -> {
-            mContext.startActivity(new Intent(mContext, TossActivity.class));
-            bottomSheetDialog.hide();
-        });
-        tvScoreCard.setOnClickListener(v -> {
-
-        });
-        tvChangeScorer.setOnClickListener(v -> {
-
-        });
-
-        bottomSheetDialog.findViewById(R.id.tv_cancel).setOnClickListener(v -> {
-            bottomSheetDialog.hide();
-        });
-
-        bottomSheetDialog.findViewById(R.id.tv_viewDetails).setOnClickListener(v -> {
-            mContext.startActivity(new Intent(mContext, SubmitCricketDetailsActivity.class).putExtra("FROM","1"));
-            bottomSheetDialog.hide();
-        });
-
-        bottomSheetDialog.show();
-    }
 }

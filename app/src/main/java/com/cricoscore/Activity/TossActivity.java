@@ -224,10 +224,9 @@ public class TossActivity extends AppCompatActivity {
                 Toaster.customToast(getResources().getString(R.string.Decision_to_choose));
             } else {
                 isSaveButtonStatus = true;
-                startActivity(new Intent(mContext, DashboardLiveScoringActivity.class));
+                startActivity(new Intent(mContext, DashboardLiveScoringActivity.class).putExtra("FROM",""));
 
             }
-
 
         });
     }

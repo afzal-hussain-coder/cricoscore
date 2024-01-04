@@ -28,6 +28,7 @@ import com.cricoscore.Activity.AddTeamActivity;
 import com.cricoscore.Activity.AddTournamentActivity;
 import com.cricoscore.Activity.ScheduleCricketDetailsActivity;
 import com.cricoscore.Activity.ScheduleMatchActivity;
+import com.cricoscore.Activity.VisitProfileActivity;
 import com.cricoscore.Fragment.MatchFragment;
 import com.cricoscore.Fragment.TournamentFragment;
 import com.cricoscore.R;
@@ -226,14 +227,14 @@ public class CustomeCameraActivity extends AppCompatActivity {
                         AddTeamActivity.image_uri = resultUri;
                         finish();
                         break;
-
-
+                    case "VisitProfileActivity":
+                        VisitProfileActivity.image_uri = resultUri;
+                        finish();
+                        break;
                     default: {
                         finish();
                     }
-
                 }
-
 
             }
         }

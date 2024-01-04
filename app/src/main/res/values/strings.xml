@@ -102,5 +102,73 @@
     <string name="selection_of_team_error">Choose toss winning team</string>
     <string name="Decision_to_choose">Decision to choose batting or bowling</string>
     <string name="username_msg">Sorry, your username must be between 3 to 21 characters</string>
+    <string name="firstname_msg">Sorry, your firstname must be between 2 to 30 characters</string>
+    <string name="lastname_msg">Sorry, your lastname must be between 2 to 30 characters</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="Drinks">Drinks</string>
+    <string name="timed_out">Timed Out</string>
+    <string name="lunch">Lunch</string>
+    <string name="stumps">Stumps</string>
+    <string name="rain">Rain</string>
+    <string name="others">Others</string>
+    <string name="scoring_mistake">Scoring Mistake</string>
+    <string name="wogen_wheel">Wagon Wheel</string>
+    <string name="dont_show_ww_for_dots_ball">Don\'t show WW for dot balls</string>
+    <string name="dont_show_ww_for_1s_2s_3s">Don\'t show WW for 1s,2s and 3s</string>
+    <string name="short_area">Short Area</string>
+
+
+    <string name="leg_glance">Leg Glance</string>
+    <string name="inside_edge">Inside Edge</string>
+    <string name="top_edge">Top Edge</string>
+    <string name="pull">Pull</string>
+    <string name="hook">Hook</string>
+    <string name="dilscoop_ramp_shot">Dilscoop\n Ramp Shot</string>
+    <string name="flick">Flick</string>
+    <string name="punch">Punch</string>
+    <string name="defence">Defence</string>
+    <string name="sweep">Sweep</string>
+    <string name="lofted_shot">Lofted Shot</string>
+    <string name="slog_sweep">Slog Sweep</string>
+    <string name="drive">Drive</string>
+    <string name="helicopter">Helicopter</string>
+    <string name="straight_drive">straight\n drive</string>
+    <string name="on_drive">On Drive</string>
+    <string name="off_drive">off drive</string>
+    <string name="back_foot_punch">Back Foot Punch</string>
+    <string name="inside_out">Inside Out</string>
+    <string name="switch_hit">Switch Hit</string>
+    <string name="late_cut">Late Cut</string>
+    <string name="cut_shot">Cut Shot</string>
+    <string name="square_drive">square drive</string>
+    <string name="slash">slash</string>
+    <string name="upper_cut">Upper Cut</string>
+    <string name="reverse_sweep">reverse sweep</string>
+    <string name="outside_edge">outside edge</string>
+    <string name="reverse_scoop">reverse scoop</string>
+    <string name="non_of_above">None Of the Above</string>
+    <string name="savedmissing">*Saved/Missed runs and Dropped Catch are in Quick Options on the Scoring screen</string>
+    <string name="live">Live</string>
+    <string name="what_would_you_like_to_do">What would you like to do?</string>
+    <string name="resume_scoring">Resume Scoring</string>
+    <string name="start_streaming">Start Streaming</string>
+    <string name="view_full_scorecard">View Full Scorecard</string>
+    <string name="batting_style">Batting Style</string>
+
+    <!--Batting Style String-->
+
+    <string name="right_arm_fast">Right-arm fast</string>
+    <string name="right_arm_midium">Right-arm medium</string>
+    <string name="left_arm_fast">Left-arm fast</string>
+    <string name="left_arm_midium">Left-arm medium</string>
+    <string name="slow_left_arm_orthodox">Slow left-arm orthodox</string>
+    <string name="slow_leftc_arm_chinaman">Slow left-arm chinaman</string>
+    <string name="right_arm_off_break">Right-arm Off Break</string>
+    <string name="right_arm_leg_break">Right-arm Leg Break</string>
+
+    <!--Batting Style-->
+    <string name="left_hand_bat">Left Hand Bat</string>
+    <string name="right_hand_bat">Right Hand Bat</string>
+    <string name="bowling_stayle">Bowling Style</string>
 
 </resources>

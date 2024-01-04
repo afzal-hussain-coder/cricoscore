@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     finish();
                 } else {
-                    activityLoginBinding.tvOtpMobileNumber.setText(SessionManager.getPhone());
+                    activityLoginBinding.tvOtpMobileNumber.setText("XXXXXX"+SessionManager.getPhone().substring(6,10));
 
 
                     char[] charArray = String.valueOf(SessionManager.getOtp()).toCharArray();
@@ -150,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                 activityLoginBinding.e3.setText(String.valueOf(charArray[2]));
                 activityLoginBinding.e4.setText(String.valueOf(charArray[3]));
 
-
+                activityLoginBinding.tvOtpMobileNumber.setText("XXXXXX"+SessionManager.getPhone().substring(6,10));
                 activityLoginBinding.liOtpLogin.setVisibility(View.GONE);
                 activityLoginBinding.topLoginSignup.setVisibility(View.GONE);
                 activityLoginBinding.top.setVisibility(View.GONE);
@@ -181,6 +181,8 @@ public class LoginActivity extends AppCompatActivity {
                     activityLoginBinding.liResetPassword.startAnimation(anim_right);
                     activityLoginBinding.liResetPassword.setVisibility(View.VISIBLE);
                     activityLoginBinding.liOtpLatout.setVisibility(View.GONE);
+                    activityLoginBinding.tvResetMessage.setVisibility(View.GONE);
+                    activityLoginBinding.tvResetMessage2.setVisibility(View.GONE);
 
                 } else {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class)
@@ -1282,4 +1284,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
+
+    //...
+    //Todo submit profile:-
+    //username
+    // email
+    // mobile number
+    // avtar
+
 }
