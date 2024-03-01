@@ -17,7 +17,7 @@ public class ForgetPasswordViewModel extends ViewModel {
     MutableLiveData<Integer> mProgressMutableData = new MutableLiveData<>();
     MutableLiveData<Boolean> mSignUpResultMutableData = new MutableLiveData<>();
 
-    ForgetPasswordViewModel(){
+    public ForgetPasswordViewModel(){
         mProgressMutableData.postValue(View.GONE);
         mSignUpResultMutableData.postValue(false);
         forgetPasswordRepository = new ForgetPasswordRepository();

@@ -8,8 +8,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +20,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import com.cricoscore.R;
 import com.cricoscore.Utils.GenericKeyEvent;
@@ -57,6 +60,17 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(activityLoginBinding.getRoot());
         mContext = this;
         mActivity = this;
+
+
+
+//        TextView vieww = (TextView) findViewById(R.id.drawable_test);
+//        final TextDrawable textDrawable = new TextDrawable(vieww, "U+1F600");
+//        textDrawable.setFillText(true);
+//        textDrawable.getPaint().setColor(Color.RED);
+//        vieww.setBackgroundDrawable(textDrawable);
+
+
+
 
         anim_right = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in_right_layout);
 

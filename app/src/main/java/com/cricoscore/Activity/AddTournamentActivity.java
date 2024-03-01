@@ -25,6 +25,7 @@ import com.cricoscore.R;
 import com.cricoscore.Utils.DataModel;
 import com.cricoscore.Utils.Global;
 import com.cricoscore.Utils.SelectTournamentType;
+import com.cricoscore.Utils.Toaster;
 import com.cricoscore.databinding.ActivityAddTournamentBinding;
 import com.cricoscore.databinding.ToolbarBinding;
 import com.google.android.material.chip.Chip;
@@ -57,6 +58,7 @@ public class AddTournamentActivity extends AppCompatActivity {
     public static Uri image_uri=null;
     private int logo=0,banner=0;
     private String filterType = "";
+    private String tournamentType="";
 
 
     ActivityAddTournamentBinding activityAddTournamentBinding;
@@ -118,13 +120,7 @@ public class AddTournamentActivity extends AppCompatActivity {
             @Override
             public void onClickDone(String name) {
 
-                if (name.equalsIgnoreCase("Cancelled booking")) {
-                    filterType = "cancelled";
-                } else if (name.equalsIgnoreCase("Confirmed booking")) {
-                    filterType = "confirmed";
-                } else {
-                    filterType = name;
-                }
+                tournamentType = name;
             }
 
 
@@ -337,9 +333,56 @@ public class AddTournamentActivity extends AppCompatActivity {
             timePickerDialog.show();
         });*/
 
+
+
+        activityAddTournamentBinding.editTextTAddAwards.setOnFocusChangeListener((v, hasFocus) -> {
+
+            if (hasFocus) {
+                activityAddTournamentBinding.filledInputAwards.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            } else {
+                if (Objects.requireNonNull(activityAddTournamentBinding.editTextTAddAwards.getText()).length() == 0) {
+                    activityAddTournamentBinding.filledInputAwards.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_grey)));
+                } else {
+                    activityAddTournamentBinding.filledInputAwards.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_grey)));
+                }
+            }
+        });
+
         activityAddTournamentBinding.mbSubmit.setOnClickListener(v -> {
-            startActivity(new Intent(mContext,MainActivity.class));
-            finish();
+
+            if(tournamentType.isEmpty()){
+                Toaster.customToast("Select Tournament Type");
+            }
+
+            if (Objects.requireNonNull(activityAddTournamentBinding.editTextTAddAwards.getText()).toString().isEmpty()) {
+                activityAddTournamentBinding.filledInputAwards.setErrorEnabled(true);
+                activityAddTournamentBinding.filledInputAwards.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                activityAddTournamentBinding.filledInputAwards.setErrorIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                activityAddTournamentBinding.filledInputAwards.setBoxStrokeErrorColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                activityAddTournamentBinding.filledInputAwards.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                activityAddTournamentBinding.filledInputAwards.setError(getResources().getString(R.string.add_awards_message));
+            }
+//            else if (activityLoginBinding.editTextPassword.getText().toString().isEmpty()) {
+//                activityLoginBinding.filledTextFieldPassword.setErrorEnabled(true);
+//                activityLoginBinding.filledTextFieldPassword.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+//                activityLoginBinding.filledTextFieldPassword.setErrorIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+//                activityLoginBinding.filledTextFieldPassword.setBoxStrokeErrorColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+//                activityLoginBinding.filledTextFieldPassword.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+//                activityLoginBinding.filledTextFieldPassword.setError("Password is required");
+//            } else {
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    if (Global.isOnline(mContext)) {
+//                        loginViewModel.getLogin(activityLoginBinding.editTextUsername.getText().toString(),
+//                                activityLoginBinding.editTextPassword.getText().toString());
+//                    } else {
+//                        Global.showDialog(mActivity);
+//                    }
+//                }
+//            }
+
+
+//            startActivity(new Intent(mContext,MainActivity.class));
+//            finish();
         });
 
         activityAddTournamentBinding.middle.setOnClickListener(view -> {
@@ -355,6 +398,8 @@ public class AddTournamentActivity extends AppCompatActivity {
             startActivity(new Intent(mContext, CustomeCameraActivity.class)
                     .putExtra("FROM","AddTournamentActivity"));
         });
+
+
 
     }
 

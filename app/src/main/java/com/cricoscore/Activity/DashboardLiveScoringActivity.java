@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -34,6 +35,7 @@ import com.cricoscore.Adapter.BatsmanScorecardAdapter;
 import com.cricoscore.Adapter.BattingStyleAdapter;
 import com.cricoscore.Adapter.BowlerScorecardAdapter;
 import com.cricoscore.Adapter.BowlingStyleAdapter;
+import com.cricoscore.Adapter.CommentaryAdapter;
 import com.cricoscore.Adapter.ScoringBallAdapter;
 import com.cricoscore.Adapter.ScoringRunAdapter;
 import com.cricoscore.Adapter.ShortAreaSubCategoryAdapter;
@@ -107,6 +109,11 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
     boolean checkBoxStatus;
     boolean checkBoxDitBallStatus;
 
+    private ArrayList<DataModel> option_teamType_list = new ArrayList<>();
+    private ArrayList<DataModel> option_commentaryType_list = new ArrayList<>();
+    private String teamTypeSelection = "";
+    private String commentaryTypeSelection = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +123,6 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
 
         mContext = this;
         mActivity = this;
-
 
         textToSpeech = new TextToSpeech(getApplicationContext(), i -> {
 
@@ -159,6 +165,7 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         activityDashboardLiveScoringBinding.rlBowlingMain.setOnClickListener(v -> showBottomBowlingSheetDialog(""));
 
         activityDashboardLiveScoringBinding.tvStartScoring.setOnClickListener(v -> {
+            activityDashboardLiveScoringBinding.liTopScorecard.setVisibility(View.GONE);
             activityDashboardLiveScoringBinding.liScorecard.setVisibility(View.GONE);
             activityDashboardLiveScoringBinding.rlStartScoring.setVisibility(View.VISIBLE);
             activityDashboardLiveScoringBinding.tvScorecard.setBackgroundColor(getResources().getColor(R.color.verified_user_color));
@@ -232,6 +239,7 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         activityDashboardLiveScoringBinding.tvToss.startAnimation(animationBlink);
 
         activityDashboardLiveScoringBinding.tvScorecard.setOnClickListener(v -> {
+            activityDashboardLiveScoringBinding.liTopScorecard.setVisibility(View.VISIBLE);
             activityDashboardLiveScoringBinding.liScorecard.setVisibility(View.VISIBLE);
             activityDashboardLiveScoringBinding.rlStartScoring.setVisibility(View.GONE);
             activityDashboardLiveScoringBinding.tvStartScoring.setBackgroundColor(getResources().getColor(R.color.verified_user_color));
@@ -246,6 +254,85 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
                 activityDashboardLiveScoringBinding.tvScorecard.setBackgroundColor(getResources().getColor(R.color.dim_sky));
             }
         }
+
+
+
+
+        /*Commentary*/
+        option_teamType_list.add(new DataModel("Team A"));
+        option_teamType_list.add(new DataModel("Team B"));
+        activityDashboardLiveScoringBinding.dropTeamSelection.setOptionList(option_teamType_list);
+        teamTypeSelection = option_teamType_list.get(0).getName();
+        activityDashboardLiveScoringBinding.dropTeamSelection.setText(teamTypeSelection);
+        activityDashboardLiveScoringBinding.dropTeamSelection.setClickListener(new SelectStatusType.onClickInterface() {
+            @Override
+            public void onClickAction() {
+            }
+
+            @Override
+            public void onClickDone(String name) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    activityDashboardLiveScoringBinding.dropTeamSelection.setCompoundDrawableTintList(mContext.getResources().getColorStateList(R.color.black));
+                }
+            }
+
+
+            @Override
+            public void onDismiss() {
+            }
+        });
+
+        option_commentaryType_list.add(new DataModel(mActivity.getResources().getString(R.string.full_commentary)));
+        option_commentaryType_list.add(new DataModel(mActivity.getResources().getString(R.string.wickets)));
+        option_commentaryType_list.add(new DataModel(mActivity.getResources().getString(R.string.boundaries)));
+        activityDashboardLiveScoringBinding.dropCommentaryType.setOptionList(option_commentaryType_list);
+        commentaryTypeSelection = option_commentaryType_list.get(0).getName();
+        activityDashboardLiveScoringBinding.dropCommentaryType.setText(commentaryTypeSelection);
+        activityDashboardLiveScoringBinding.dropCommentaryType.setClickListener(new SelectStatusType.onClickInterface() {
+            @Override
+            public void onClickAction() {
+            }
+
+            @Override
+            public void onClickDone(String name) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    activityDashboardLiveScoringBinding.dropCommentaryType.setCompoundDrawableTintList(mContext.getResources().getColorStateList(R.color.black));
+                }
+            }
+
+
+            @Override
+            public void onDismiss() {
+            }
+        });
+
+        activityDashboardLiveScoringBinding.rcvCommentary.setHasFixedSize(true);
+        activityDashboardLiveScoringBinding.rcvCommentary.setLayoutManager(new LinearLayoutManager(mActivity));
+        activityDashboardLiveScoringBinding.rcvCommentary.setAdapter(new CommentaryAdapter(mActivity));
+
+
+        /*scorecard Reopen all views*/
+
+        activityDashboardLiveScoringBinding.tvScorecard1.setOnClickListener(view -> {
+            activityDashboardLiveScoringBinding.liScorcarddOpen.setVisibility(View.VISIBLE);
+            activityDashboardLiveScoringBinding.liCommentaryReopen.setVisibility(View.GONE);
+
+            activityDashboardLiveScoringBinding.tvScorecard1.setBackgroundColor(mContext.getResources().getColor(R.color.light_sky));
+            activityDashboardLiveScoringBinding.tvScorecard1.setTextColor(mContext.getResources().getColor(R.color.purple_500));
+
+            activityDashboardLiveScoringBinding.tvCommentary.setBackgroundColor(mContext.getResources().getColor(R.color.light_gray));
+            activityDashboardLiveScoringBinding.tvCommentary.setTextColor(mContext.getResources().getColor(R.color.dark_grey));
+        });
+
+        activityDashboardLiveScoringBinding.tvCommentary.setOnClickListener(view -> {
+            activityDashboardLiveScoringBinding.liScorcarddOpen.setVisibility(View.GONE);
+            activityDashboardLiveScoringBinding.liCommentaryReopen.setVisibility(View.VISIBLE);
+            activityDashboardLiveScoringBinding.tvCommentary.setBackgroundColor(mContext.getResources().getColor(R.color.light_sky));
+            activityDashboardLiveScoringBinding.tvCommentary.setTextColor(mContext.getResources().getColor(R.color.purple_500));
+
+            activityDashboardLiveScoringBinding.tvScorecard1.setBackgroundColor(mContext.getResources().getColor(R.color.light_gray));
+            activityDashboardLiveScoringBinding.tvScorecard1.setTextColor(mContext.getResources().getColor(R.color.dark_grey));
+        });
 
 
     }
@@ -917,7 +1004,7 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
 
         tv_zero.setOnClickListener(v -> {
 
-            if(SessionManager.getWWDotBoolean()==false){
+            if (SessionManager.getWWDotBoolean() == false) {
                 startActivity(new Intent(mContext, WagonWheelActivity.class));
             }
 
@@ -986,7 +1073,7 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         });
 
         tv_one.setOnClickListener(v -> {
-            if(SessionManager.getWW1sBoolean()==false){
+            if (SessionManager.getWW1sBoolean() == false) {
                 startActivity(new Intent(mContext, WagonWheelActivity.class));
             }
 
@@ -1052,7 +1139,7 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         });
 
         tv_two.setOnClickListener(v -> {
-            if(SessionManager.getWW1sBoolean()==false){
+            if (SessionManager.getWW1sBoolean() == false) {
                 startActivity(new Intent(mContext, WagonWheelActivity.class));
             }
             typedRun = 2;
@@ -1116,7 +1203,7 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         });
 
         tv_three.setOnClickListener(v -> {
-            if(SessionManager.getWW1sBoolean()==false){
+            if (SessionManager.getWW1sBoolean() == false) {
                 startActivity(new Intent(mContext, WagonWheelActivity.class));
             }
             typedRun = 3;
@@ -1483,6 +1570,49 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
             showBottomBowlingSheetDialog("ChangeBowler");
         });
 
+    }
+
+    private void changeScorerShowBottomSheetDialog() {
+
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this, R.style.BottomSheetDialogTheme);
+        bottomSheetDialog.setContentView(R.layout.change_scorere_dialog);
+        ArrayList<DataModel> option_status_list = new ArrayList<>();
+        option_status_list.add(new DataModel("Ahuja, KS"));
+        option_status_list.add(new DataModel("Ashwin, R"));
+        option_status_list.add(new DataModel("Arshdeep Singh"));
+        option_status_list.add(new DataModel("Avesh Khan"));
+        option_status_list.add(new DataModel("Bharat, KS"));
+        option_status_list.add(new DataModel("Chahar, DL"));
+        SelectStatusType drop_tvSelectBatman1 = bottomSheetDialog.findViewById(R.id.drop_tvSelectBatman1);
+
+
+        assert drop_tvSelectBatman1 != null;
+        drop_tvSelectBatman1.setOptionList(option_status_list);
+        drop_tvSelectBatman1.setClickListener(new SelectStatusType.onClickInterface() {
+            @Override
+            public void onClickAction() {
+            }
+
+            @Override
+            public void onClickDone(String name) {
+
+            }
+
+
+            @Override
+            public void onDismiss() {
+            }
+        });
+
+
+        bottomSheetDialog.findViewById(R.id.mb_cancel).setOnClickListener(v -> {
+            bottomSheetDialog.hide();
+        });
+        bottomSheetDialog.findViewById(R.id.mb_save).setOnClickListener(v -> {
+            bottomSheetDialog.hide();
+        });
+
+        bottomSheetDialog.show();
     }
 
     private void showBottomStopMatchSheetDialog() {
@@ -1862,7 +1992,6 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
                 tvRain.setTextSize(14);
             }
 
-
             iv_drinks.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 tvDrinks.setTextColor(mContext.getColor(R.color.dark_grey));
@@ -1911,6 +2040,9 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         });
 
         mcv_change_scorer.setOnClickListener(view -> {
+            bottomSheetDialog.hide();
+            changeScorerShowBottomSheetDialog();
+
             ivRain.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 tvRain.setTextColor(mContext.getColor(R.color.dark_grey));
@@ -1973,11 +2105,9 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
             bottomSheetDialog.hide();
         });
 
-
         bottomSheetDialog.show();
 
 
     }
-
 
 }

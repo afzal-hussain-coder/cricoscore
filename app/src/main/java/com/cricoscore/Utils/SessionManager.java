@@ -71,6 +71,16 @@ public class SessionManager {
         return SharedPreferencesManager.getPreferenceString(USERNAME);
     }
 
+
+    public static void saveUserAvtar(String value) {
+        SharedPreferencesManager.savePreferenceString(USER_AVATAR, value);
+    }
+
+    public static String getUserAvtar() {
+        return SharedPreferencesManager.getPreferenceString(USER_AVATAR);
+    }
+
+
     public static void saveEmail(String value) {
         SharedPreferencesManager.savePreferenceString(EMAIL, value);
     }

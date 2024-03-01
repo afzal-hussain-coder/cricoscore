@@ -1,6 +1,7 @@
 package com.cricoscore.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,15 +10,22 @@ import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 
+import com.bumptech.glide.Glide;
 import com.cricoscore.CustomeCamera.CustomeCameraActivity;
 import com.cricoscore.R;
 import com.cricoscore.Utils.Global;
+import com.cricoscore.Utils.SessionManager;
+import com.cricoscore.Utils.Toaster;
 import com.cricoscore.databinding.ActivityAddTournamentBinding;
 import com.cricoscore.databinding.ActivityVisitProfileBinding;
 import com.cricoscore.databinding.ToolbarBinding;
+import com.cricoscore.view_model.LoginViewModel;
+import com.cricoscore.view_model.SubmitUserProfileViewModel;
 
 import java.util.Objects;
 
@@ -26,6 +34,7 @@ public class VisitProfileActivity extends AppCompatActivity {
     Context mContext;
     Activity mActivity;
     public static Uri image_uri = null;
+    SubmitUserProfileViewModel submitUserProfileViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +56,31 @@ public class VisitProfileActivity extends AppCompatActivity {
         toolbarBinding.toolbartext.setText(getResources().getString(R.string.edit_profile));
         toolbarBinding.toolbar.setNavigationOnClickListener(v -> finish());
 
+        /**
+         * @SubmitProfile Result
+         * @s --> Check result
+         */
+        submitUserProfileViewModel = new ViewModelProvider(this).get(SubmitUserProfileViewModel.class);
+        submitUserProfileViewModel.getSubmitProfileResult().observe(this, responseStatus -> {
+            if (responseStatus.isStatus()) {
+
+                new Handler().postDelayed(() -> {
+                    Toaster.customToast(responseStatus.getMessage());
+                }, 100);
+
+            }
+        });
+        submitUserProfileViewModel.getSubmitProfileProgress().observe(this, integer -> {
+            if (integer == 0) {
+                Global.showLoader(getSupportFragmentManager());
+            } else {
+                Global.hideLoder();
+            }
+        });
+
+
         initView();
+        setUserData();
     }
 
     @Override
@@ -55,8 +88,9 @@ public class VisitProfileActivity extends AppCompatActivity {
         super.onResume();
         if (image_uri != null) {
             activityVisitProfileBinding.profilePic.setImageURI(image_uri);
-            image_uri = null;
+            //image_uri = null;
         }
+
     }
 
     private void initView() {
@@ -332,19 +366,39 @@ public class VisitProfileActivity extends AppCompatActivity {
                  * SignUp Api Request
                  */
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    if (Global.isOnline(mContext)) {
-//                        authViewModel.signUp(activityVisitProfileBinding.editTextUsernameSignup.getText().toString(),
-//                                activityVisitProfileBinding.editTextEmailSignup.getText().toString(),
-//                                activityVisitProfileBinding.editTextPhoneSignup.getText().toString(),
-//                                activityVisitProfileBinding.editTextPasswordSignup.getText().toString());
-//                    } else {
-//                        Global.showDialog(mActivity);
-//                    }
+                    if (Global.isOnline(mContext)) {
+                        submitUserProfileViewModel.getSubmitUserProfile(image_uri, SessionManager.getToken(), activityVisitProfileBinding.editTextUsernameSignup.getText().toString(),
+                                activityVisitProfileBinding.editTextFirstname.getText().toString(),
+                                activityVisitProfileBinding.editTextLastname.getText().toString(),
+                                activityVisitProfileBinding.editTextEmailSignup.getText().toString(),
+                                activityVisitProfileBinding.editTextPhoneSignup.getText().toString(),
+                                SessionManager.getUserId());
+                    } else {
+                        Global.showDialog(mActivity);
+                    }
                 }
             }
 
 
         });
+
+    }
+
+    // Set Data here
+    private void setUserData() {
+        activityVisitProfileBinding.editTextUsernameSignup.setText(SessionManager.getUserName());
+        activityVisitProfileBinding.editTextFirstname.setText(SessionManager.getFirstName());
+        activityVisitProfileBinding.editTextLastname.setText(SessionManager.getLastName());
+        activityVisitProfileBinding.editTextEmailSignup.setText(SessionManager.getEmail());
+        activityVisitProfileBinding.editTextPhoneSignup.setText(SessionManager.getPhone());
+        // image_uri = Uri.parse(SessionManager.getUserAvtar());
+
+        //Toaster.customToast(image_uri+"");
+
+        Glide.with(mContext).load(SessionManager.getUserAvtar()).
+                error(mContext.getResources().getDrawable(R.drawable.placeholder_user)).
+                into(activityVisitProfileBinding.profilePic);
+
 
     }
 

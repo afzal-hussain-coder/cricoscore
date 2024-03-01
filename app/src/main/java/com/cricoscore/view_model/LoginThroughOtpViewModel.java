@@ -15,7 +15,7 @@ public class LoginThroughOtpViewModel extends ViewModel {
     MutableLiveData<Integer> mProgressMutableData = new MutableLiveData<>();
     MutableLiveData<Boolean> mSignUpResultMutableData = new MutableLiveData<>();
 
-    LoginThroughOtpViewModel(){
+    public LoginThroughOtpViewModel(){
         mProgressMutableData.postValue(View.GONE);
         mSignUpResultMutableData.postValue(false);
         loginRepository = new LoginRepository();

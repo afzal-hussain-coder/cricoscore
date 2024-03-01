@@ -152,6 +152,7 @@
     <string name="what_would_you_like_to_do">What would you like to do?</string>
     <string name="resume_scoring">Resume Scoring</string>
     <string name="start_streaming">Start Streaming</string>
+    <string name="stop_streaming">Stop Streaming</string>
     <string name="view_full_scorecard">View Full Scorecard</string>
     <string name="batting_style">Batting Style</string>
 
@@ -170,5 +171,17 @@
     <string name="left_hand_bat">Left Hand Bat</string>
     <string name="right_hand_bat">Right Hand Bat</string>
     <string name="bowling_stayle">Bowling Style</string>
+    <string name="commentary">Commentary</string>
+    <string name="teams">Teams</string>
+    <string name="full_commentary">Full Commentary</string>
+    <string name="boundaries">Boundaries</string>
+    <string name="wickets">Wickets</string>
+    <string name="end_of_over">End of Over 2</string>
+    <string name="gallery">Gallery</string>
+    <string name="current_partnership">Current Partnership:</string>
+    <string name="recents">Recents:</string>
+    <string name="liveStreamYourLocalMatch">Live Stream Your Local Match</string>
+    <string name="streamKey_msg">Sorry, your stream key must be between 3 to 21 characters</string>
+    <string name="add_awards_message">Fill awards</string>
 
 </resources>

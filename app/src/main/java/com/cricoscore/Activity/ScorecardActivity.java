@@ -1,19 +1,25 @@
 package com.cricoscore.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
 import com.cricoscore.Adapter.BatsmanScorecardAdapter;
 import com.cricoscore.Adapter.BowlerScorecardAdapter;
+import com.cricoscore.Adapter.TabAdapter;
+import com.cricoscore.Adapter.TabScorcardAdapter;
 import com.cricoscore.R;
 import com.cricoscore.databinding.ActivityScorecardBinding;
 import com.cricoscore.databinding.ActivityStartLiveScoringBinding;
 import com.cricoscore.databinding.ToolbarBinding;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
 
@@ -22,6 +28,12 @@ public class ScorecardActivity extends AppCompatActivity {
     ActivityScorecardBinding activityScorecardBinding;
     Context mContext;
     Activity mActivity;
+
+
+    TabLayout tabLayout;
+    private ViewPager2 viewPager2;
+    private TabScorcardAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,55 +51,39 @@ public class ScorecardActivity extends AppCompatActivity {
         toolbarBinding.toolbartext.setText(getResources().getString(R.string.scorecard));
         toolbarBinding.toolbar.setNavigationOnClickListener(v -> finish());
 
+        activityScorecardBinding.tabLayout.addTab(activityScorecardBinding.tabLayout.newTab().setText(mContext.getResources().getString(R.string.live)));
+        activityScorecardBinding.tabLayout.addTab(activityScorecardBinding.tabLayout.newTab().setText(mContext.getResources().getString(R.string.scorecard)));
+        activityScorecardBinding.tabLayout.addTab(activityScorecardBinding.tabLayout.newTab().setText(mContext.getResources().getString(R.string.commentary)));
+        activityScorecardBinding.tabLayout.addTab(activityScorecardBinding.tabLayout.newTab().setText(mContext.getResources().getString(R.string.gallery)));
+        activityScorecardBinding.tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        adapter = new TabScorcardAdapter(fragmentManager , getLifecycle());
+        activityScorecardBinding.viewPager.setAdapter(adapter);
 
-        /*Team Scorecard Details*/
-        /*BatsmanScore*/
-        activityScorecardBinding.rvBatsmanTeam1.setLayoutManager(new LinearLayoutManager(mActivity));
-        activityScorecardBinding.rvBatsmanTeam1.setHasFixedSize(true);
-        activityScorecardBinding.rvBatsmanTeam1.setAdapter(new BatsmanScorecardAdapter(mContext));
-
-        activityScorecardBinding.rlTeam1Details.setOnClickListener(v -> {
-            if(activityScorecardBinding.liTeam1Details.getVisibility()==View.GONE){
-                activityScorecardBinding.liTeam1Details.setVisibility(View.VISIBLE);
-                activityScorecardBinding.imgDownArrow.setVisibility(View.GONE);
-                activityScorecardBinding.imgUpArrow.setVisibility(View.VISIBLE);
-            }else{
-                activityScorecardBinding.liTeam1Details.setVisibility(View.GONE);
-                activityScorecardBinding.imgDownArrow.setVisibility(View.VISIBLE);
-                activityScorecardBinding.imgUpArrow.setVisibility(View.GONE);
+        activityScorecardBinding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                activityScorecardBinding.viewPager.setCurrentItem(tab.getPosition());
             }
 
-        });
-        /*BowlerScore*/
-        activityScorecardBinding.rvBowlerTeam1.setLayoutManager(new LinearLayoutManager(mActivity));
-        activityScorecardBinding.rvBowlerTeam1.setHasFixedSize(true);
-        activityScorecardBinding.rvBowlerTeam1.setAdapter(new BowlerScorecardAdapter(mContext));
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-        /*Team2 Scorecard Details*/
-        /*BatsmanScore*/
-        activityScorecardBinding.rvBatsmanTeam2.setLayoutManager(new LinearLayoutManager(mActivity));
-        activityScorecardBinding.rvBatsmanTeam2.setHasFixedSize(true);
-        activityScorecardBinding.rvBatsmanTeam2.setAdapter(new BatsmanScorecardAdapter(mContext));
-
-        activityScorecardBinding.rlTeam2Details.setOnClickListener(v -> {
-            if(activityScorecardBinding.liTeam2Details.getVisibility()== View.GONE){
-                activityScorecardBinding.liTeam2Details.setVisibility(View.VISIBLE);
-                activityScorecardBinding.imgDownArrow2.setVisibility(View.GONE);
-                activityScorecardBinding.imgUpArrow2.setVisibility(View.VISIBLE);
-            }else{
-                activityScorecardBinding.liTeam2Details.setVisibility(View.GONE);
-                activityScorecardBinding.imgDownArrow2.setVisibility(View.VISIBLE);
-                activityScorecardBinding.imgUpArrow2.setVisibility(View.GONE);
             }
 
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
         });
 
-        /*BowlerScore*/
-        activityScorecardBinding.rvBowlerTeam2.setLayoutManager(new LinearLayoutManager(mActivity));
-        activityScorecardBinding.rvBowlerTeam2.setHasFixedSize(true);
-        activityScorecardBinding.rvBowlerTeam2.setAdapter(new BowlerScorecardAdapter(mContext));
-
+        activityScorecardBinding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                activityScorecardBinding.tabLayout.selectTab(activityScorecardBinding.tabLayout.getTabAt(position));
+            }
+        });
 
     }
 

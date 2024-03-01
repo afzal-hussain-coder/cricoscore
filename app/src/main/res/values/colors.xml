@@ -16,6 +16,8 @@
     <color name="light_gray">#F8F7FB</color>
     <color name="lightgrey_dim">#EBEAEC</color>
     <color name="verified_user_color">#55ACEE</color>
+    <color name="light_sky">#CAE2F7</color>
+
     <color name="green">#4CAF50</color>
     <color name="black_semi_transparent">#B1000000</color>
     <color name="black_light_tranparent">#20000000</color>

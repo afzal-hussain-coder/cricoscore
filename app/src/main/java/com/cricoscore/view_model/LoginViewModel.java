@@ -16,7 +16,7 @@ public class LoginViewModel extends ViewModel {
     MutableLiveData<Integer> mProgressMutableData = new MutableLiveData<>();
     MutableLiveData<Boolean> mSignUpResultMutableData = new MutableLiveData<>();
 
-    LoginViewModel(){
+    public LoginViewModel(){
         mProgressMutableData.postValue(View.GONE);
         mSignUpResultMutableData.postValue(false);
         loginRepository = new LoginRepository();

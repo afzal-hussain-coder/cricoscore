@@ -15,19 +15,19 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.cricoscore.Adapter.MenuAdapter;
 import com.cricoscore.Adapter.TabAdapter;
 import com.cricoscore.R;
+import com.cricoscore.Socket.SocketManager;
 import com.cricoscore.Utils.DataModel;
 import com.cricoscore.Utils.Global;
 import com.cricoscore.Utils.SelectStatusType;
@@ -35,11 +35,17 @@ import com.cricoscore.Utils.SessionManager;
 import com.cricoscore.Utils.SharedPreferencesManager;
 import com.cricoscore.Utils.Toaster;
 import com.cricoscore.model.Drawer;
-import com.cricoscore.view_model.SignUpViewModel;
 import com.cricoscore.view_model.UserProfileViewModel;
 import com.google.android.material.tabs.TabLayout;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 public class MainActivity extends AppCompatActivity {
     private ListView list_nav;
@@ -57,8 +63,11 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<DataModel> option_status_list = new ArrayList<>();
     String filterTypeStatus="";
     TextView txt_visit_profile;
+    CircleImageView profile_pic;
 
     UserProfileViewModel userProfileViewModel;
+
+    SocketManager socketManager;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
         userProfileViewModel.getUserProfileResult().observe(this,aBoolean -> {
          if(aBoolean){
              txt_nav_name.setText(SessionManager.getUserName());
+             Glide.with(mContext).load(SessionManager.getUserAvtar()).
+                     error(mContext.getResources().getDrawable(R.drawable.placeholder_user)).
+                     into(profile_pic);
          }
         });
         userProfileViewModel.getUserProfileLoader().observe(this, integer -> {
@@ -149,9 +161,42 @@ public class MainActivity extends AppCompatActivity {
         setItemTextImageOnNavigationDrawer();
 
         initView();
+
+        socketManager = new SocketManager();
+        socketManager.connect();
+
+        socketManager.onMessageReceived(new SocketManager.Listener() {
+            @Override
+            public void onReceived(String message) {
+                Log.d("onReceived",message);
+
+                //Toaster.customToast(message);
+            }
+        });
+
+        socketManager.sendMessage("Afzal Heloo");
+
+        Socket mSocket = null;
+        try {
+            mSocket = IO.socket("https://chat.criconetonline.com");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                //Exception e = (Exception) args[0];
+               // Log.e("SocketManager", "Connection error: " + e.getMessage());
+                //Toaster.customToast("connected");
+               System.out.println("connected");
+            }
+        });
+
+
     }
 
     private void initView() {
+        profile_pic = findViewById(R.id.profile_pic);
         txt_visit_profile = findViewById(R.id.txt_visit_profile);
         txt_nav_name = findViewById(R.id.txt_nav_name);
         drop_pStatus = findViewById(R.id.drop_pStatus);
@@ -183,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout.addTab(tabLayout.newTab().setText("Tournament"));
         tabLayout.addTab(tabLayout.newTab().setText("Match"));
+        tabLayout.addTab(tabLayout.newTab().setText("Live"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -236,6 +282,7 @@ public class MainActivity extends AppCompatActivity {
         drawerList.add(new Drawer(getString(R.string.yourteamlist), false, R.drawable.team));
         drawerList.add(new Drawer(getString(R.string.addPlayer), false, R.drawable.player_icon));
         drawerList.add(new Drawer(getString(R.string.yourPlayerlist), false, R.drawable.player_icon));
+        drawerList.add(new Drawer(getString(R.string.liveStreamYourLocalMatch), false, R.drawable.stream_icon));
         drawerList.add(new Drawer(getString(R.string.logout), false, R.drawable.logout_black_24dp));
 
         menuadapter = new MenuAdapter(mActivity, drawerList);
@@ -285,7 +332,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(mActivity, AddTeamActivity.class));
         }else if(drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.yourPlayerlist))) {
             startActivity(new Intent(mActivity, YourPlayerListActivity.class));
-        }else if(drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.logout))) {
+        } else if(drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.liveStreamYourLocalMatch))){
+            startActivity(new Intent(mActivity,LiveStreamCameraActivity.class));
+        }
+        else if(drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.logout))) {
 
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle("");
@@ -305,5 +355,11 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        socketManager.disconnect();
     }
 }

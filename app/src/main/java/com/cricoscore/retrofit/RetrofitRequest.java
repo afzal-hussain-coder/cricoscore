@@ -2,6 +2,10 @@ package com.cricoscore.retrofit;
 
 import static com.cricoscore.Utils.Global.BASE_URL;
 
+import com.cricoscore.BuildConfig;
+
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -14,9 +18,13 @@ public class RetrofitRequest {
     public static Retrofit getRetrofitInstance() {
         // API response interceptor
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        if(BuildConfig.DEBUG) {
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        }
         //Client
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor)
+                .connectTimeout(100, TimeUnit.SECONDS)
+                .readTimeout(100,TimeUnit.SECONDS).build();
 
         if (retrofit == null) {
             retrofit = new retrofit2.Retrofit.Builder()

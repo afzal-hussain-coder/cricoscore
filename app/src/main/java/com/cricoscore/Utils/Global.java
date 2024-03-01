@@ -64,6 +64,13 @@ public class Global {
     public static final String FORGET_PASSWORD ="forgotpass";
     public static final String RESET_PASSWORD ="user/reSetPassword";
     public static final String VERIFY_EMAIL_OTP="user/verifyEmailOTP";
+    public static final String USER_SUBMIT_PROFILE="user/submitProfile";
+    public static final String ADDTOURNAMENTURL="tournament/add";
+
+
+
+
+
 
     private static LoadingDialogFragment loadingDialogFragment = new LoadingDialogFragment();
 

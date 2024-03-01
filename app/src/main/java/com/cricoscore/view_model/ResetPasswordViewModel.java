@@ -16,7 +16,7 @@ public class ResetPasswordViewModel extends ViewModel {
     MutableLiveData<Integer> mProgressMutableData = new MutableLiveData<>();
     MutableLiveData<ResponseStatus> mSignUpResultMutableData = new MutableLiveData<>();
 
-    ResetPasswordViewModel(){
+    public ResetPasswordViewModel(){
         mProgressMutableData.postValue(View.GONE);
         mSignUpResultMutableData.postValue(new ResponseStatus(false,""));
         forgetPasswordRepository = new ResetPasswordRepository();
@@ -44,7 +44,6 @@ public class ResetPasswordViewModel extends ViewModel {
         });
 
     }
-
 
     public LiveData<Integer> getResetPasswordProgress() {
         return mProgressMutableData;

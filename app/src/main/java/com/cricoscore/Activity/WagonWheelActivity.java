@@ -165,7 +165,15 @@ public class WagonWheelActivity extends AppCompatActivity {
         });
 
         activityWagonWheelBinding.tvNonOfAbove.setOnClickListener(view -> {
+            activityWagonWheelBinding.rlButtonGroup.setVisibility(View.GONE);
+            Toaster.customToast(selectedSegment);
 
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            }, 1000);
         });
         activityWagonWheelBinding.mbSave.setOnClickListener(view -> {
                     Toaster.customToast(selectedSegment + "  " + selectedShortArea);
@@ -177,9 +185,7 @@ public class WagonWheelActivity extends AppCompatActivity {
                         }
                     }, 1000);
 
-                }
-
-        );
+                });
         activityWagonWheelBinding.mbCancel.setOnClickListener(view -> {
 
         });
@@ -209,4 +215,9 @@ public class WagonWheelActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

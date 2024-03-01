@@ -14,7 +14,7 @@ public class UserProfileViewModel extends ViewModel {
     MutableLiveData<Integer> mProgressMutableData = new MutableLiveData<>();
     MutableLiveData<Boolean> mSignUpResultMutableData = new MutableLiveData<>();
 
-    UserProfileViewModel(){
+   public UserProfileViewModel(){
         mProgressMutableData.postValue(View.GONE);
         mSignUpResultMutableData.postValue(false);
         userProfileRepository = new UserProfileRepository();
@@ -40,6 +40,7 @@ public class UserProfileViewModel extends ViewModel {
                     SessionManager.saveIsEmailVerified(authData.getIs_email_verified());
                     SessionManager.saveIsPhoneVerified(authData.getIs_mobile_verified());
                     SessionManager.saveOtp(authData.getOtp());
+                    SessionManager.saveUserAvtar(authData.getAvatar());
                     mSignUpResultMutableData.postValue(userProfileResponse.getStatus());
                 }else mSignUpResultMutableData.postValue(false);
             }

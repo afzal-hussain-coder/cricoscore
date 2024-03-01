@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".Activity.VisitProfileActivity">
 
     <include
@@ -237,7 +238,8 @@
                         app:hintTextAppearance="@style/HintTextAppearance"
                         app:hintTextColor="@color/green"
                         app:startIconDrawable="@drawable/password_black_24dp"
-                        app:startIconTint="@color/dark_grey">
+                        app:startIconTint="@color/dark_grey"
+                        android:visibility="gone">
 
                         <!--this is the actual edit text which takes the input-->
                         <com.google.android.material.textfield.TextInputEditText
@@ -269,7 +271,8 @@
                         app:hintTextAppearance="@style/HintTextAppearance"
                         app:hintTextColor="@color/green"
                         app:startIconDrawable="@drawable/password_black_24dp"
-                        app:startIconTint="@color/dark_grey">
+                        app:startIconTint="@color/dark_grey"
+                        android:visibility="gone">
 
                         <!--this is the actual edit text which takes the input-->
                         <com.google.android.material.textfield.TextInputEditText
