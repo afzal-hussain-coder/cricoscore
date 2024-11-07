@@ -60,16 +60,21 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/filledTeamName"
                     style="@style/OutlinedRoundBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Type Team Name"
                     android:textColorHint="@color/dark_grey"
                     app:boxBackgroundColor="@color/white"
-                    app:boxStrokeColor="@color/purple_500"
-                    app:hintTextColor="@color/purple_500"
-                    app:startIconDrawable="@drawable/player_icon"
-                    app:startIconTint="@null">
+                    app:boxStrokeColor="@color/green"
+                    app:endIconTint="@color/dark_grey"
+                    app:errorEnabled="false"
+                    app:errorTextAppearance="@style/ErrorTextAppearance"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:hintTextColor="@color/green"
+                    app:startIconDrawable="@drawable/account_circle_black_24dp"
+                    app:startIconTint="@color/dark_grey">
 
                     <!--this is the actual edit text which takes the input-->
                     <com.google.android.material.textfield.TextInputEditText
@@ -90,6 +95,7 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/filledCity"
                     style="@style/OutlinedRoundBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -97,10 +103,14 @@
                     android:hint="Type City"
                     android:textColorHint="@color/dark_grey"
                     app:boxBackgroundColor="@color/white"
-                    app:boxStrokeColor="@color/purple_500"
-                    app:hintTextColor="@color/purple_500"
-                    app:startIconDrawable="@drawable/phone_android_black_24dp"
-                    app:startIconTint="@null">
+                    app:boxStrokeColor="@color/green"
+                    app:endIconTint="@color/dark_grey"
+                    app:errorEnabled="false"
+                    app:errorTextAppearance="@style/ErrorTextAppearance"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:hintTextColor="@color/green"
+                    app:startIconDrawable="@drawable/account_circle_black_24dp"
+                    app:startIconTint="@color/dark_grey">
 
                     <!--this is the actual edit text which takes the input-->
                     <com.google.android.material.textfield.TextInputEditText

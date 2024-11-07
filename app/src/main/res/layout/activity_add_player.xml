@@ -11,178 +11,219 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-    <RelativeLayout
-        android:id="@+id/middle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginTop="@dimen/_30sdp">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_pic"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp"
-            android:layout_centerInParent="true"
-            android:padding="@dimen/_4sdp"
-            android:src="@drawable/placeholder_user" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="-30dp"
-            android:layout_marginTop="@dimen/_55sdp"
-            android:layout_toEndOf="@+id/profile_pic"
-            android:background="@drawable/circle_camera"
-            android:padding="@dimen/_4sdp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_add_a_photo_black_24dp" />
-        </LinearLayout>
-    </RelativeLayout>
-
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
+        android:id="@+id/liMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/middle"
+        android:layout_below="@+id/toolbar"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:id="@+id/middle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_30sdp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_pic"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_centerInParent="true"
+                android:padding="@dimen/_4sdp"
+                android:src="@drawable/placeholder_user" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-30dp"
+                android:layout_marginTop="@dimen/_55sdp"
+                android:layout_toEndOf="@+id/profile_pic"
+                android:background="@drawable/circle_camera"
+                android:padding="@dimen/_4sdp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_add_a_photo_black_24dp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/middle"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/filledPlayerName"
+                    style="@style/OutlinedRoundBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:hint="Player Name"
+                    android:textColorHint="@color/dark_grey"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxStrokeColor="@color/green"
+                    app:hintTextColor="@color/purple_500"
+                    app:startIconDrawable="@drawable/player_icon"
+                    app:startIconTint="@null">
+
+                    <!--this is the actual edit text which takes the input-->
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text_pName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_regular"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/filledPhoneNumber"
+                    style="@style/OutlinedRoundBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:hint="Player Mobile Number"
+                    android:textColorHint="@color/dark_grey"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxStrokeColor="@color/green"
+                    app:hintTextColor="@color/purple_500"
+                    app:startIconDrawable="@drawable/phone_android_black_24dp"
+                    app:startIconTint="@null">
+
+                    <!--this is the actual edit text which takes the input-->
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text_pMobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_regular"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone"
+                        android:maxLength="10"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <!--state-->
+                <com.cricoscore.Utils.SelectTournamentType
+                    android:id="@+id/drop_pType"
+                    style="@style/formDropDown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/editboxx"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:hint="Select Player Type"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/dark_grey"
+                    android:textSize="@dimen/_10sdp"
+                    android:visibility="gone" />
+                <!--city-->
+                <com.cricoscore.Utils.SelectTournamentType
+                    android:id="@+id/drop_pRole"
+                    style="@style/formDropDown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/editboxx"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:hint="Select Player Role"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/dark_grey"
+                    android:textSize="@dimen/_10sdp"
+                    android:visibility="gone" />
+
+                <com.cricoscore.Utils.SelectTournamentType
+                    android:id="@+id/drop_p_Add_To_Team"
+                    style="@style/formDropDown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/editboxx"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:hint="Add To Team"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/dark_grey"
+                    android:textSize="@dimen/_10sdp"
+                    android:visibility="gone" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mb_submit"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:backgroundTint="@color/purple_500"
+                    android:fontFamily="@font/opensans_bold"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:text="@string/submit"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10sdp"
+                    app:cornerRadius="@dimen/_50sdp" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:visibility="gone"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_10sdp">
+        android:orientation="vertical">
 
-
-        <LinearLayout
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:background="@color/black_semi_transparent"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            app:autoShowKeyboard="true"
+            app:queryHint="search player" />
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/OutlinedRoundBox"
-                app:boxBackgroundColor="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Player Name"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:textColorHint="@color/dark_grey"
-                app:boxStrokeColor="@color/purple_500"
-                app:hintTextColor="@color/purple_500"
-                app:startIconDrawable="@drawable/player_icon"
-                app:startIconTint="@null">
-
-                <!--this is the actual edit text which takes the input-->
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_text_pName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textSize="@dimen/_10sdp"
-                    android:fontFamily="@font/opensans_regular"
-                    android:textColor="@color/black"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/OutlinedRoundBox"
-                app:boxBackgroundColor="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Player Mobile Number"
-                android:textColorHint="@color/dark_grey"
-                app:boxStrokeColor="@color/purple_500"
-                app:hintTextColor="@color/purple_500"
-                android:layout_marginTop="@dimen/_5sdp"
-                app:startIconDrawable="@drawable/phone_android_black_24dp"
-                app:startIconTint="@null">
-
-                <!--this is the actual edit text which takes the input-->
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_text_pMobile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:inputType="phone"
-                    android:textSize="@dimen/_10sdp"
-                    android:maxLength="10"
-                    android:fontFamily="@font/opensans_regular"
-                    android:maxLines="1"
-                    android:textColor="@color/black"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <!--state-->
-            <com.cricoscore.Utils.SelectTournamentType
-                android:id="@+id/drop_pType"
-                style="@style/formDropDown"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/editboxx"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
-                android:padding="@dimen/_10sdp"
-                android:hint="Select Player Type"
-                android:textColor="@color/black"
-                android:textColorHint="@color/dark_grey"
-                android:textSize="@dimen/_10sdp"
-                android:fontFamily="@font/opensans_regular" />
-            <!--city-->
-            <com.cricoscore.Utils.SelectTournamentType
-                android:id="@+id/drop_pRole"
-                style="@style/formDropDown"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/editboxx"
-                android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
-                android:padding="@dimen/_10sdp"
-                android:hint="Select Player Role"
-                android:textColor="@color/black"
-                android:textColorHint="@color/dark_grey"
-                android:textSize="@dimen/_10sdp"
-                android:fontFamily="@font/opensans_regular" />
-
-            <com.cricoscore.Utils.SelectTournamentType
-                android:id="@+id/drop_p_Add_To_Team"
-                style="@style/formDropDown"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/editboxx"
-                android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
-                android:padding="@dimen/_10sdp"
-                android:hint="Add To Team"
-                android:textColor="@color/black"
-                android:textColorHint="@color/dark_grey"
-                android:textSize="@dimen/_10sdp"
-                android:fontFamily="@font/opensans_regular" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/mb_submit"
-                style="@style/Widget.MaterialComponents.Button"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:paddingTop="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_10sdp"
-                app:cornerRadius="@dimen/_50sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:textColor="@color/white"
-                android:text="@string/submit"
-                android:fontFamily="@font/opensans_bold"
-                android:textSize="@dimen/_10sdp"
-                android:backgroundTint="@color/purple_500"
-                />
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

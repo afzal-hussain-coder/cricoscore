@@ -1,4 +1,4 @@
-package com.cricoscore.model;
+package com.cricoscore.model.TournamentModel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

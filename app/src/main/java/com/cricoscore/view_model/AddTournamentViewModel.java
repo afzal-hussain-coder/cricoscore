@@ -1,5 +1,6 @@
 package com.cricoscore.view_model;
 
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import androidx.lifecycle.LiveData;
@@ -9,6 +10,8 @@ import com.cricoscore.ApiResponse.AddTournamentResponse;
 import com.cricoscore.ApiResponse.ResponseStatus;
 import com.cricoscore.Utils.Toaster;
 import com.cricoscore.repository.AddTournamentRepository;
+
+import java.net.URI;
 
 public class AddTournamentViewModel extends ViewModel {
     private final AddTournamentRepository addTournamentRepository;
@@ -23,12 +26,12 @@ public class AddTournamentViewModel extends ViewModel {
 
     public void getAddTournamentResponse(String token, String tournamentType, String prize, String ballType, String tName, String startDate, String endDate,
                                          String state, String city, String location, String groundName, float fees, int discount, int numOfTeam,
-                                         String sponsoreName, String organizerName, String organizerPhone, String organizerEmail, int userId, int tournamentId
-            , AddTournamentRepository.IAddTournamentResponse iAddTournamentResponse) {
+                                         String sponsoreName, int userId, int tournamentId,Uri uri,Uri uriBanner) {
 
+        mProgressMutableData.postValue(View.VISIBLE);
         addTournamentRepository.getAddTournamentResponse(token, tournamentType, prize, ballType,
-                tName, startDate, endDate, state, city, location, groundName, fees, discount, numOfTeam, sponsoreName, organizerName, organizerPhone, organizerEmail, userId,
-                tournamentId, new AddTournamentRepository.IAddTournamentResponse() {
+                tName, startDate, endDate, state, city, location, groundName, fees, discount, numOfTeam, sponsoreName, userId,
+                tournamentId,uri,uriBanner, new AddTournamentRepository.IAddTournamentResponse() {
                     @Override
                     public void onResponse(AddTournamentResponse addTournamentResponse, Boolean status) {
                         mProgressMutableData.postValue(View.GONE);

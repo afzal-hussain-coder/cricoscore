@@ -10,6 +10,7 @@
     app:cardCornerRadius="@dimen/_5sdp"
     app:cardElevation="@dimen/_2sdp"
     app:cardUseCompatPadding="true"
+    android:id="@+id/cardView"
     tools:ignore="NamespaceTypo">
 
 
@@ -40,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
-            android:layout_toLeftOf="@+id/cb"
+            android:layout_toLeftOf="@+id/liEnd"
             android:layout_toRightOf="@+id/rl_profile"
             android:orientation="vertical">
 
@@ -72,14 +73,31 @@
                 app:fontFamily="@font/opensans_regular" />
         </LinearLayout>
 
-        <CheckBox
-            android:id="@+id/cb"
+
+        <LinearLayout
+            android:id="@+id/liEnd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:visibility="gone">
+            android:orientation="horizontal">
 
-        </CheckBox>
+            <CheckBox
+                android:id="@+id/cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone" />
+<!--            <com.cricoscore.Utils.CircleCheckBox-->
+<!--                android:id="@+id/circleCheckBox"-->
+<!--                android:layout_width="@dimen/_30sdp"-->
+<!--                android:layout_height="@dimen/_30sdp" />-->
+            <ImageView
+                android:id="@+id/ivRemove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/cancel_black_24dp"/>
+        </LinearLayout>
 
 
     </RelativeLayout>

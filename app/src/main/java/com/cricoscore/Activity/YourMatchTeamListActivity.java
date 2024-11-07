@@ -56,15 +56,15 @@ public class YourMatchTeamListActivity extends AppCompatActivity {
         activityYourMatchTeamListBinding.rvTeamList.setHasFixedSize(true);
         activityYourMatchTeamListBinding.rvTeamList.setLayoutManager(new LinearLayoutManager(this));
 
-        yourTeamListAdapter = new YourTeamListAdapter(mContext,getTeamList(), (pos,string) -> {
-            position = pos;
-            if(position>0){
-                activityYourMatchTeamListBinding.mcvSubmit.setVisibility(View.VISIBLE);
-            }else{
-                activityYourMatchTeamListBinding.mcvSubmit.setVisibility(View.GONE);
-            }
-        });
-        activityYourMatchTeamListBinding.rvTeamList.setAdapter(yourTeamListAdapter);
+//        yourTeamListAdapter = new YourTeamListAdapter(mContext,getTeamList(), (pos,string) -> {
+//            position = pos;
+//            if(position>0){
+//                activityYourMatchTeamListBinding.mcvSubmit.setVisibility(View.VISIBLE);
+//            }else{
+//                activityYourMatchTeamListBinding.mcvSubmit.setVisibility(View.GONE);
+//            }
+//        });
+//        activityYourMatchTeamListBinding.rvTeamList.setAdapter(yourTeamListAdapter);
 
         selectTournamentType =activityYourMatchTeamListBinding.dropTournamentName;
         option_tournament_list.add(new DataModel("Match A"));
@@ -108,58 +108,5 @@ public class YourMatchTeamListActivity extends AppCompatActivity {
 
 
     }
-    public List<YourTeamListActivity.Team> getTeamList(){
-        List<YourTeamListActivity.Team> tList = new ArrayList<>();
-        tList.add(new YourTeamListActivity.Team(
-                Color.parseColor("#E6F587"),"Royal Challengers","Inderjit Singh Bindra Stadium"));
-        tList.add(new YourTeamListActivity.Team(
-                Color.parseColor("#BBEA54"),"Power Hitters","Dr. Y. S. Rajasekhara Reddy International Cricket Stadium"));
-        tList.add(new YourTeamListActivity.Team(
-                Color.parseColor("#F1DB9C"),"Flying Eagles","Rajiv Gandhi International Cricket Stadium"));
-        tList.add(new YourTeamListActivity.Team(
-                Color.parseColor("#F4CEC8"),"Swift Strikers","Vidarbha Cricket Association Stadium"));
-        tList.add(new YourTeamListActivity.Team(
-                Color.parseColor("#E6C2EF"),"Golden Eagles","Arun Jaitley Cricket Stadium"
-        ));
-        return tList;
-    }
-    public class Team{
 
-        public int getLogo() {
-            return logo;
-        }
-
-        public void setLogo(int logo) {
-            this.logo = logo;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
-
-        int logo;
-        String name="";
-        String address="";
-
-
-
-
-        public Team(int logo, String name, String address) {
-            this.logo = logo;
-            this.name = name;
-            this.address = address;
-        }
-    }
 }

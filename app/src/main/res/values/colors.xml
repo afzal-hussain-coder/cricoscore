@@ -14,6 +14,9 @@
     <color name="dim_grey">#696969</color>
     <color name="dark_grey">#A9A9A9</color>
     <color name="light_gray">#F8F7FB</color>
+    <color name="platinum_gray"> #E5E4E2</color>
+
+
     <color name="lightgrey_dim">#EBEAEC</color>
     <color name="verified_user_color">#55ACEE</color>
     <color name="light_sky">#CAE2F7</color>

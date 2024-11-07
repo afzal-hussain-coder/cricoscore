@@ -1,6 +1,7 @@
 package com.cricoscore.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.cricoscore.Activity.TeamPlayerActivity;
 import com.cricoscore.R;
+import com.cricoscore.Utils.Global;
+import com.cricoscore.Utils.Toaster;
+import com.cricoscore.model.PlayerModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +28,15 @@ public class YourPlayerListAdapter extends RecyclerView.Adapter<YourPlayerListAd
     Context mContext;
     itemClickListener itemClickListener;
     int posClick=0;
-    List<TeamPlayerActivity.Player> tList = new ArrayList<>();
-    public YourPlayerListAdapter(Context mContext,List<TeamPlayerActivity.Player> tList, itemClickListener itemClickListener){
+    List<PlayerModel> tList = new ArrayList<>();
+    ArrayList<PlayerModel>addList;
+    ArrayList<PlayerModel>updatePlayer;
+    public YourPlayerListAdapter(Context mContext,List<PlayerModel> tList,ArrayList<PlayerModel>selectedPayer, itemClickListener itemClickListener){
         this.mContext = mContext;
         this.tList = tList;
         this.itemClickListener = itemClickListener;
+        addList = new ArrayList<>();
+        this.updatePlayer = selectedPayer;
     }
 
     @NonNull
@@ -39,22 +48,83 @@ public class YourPlayerListAdapter extends RecyclerView.Adapter<YourPlayerListAd
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        TeamPlayerActivity.Player tournament = tList.get(position);
+        PlayerModel tournament = tList.get(position);
         holder.tvTName.setText(tournament.getName());
-        holder.tvtLocation.setText(tournament.getPhone());
-        holder.tvtRole.setText(tournament.getRole());
 
-        holder.image.setBorderColor(tournament.getLogo());
-        holder.cb.setVisibility(View.VISIBLE);
+        if(tournament.getAvatar().isEmpty()){
+            Glide.with(mContext).load(R.drawable.placeholder_user).into(holder.image);
+        }else{
+            Glide.with(mContext).load(Global.BASE_URL+"/"+tournament.getAvatar()).into(holder.image);
+        }
+
+
+      //  holder.cb.setChecked(false);
+
+
+
+
+//        for(int i =0;i<updatePlayer.size();i++){
+//           // Toaster.customToast("Selected Payer Size: " + updatePlayer.get(i).getPlayer_id());
+//            if(updatePlayer.get(i).getPlayer_id()== tournament.getPlayer_id()){
+//                holder.cb.setChecked(true);
+//
+//                addList.add(tList.get(position));
+//                itemClickListener.checkedItem(addList);
+//                break;
+//            }
+//        }
+
+        if (updatePlayer != null && tList != null && updatePlayer.size() > 0) {
+            for (int i = 0; i < updatePlayer.size(); i++) {
+                // Check if the player ID matches
+                if (updatePlayer.get(i).getPlayer_id() == tournament.getPlayer_id()) {
+                    holder.cb.setChecked(true);
+
+                    // Add to the selected list
+                    addList.add(tList.get(position));
+                    itemClickListener.checkedItem(addList);
+                    break; // Exit the loop once the match is found
+                }
+            }
+        } else {
+            // Handle the case where updatePlayer or tList is null or empty
+            // For example, log or show an error message
+            Log.e("Error", "Player list or tournament list is null or empty.");
+        }
+
+
+
 
         holder.cb.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked==true){
-                posClick++;
-                itemClickListener.checkedItem(posClick);
+                addList.add(tList.get(position));
             }else{
-                posClick--;
-                itemClickListener.checkedItem(posClick);
+                addList.remove(tList.get(position));
+
             }
+
+            itemClickListener.checkedItem(addList);
+        });
+
+
+        holder.itemView.setOnClickListener(v -> {
+
+            boolean isChecked = holder.cb.isChecked();
+
+            // Toggle the checked state
+            holder.cb.setChecked(!isChecked);
+            isChecked = !isChecked; // Update the local variable
+
+            if (isChecked) {
+                // Add team ID if not already present
+                addList.add(tList.get(position));
+            } else {
+                // Remove team ID if present
+                addList.remove(tList.get(position));
+            }
+
+            itemClickListener.checkedItem(addList);
+
         });
 
     }
@@ -87,6 +157,6 @@ public class YourPlayerListAdapter extends RecyclerView.Adapter<YourPlayerListAd
     }
 
     public interface itemClickListener{
-        public void checkedItem(int pos);
+        public void checkedItem(ArrayList<PlayerModel>playerModelArrayList);
     }
 }

@@ -890,6 +890,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
         activityLoginBinding.mbRecover.setOnClickListener(v -> {
             if (activityLoginBinding.editTextForgotPasswordEmail.getText().toString().isEmpty()) {
                 activityLoginBinding.filledTextFieldForgotEmail.setErrorEnabled(true);
@@ -954,6 +955,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
         activityLoginBinding.mbRequestOtp.setOnClickListener(v -> {
             if (Objects.requireNonNull(activityLoginBinding.editTextMobileThroughOtp.getText()).toString().isEmpty()) {
                 activityLoginBinding.filledTextFieldThroughOtp.setErrorEnabled(true);

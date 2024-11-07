@@ -151,7 +151,7 @@
 
 
             <com.cricoscore.Utils.SelectTournamentType
-                android:id="@+id/drop_tAwards"
+                android:id="@+id/drop_ballType"
                 style="@style/formDropDown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -166,6 +166,7 @@
                 android:fontFamily="@font/opensans_regular" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/filledTextFieldTname"
                 style="@style/OutlinedRoundBox"
                 app:boxBackgroundColor="@color/white"
                 android:layout_width="match_parent"
@@ -287,6 +288,7 @@
                 android:fontFamily="@font/opensans_regular" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/filledTextFieldLocation"
                 style="@style/OutlinedRoundBox"
                 app:boxBackgroundColor="@color/white"
                 android:layout_width="match_parent"
@@ -315,6 +317,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/filledTextFieldGroundName"
                 style="@style/OutlinedRoundBox"
                 app:boxBackgroundColor="@color/white"
                 android:layout_width="match_parent"
@@ -343,6 +346,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/filledTextFieldFees"
                 style="@style/OutlinedRoundBox"
                 app:boxBackgroundColor="@color/white"
                 android:layout_width="match_parent"
@@ -371,6 +375,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/filledTextFieldDiscount"
                 style="@style/OutlinedRoundBox"
                 app:boxBackgroundColor="@color/white"
                 android:layout_width="match_parent"
@@ -389,7 +394,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:maxLines="1"
                     android:textSize="@dimen/_10sdp"
                     android:fontFamily="@font/opensans_regular"
@@ -399,6 +404,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/filledTextFieldNumberOfTeam"
                 style="@style/OutlinedRoundBox"
                 app:boxBackgroundColor="@color/white"
                 android:layout_width="match_parent"
@@ -417,7 +423,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:maxLines="1"
                     android:textSize="@dimen/_10sdp"
                     android:fontFamily="@font/opensans_regular"
@@ -427,6 +433,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/filledTextFieldSponsore"
                 style="@style/OutlinedRoundBox"
                 app:boxBackgroundColor="@color/white"
                 android:layout_width="match_parent"
@@ -458,6 +465,7 @@
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:layout_marginTop="@dimen/_10sdp"
+                 android:visibility="gone"
                  android:orientation="vertical">
 
                  <TextView
@@ -476,6 +484,7 @@
                      android:orientation="horizontal"
                      android:weightSum="2">
                      <com.google.android.material.textfield.TextInputLayout
+                         android:id="@+id/filledTextFieldOrganizerNam"
                          style="@style/OutlinedRoundBox"
                          app:boxBackgroundColor="@color/white"
                          android:layout_width="0dp"
@@ -504,6 +513,7 @@
 
                      </com.google.android.material.textfield.TextInputLayout>
                      <com.google.android.material.textfield.TextInputLayout
+                         android:id="@+id/filledTextFieldOrganizerPhone"
                          style="@style/OutlinedRoundBox"
                          app:boxBackgroundColor="@color/white"
                          android:layout_width="0dp"
@@ -526,7 +536,7 @@
                              android:inputType="phone"
                              android:textSize="@dimen/_10sdp"
                              android:fontFamily="@font/opensans_regular"
-                             android:maxLength="10"
+                             android:maxLength="12"
                              android:maxLines="1"
                              android:textColor="@color/black"
                              tools:ignore="TouchTargetSizeCheck" />
@@ -536,7 +546,7 @@
 
                  </LinearLayout>
                  <com.google.android.material.textfield.TextInputLayout
-                     android:id="@+id/filledTextField_email_signup"
+                     android:id="@+id/filledTextFieldOrganizer_email"
                      style="@style/OutlinedRoundBox"
                      app:boxBackgroundColor="@color/white"
                      android:layout_width="match_parent"
@@ -551,7 +561,7 @@
 
                      <!--this is the actual edit text which takes the input-->
                      <com.google.android.material.textfield.TextInputEditText
-                         android:id="@+id/edit_text_email_signup"
+                         android:id="@+id/edit_text_Organizer_email"
                          android:layout_width="match_parent"
                          android:layout_height="wrap_content"
                          android:maxLines="1"

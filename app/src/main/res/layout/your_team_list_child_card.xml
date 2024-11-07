@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_100sdp"
+    android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/_2sdp"
     android:layout_marginBottom="@dimen/_2sdp"
     app:cardBackgroundColor="@color/smokewhite"
@@ -23,12 +23,14 @@
             android:id="@+id/rl_profile"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-            android:layout_alignParentLeft="true">
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/image"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
+                android:layout_centerVertical="true"
                 android:src="@drawable/placeholder_user"
                 app:civ_border_width="@dimen/_4sdp"
                 tools:ignore="ImageContrastCheck" />
@@ -40,27 +42,40 @@
             android:id="@+id/tvTName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginStart="@dimen/_4sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_2sdp"
             android:layout_marginEnd="@dimen/_2sdp"
-            android:layout_toLeftOf="@+id/cb"
+            android:layout_toLeftOf="@+id/liEnd"
             android:layout_toRightOf="@+id/rl_profile"
             android:gravity="center_vertical"
             android:text="Team Name"
             android:textColor="@color/black"
-            android:textSize="@dimen/_8sdp"
+            android:textSize="@dimen/_10sdp"
             app:fontFamily="@font/opensans_semibold" />
 
 
-        <CheckBox
-            android:id="@+id/cb"
+        <LinearLayout
+            android:id="@+id/liEnd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:visibility="visible">
+            android:orientation="horizontal">
 
-        </CheckBox>
+            <CheckBox
+                android:id="@+id/cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone" />
+            <ImageView
+                android:id="@+id/ivRemove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/cancel_black_24dp"/>
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/tvtLocation"
@@ -74,6 +89,7 @@
             android:text="Bindra Stadium I.S, Sukhna Path, Sector 63, Sahibzada Ajit Singh Nagar, Chandigarh, Punjab 160062"
             android:textColor="@color/black"
             android:textSize="@dimen/_7sdp"
+            android:visibility="gone"
             app:fontFamily="@font/opensans_semibold" />
 
     </RelativeLayout>

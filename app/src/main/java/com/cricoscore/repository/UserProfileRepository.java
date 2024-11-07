@@ -23,8 +23,8 @@ public class UserProfileRepository {
         apiRequest = RetrofitRequest.getRetrofitInstance().create(ApiRequest.class);
     }
 
-    public void getUserProfile(String token,Integer userId,Integer userid, IUserProfileResponse userProfileResponse){
-        Call<UserProfileResponse> initiateLogin = apiRequest.getUserProfile(token,userId,userid);
+    public void getUserProfile(String token,IUserProfileResponse userProfileResponse){
+        Call<UserProfileResponse> initiateLogin = apiRequest.getUserProfile(token);
         initiateLogin.enqueue(new Callback<UserProfileResponse>() {
             @Override
             public void onResponse(Call<UserProfileResponse> call, Response<UserProfileResponse> response) {

@@ -4,11 +4,11 @@ plugins {
 
 android {
     namespace 'com.cricoscore'
-    compileSdk 34
+    compileSdk 33
     defaultConfig {
         applicationId "com.cricoscore"
         minSdk 21
-        targetSdk 34
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -76,14 +76,14 @@ dependencies {
     //for PickVisualMedia contract
     implementation "androidx.activity:activity:1.7.0"
 
-    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 
     // koin Dependency Injection
 //    implementation "org.koin:koin-android:3.2.0"
 //    implementation 'org.koin:koin-androidx-viewmodel:3.2.0'
 //    implementation 'org.koin:koin-androidx-scope:3.2.0'
 
-    implementation("com.github.NodeMedia:NodeMediaClient-Android:3.1.16")
+    //implementation 'com.github.NodeMedia:NodeMediaClient-Android:3.1.16'
     implementation("com.guolindev.permissionx:permissionx:1.6.1")
 
     implementation "com.github.bumptech.glide:glide:4.11.0"

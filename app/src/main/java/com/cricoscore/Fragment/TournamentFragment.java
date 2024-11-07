@@ -1,50 +1,66 @@
 package com.cricoscore.Fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.content.res.ColorStateList;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.CalendarContract;
-import android.util.Log;
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cricoscore.Activity.YourPlayerListActivity;
+import com.cricoscore.Activity.AddTeamActivity;
 import com.cricoscore.Activity.YourTeamListActivity;
 import com.cricoscore.Adapter.TournamentAdapter;
+import com.cricoscore.ApiResponse.Tournament;
+import com.cricoscore.ApiResponse.TournamentResponse;
 import com.cricoscore.CustomeCamera.CustomeCameraActivity;
 import com.cricoscore.R;
-import com.cricoscore.Utils.SelectTournamentType;
+import com.cricoscore.Utils.Global;
+import com.cricoscore.Utils.SessionManager;
 import com.cricoscore.Utils.Toaster;
+import com.cricoscore.retrofit.ApiRequest;
+import com.cricoscore.retrofit.RetrofitRequest;
+import com.cricoscore.view_model.AddTeamViewMode;
+import com.cricoscore.view_model.AllTournamentViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class TournamentFragment extends Fragment {
 
     RecyclerView rv_home;
-    public static Uri image_uri=null;
+    public static Uri image_uri = null;
     TextInputEditText edit_text_teamName;
     TextInputEditText edit_text_city;
     CircleImageView iv_team_logo;
 
+    AllTournamentViewModel allTournamentViewModel;
+
+    AddTeamViewMode addTeamViewMode;
 
 
     public TournamentFragment() {
@@ -52,14 +68,75 @@ public class TournamentFragment extends Fragment {
     }
 
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        allTournamentViewModel = new ViewModelProvider(getActivity()).get(AllTournamentViewModel.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tournament, container, false);
+        View view = inflater.inflate(R.layout.fragment_tournament, container, false);
+
+        rv_home = view.findViewById(R.id.rv_home);
+        rv_home.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rv_home.setHasFixedSize(true);
+
+        allTournamentViewModel.getTournamentListProgress().observe(getActivity(), integer -> {
+            if (integer == 0) {
+                Global.showLoader(getChildFragmentManager());
+            } else {
+                Global.hideLoder();
+            }
+        });
+
+        allTournamentViewModel.getTournamentListData().observe(getActivity(), tournaments -> {
+            rv_home.setAdapter(new TournamentAdapter(getActivity(), tournaments, (integer) -> {
+                startActivity(new Intent(getActivity(), YourTeamListActivity.class).putExtra("Id",integer+""));
+            }));
+        });
 
 
+
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Global.isOnline(getActivity())) {
+                allTournamentViewModel.getTournamentListResponse(SessionManager.getToken());
+            } else {
+                Global.showDialog(getActivity());
+            }
+        }
+
+
+        /**
+         * @AddTeam Result
+         * @s --> Check result
+         */
+
+        addTeamViewMode = new ViewModelProvider(this).get(AddTeamViewMode.class);
+
+        addTeamViewMode.getAddTournamentResult().observe(getActivity(), responseStatus -> {
+            if (responseStatus.isStatus()) {
+
+                new Handler().postDelayed(() -> {
+                    Toaster.customToast(responseStatus.getMessage());
+                }, 100);
+
+            }
+        });
+
+        addTeamViewMode.getSubmitProfileProgress().observe(getActivity(), integer -> {
+            if (integer == 0) {
+                Global.showLoader(getParentFragmentManager());
+            } else {
+                Global.hideLoder();
+            }
+        });
+
+        return view;
 
     }
 
@@ -67,133 +144,21 @@ public class TournamentFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        rv_home = view.findViewById(R.id.rv_home);
-        rv_home.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rv_home.setHasFixedSize(true);
 
-        rv_home.setAdapter(new TournamentAdapter(getActivity(), getTournamentList(), new TournamentAdapter.getImageCallListener() {
-            @Override
-            public void addTeamLogo() {
-                showBottomSheetDialog(null);
-            }
-        }));
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        if(image_uri!=null){
+        if (image_uri != null) {
             iv_team_logo.setImageURI(image_uri);
             image_uri = null;
         }
 
     }
 
-
-//    @Override
-//    public void onSaveInstanceState(Bundle savedInstanceState) {
-//        super.onSaveInstanceState(savedInstanceState);
-//        savedInstanceState.putString("editTextName", edit_text_teamName.getText().toString());
-//        savedInstanceState.putString("editTextCity", edit_text_city.getText().toString());
-//
-//    }
-//
-//    @Override
-//    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-//        super.onViewStateRestored(savedInstanceState);
-//
-//        if(savedInstanceState!=null){
-//            Toaster.customToast(savedInstanceState.getString("editTextName"));
-//            edit_text_teamName.setText(savedInstanceState.getString("editTextName"), TextView.BufferType.EDITABLE);
-//            edit_text_city.setText(savedInstanceState.getString("editTextCity"), TextView.BufferType.EDITABLE);
-//        }
-//
-//
-//    }
-
-
-
-    public List<Tournament> getTournamentList(){
-        List<Tournament> tList = new ArrayList<>();
-        tList.add(new Tournament(Color.parseColor("#33FFD7"),
-                Color.parseColor("#33FFD7"),"Wino Crew Gaming","Harbax Stadium, Delhi Cantt, Delhi - 110010",
-                "30-Mar-23 to 31-Sep-23"));
-        tList.add(new Tournament(Color.parseColor("#33E9FF"),
-                Color.parseColor("#33E9FF"),"Master Blasters","Villa No. 231, Saphire Greens,",
-                "01-Apr-23 to 22-july-23"));
-        tList.add(new Tournament(Color.parseColor("#C4F0F7"),
-                Color.parseColor("#C4F0F7"),"Bat Ball Doomers League","Vidhan Sabha Road, Ammaseoni",
-                "9-Jan-23 to 31-Mar-23"));
-        tList.add(new Tournament(Color.parseColor("#BBC9F9"),
-                Color.parseColor("#BBC9F9"),"North Sea Pro Series","Raipur, Chhatisgarh - 493111 (INDIA)",
-                "5-Feb-23 to 23-May-23"));
-        tList.add(new Tournament(Color.parseColor("#87A0F5"),
-                Color.parseColor("#87A0F5"),"Huddle Buddies Tournament","D-6/10," +
-                "Vasant Vihar," +
-                "New Delhi - 110 057 (INDIA)","16-Nov-23 to 27-Dec-23"
-                ));
-        return tList;
-    }
-    public class Tournament{
-        public int getBanner() {
-            return banner;
-        }
-
-        public void setBanner(int banner) {
-            this.banner = banner;
-        }
-
-        public int getLogo() {
-            return logo;
-        }
-
-        public void setLogo(int logo) {
-            this.logo = logo;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
-
-        int banner;
-        int logo;
-        String name="";
-        String address="";
-
-        public String getDate() {
-            return date;
-        }
-
-        public void setDate(String date) {
-            this.date = date;
-        }
-
-        String date="";
-
-
-        public Tournament(int banner, int logo, String name, String address,String date) {
-            this.banner = banner;
-            this.logo = logo;
-            this.name = name;
-            this.address = address;
-            this.date = date;
-        }
-    }
-
-    public void showBottomSheetDialog(Uri image_uri) {
+    /*public void showBottomSheetDialog(Uri image_uri) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity(), R.style.BottomSheetDialogTheme);
         bottomSheetDialog.setContentView(R.layout.add_team_bottom_dialog);
 
@@ -201,12 +166,14 @@ public class TournamentFragment extends Fragment {
         TextView tv_select_team_from_list = bottomSheetDialog.findViewById(R.id.tv_select_team_from_list);
         iv_team_logo = bottomSheetDialog.findViewById(R.id.iv_team_logo);
         edit_text_teamName = bottomSheetDialog.findViewById(R.id.edit_text_teamName);
+        TextInputLayout filledTeamName = bottomSheetDialog.findViewById(R.id.filledTeamName);
+        TextInputLayout filledCity = bottomSheetDialog.findViewById(R.id.filledCity);
         edit_text_city = bottomSheetDialog.findViewById(R.id.edit_text_city);
         MaterialButton mb_submit = bottomSheetDialog.findViewById(R.id.mb_submit);
 
         rl_team_logo.setOnClickListener(view -> {
             getActivity().startActivity(new Intent(getActivity(), CustomeCameraActivity.class)
-                    .putExtra("FROM","TournamentFragment"));
+                    .putExtra("FROM", "TournamentFragment"));
         });
 
         tv_select_team_from_list.setOnClickListener(v -> {
@@ -214,13 +181,121 @@ public class TournamentFragment extends Fragment {
             bottomSheetDialog.dismiss();
         });
 
+
+        edit_text_teamName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                filledTeamName.setErrorEnabled(false);
+                filledTeamName.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) {
+                    filledTeamName.setErrorEnabled(false);
+                    filledTeamName.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filledTeamName.setErrorEnabled(false);
+                filledTeamName.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            }
+        });
+
+        edit_text_teamName.setOnFocusChangeListener((v, hasFocus) -> {
+
+            if (hasFocus) {
+                filledTeamName.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            } else {
+                if (edit_text_teamName.getText().length() == 0) {
+                    filledTeamName.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_grey)));
+                } else {
+                    filledTeamName.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_grey)));
+                }
+            }
+        });
+
+
+        edit_text_city.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                filledCity.setErrorEnabled(false);
+                filledCity.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) {
+                    filledCity.setErrorEnabled(false);
+                    filledCity.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filledCity.setErrorEnabled(false);
+                filledCity.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            }
+        });
+
+        edit_text_city.setOnFocusChangeListener((v, hasFocus) -> {
+
+            if (hasFocus) {
+                filledCity.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+            } else {
+                if (edit_text_city.getText().length() == 0) {
+                    filledCity.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_grey)));
+                } else {
+                    filledCity.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_grey)));
+                }
+            }
+        });
+
+
         mb_submit.setOnClickListener(view -> {
-            bottomSheetDialog.dismiss();
+
+            if (edit_text_teamName.getText().toString().isEmpty() || edit_text_teamName.getText().toString().length() < 3
+                    || edit_text_teamName.getText().toString().length() > 21) {
+                filledTeamName.setErrorEnabled(true);
+                filledTeamName.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                filledTeamName.setErrorIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                filledTeamName.setBoxStrokeErrorColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                filledTeamName.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                filledTeamName.setError(getResources().getString(R.string.team_name));
+            } else if (edit_text_city.getText().toString().isEmpty() || edit_text_city.getText().toString().length() > 3) {
+                filledCity.setErrorEnabled(true);
+                filledCity.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                filledCity.setErrorIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                filledCity.setBoxStrokeErrorColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                filledCity.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
+                filledCity.setError(getResources().getString(R.string.city_name));
+            } else {
+
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (Global.isOnline(getActivity())) {
+                        addTeamViewMode.getAddTeamResponse(SessionManager.getToken(),SessionManager.getUserId().toString(),
+                                activityAddTeamBinding.editTextCity.getText().toString().trim(),
+                                activityAddTeamBinding.editTextTeamName.getText().toString(),
+                                "");
+                    } else {
+                        Global.showDialog(mActivity);
+                    }
+                }
+
+                bottomSheetDialog.dismiss();
+            }
+
+
         });
 
         bottomSheetDialog.show();
 
     }
-
+*/
 }
 

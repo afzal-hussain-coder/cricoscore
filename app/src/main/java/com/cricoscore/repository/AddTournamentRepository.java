@@ -1,5 +1,6 @@
 package com.cricoscore.repository;
 
+import android.net.Uri;
 import android.util.Log;
 
 import com.cricoscore.ApiResponse.AddTournamentResponse;
@@ -9,7 +10,11 @@ import com.cricoscore.retrofit.RetrofitRequest;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.net.URI;
+
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,10 +29,9 @@ public class AddTournamentRepository {
         apiRequest = RetrofitRequest.getRetrofitInstance().create(ApiRequest.class);
     }
 
-
     public void getAddTournamentResponse(String token, String tournamentType, String prize, String ballType, String tName, String startDate, String endDate,
                                          String state, String city, String location, String groundName, float fees, int discount, int numOfTeam,
-                                         String sponsoreName, String organizerName, String organizerPhone, String organizerEmail, int userId, int tournamentId
+                                         String sponsoreName, int userId, int tournamentId,Uri uri,Uri uriBanner
             , IAddTournamentResponse iAddTournamentResponse) {
 
         RequestBody requestBodytournamentType = RequestBody.create(MediaType.parse("text/plain"), tournamentType);
@@ -44,16 +48,46 @@ public class AddTournamentRepository {
         RequestBody requestBodydiscount = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(discount));
         RequestBody requestBodynumOfTeam = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(numOfTeam));
         RequestBody requestBodysponsoreName = RequestBody.create(MediaType.parse("text/plain"), sponsoreName);
-        RequestBody requestBodyorganizerName = RequestBody.create(MediaType.parse("text/plain"), organizerName);
-        RequestBody requestBodyorganizerPhone = RequestBody.create(MediaType.parse("text/plain"), organizerPhone);
-        RequestBody requestBodyorganizerEmail = RequestBody.create(MediaType.parse("text/plain"), organizerEmail);
         RequestBody requestBodyuserId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(userId));
         RequestBody requestBodytournamentId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(tournamentId));
+
+        MultipartBody.Part body=null;
+        MultipartBody.Part bodyBanner=null;
+
+        if (uri != null) {
+            File file = new File(uri.getPath());
+            String mimeType = getMimeType(file);
+            RequestBody requestFile = RequestBody.create(MediaType.parse(mimeType), file);
+
+            // MultipartBody.Part is used to send also the actual file name
+            body = MultipartBody.Part.createFormData("tournament_logo", file.getName(), requestFile);
+
+            // Proceed with the rest of your logic, e.g., making a network request with 'body'
+        } else {
+            // Handle the null case
+            Log.e("FileUpload", "URI is null, cannot proceed with file upload.");
+        }
+
+        if (uriBanner != null) {
+            File file = new File(uriBanner.getPath());
+            String mimeType = getMimeType(file);
+            RequestBody requestFile = RequestBody.create(MediaType.parse(mimeType), file);
+
+            // MultipartBody.Part is used to send also the actual file name
+            bodyBanner = MultipartBody.Part.createFormData("tournament_banner", file.getName(), requestFile);
+
+            // Proceed with the rest of your logic, e.g., making a network request with 'body'
+        } else {
+            // Handle the null case
+            Log.e("FileUpload", "URI is null, cannot proceed with file upload.");
+        }
+
+
 
         Call<AddTournamentResponse> initiateAddTournament = apiRequest.getAddTournamentResponse(token, requestBodytournamentType, requestBodyprize,
                 requestBodyballType, requestBodytName, requestBodystartDate, requestBodyendDate, requestBodystate, requestBodycity,
                 requestBodylocation, requestBodygroundName, requestBodyfees, requestBodydiscount, requestBodynumOfTeam, requestBodysponsoreName,
-                requestBodygroundName, requestBodyorganizerPhone, requestBodyorganizerEmail, requestBodytournamentId, requestBodyuserId);
+                requestBodyuserId,body,bodyBanner);
 
         initiateAddTournament.enqueue(new Callback<AddTournamentResponse>() {
             @Override
@@ -84,7 +118,30 @@ public class AddTournamentRepository {
 
     public interface IAddTournamentResponse {
         void onResponse(AddTournamentResponse addTournamentResponse, Boolean status);
+
         void onFailure(Throwable t);
+    }
+
+    private String getMimeType(File file) {
+        String mimeType = null;
+        String fileName = file.getName();
+        String extension = fileName.substring(fileName.lastIndexOf('.') + 1);
+        switch (extension.toLowerCase()) {
+            case "jpg":
+            case "jpeg":
+                mimeType = "image/jpeg";
+                break;
+            case "png":
+                mimeType = "image/png";
+                break;
+            case "gif":
+                mimeType = "image/gif";
+                break;
+            default:
+                mimeType = "application/octet-stream"; // Fallback MIME type
+                break;
+        }
+        return mimeType;
     }
 
 

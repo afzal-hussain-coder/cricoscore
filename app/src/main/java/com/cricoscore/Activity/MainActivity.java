@@ -61,13 +61,14 @@ public class MainActivity extends AppCompatActivity {
     private TabAdapter adapter;
     SelectStatusType drop_pStatus;
     private ArrayList<DataModel> option_status_list = new ArrayList<>();
-    String filterTypeStatus="";
+    String filterTypeStatus = "";
     TextView txt_visit_profile;
     CircleImageView profile_pic;
 
     UserProfileViewModel userProfileViewModel;
 
     SocketManager socketManager;
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,15 +78,15 @@ public class MainActivity extends AppCompatActivity {
         mActivity = this;
         mContext = this;
 
-        userProfileViewModel =  new ViewModelProvider(this).get(UserProfileViewModel.class);
+        userProfileViewModel = new ViewModelProvider(this).get(UserProfileViewModel.class);
 
-        userProfileViewModel.getUserProfileResult().observe(this,aBoolean -> {
-         if(aBoolean){
-             txt_nav_name.setText(SessionManager.getUserName());
-             Glide.with(mContext).load(SessionManager.getUserAvtar()).
-                     error(mContext.getResources().getDrawable(R.drawable.placeholder_user)).
-                     into(profile_pic);
-         }
+        userProfileViewModel.getUserProfileResult().observe(this, aBoolean -> {
+            if (aBoolean) {
+                txt_nav_name.setText(SessionManager.getUserName());
+                Glide.with(mContext).load(Global.BASE_URL+"/"+SessionManager.getUserAvtar()).
+                        error(mContext.getResources().getDrawable(R.drawable.placeholder_user)).
+                        into(profile_pic);
+            }
         });
         userProfileViewModel.getUserProfileLoader().observe(this, integer -> {
             if (integer == 0) {
@@ -95,9 +96,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(Global.isOnline(mContext)){
-            userProfileViewModel.getUserProfile(SessionManager.getToken(),SessionManager.getUserId());
-        }else{
+        if (Global.isOnline(mContext)) {
+            userProfileViewModel.getUserProfile(SessionManager.getToken());
+        } else {
             Global.showDialog(mActivity);
         }
 
@@ -162,35 +163,35 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
 
-        socketManager = new SocketManager();
-        socketManager.connect();
-
-        socketManager.onMessageReceived(new SocketManager.Listener() {
-            @Override
-            public void onReceived(String message) {
-                Log.d("onReceived",message);
-
-                //Toaster.customToast(message);
-            }
-        });
-
-        socketManager.sendMessage("Afzal Heloo");
-
-        Socket mSocket = null;
-        try {
-            mSocket = IO.socket("https://chat.criconetonline.com");
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                //Exception e = (Exception) args[0];
-               // Log.e("SocketManager", "Connection error: " + e.getMessage());
-                //Toaster.customToast("connected");
-               System.out.println("connected");
-            }
-        });
+//        socketManager = new SocketManager();
+//        socketManager.connect();
+//
+//        socketManager.onMessageReceived(new SocketManager.Listener() {
+//            @Override
+//            public void onReceived(String message) {
+//                Log.d("onReceived",message);
+//
+//                //Toaster.customToast(message);
+//            }
+//        });
+//
+//        socketManager.sendMessage("Afzal Heloo");
+//
+//        Socket mSocket = null;
+//        try {
+//            mSocket = IO.socket("https://chat.criconetonline.com");
+//        } catch (URISyntaxException e) {
+//            e.printStackTrace();
+//        }
+//        mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+//            @Override
+//            public void call(Object... args) {
+//                //Exception e = (Exception) args[0];
+//               // Log.e("SocketManager", "Connection error: " + e.getMessage());
+//                //Toaster.customToast("connected");
+//               System.out.println("connected");
+//            }
+//        });
 
 
     }
@@ -223,8 +224,8 @@ public class MainActivity extends AppCompatActivity {
             public void onDismiss() {
             }
         });
-        tabLayout=findViewById(R.id.tabLayout);
-        viewPager2=findViewById(R.id.viewPager);
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager2 = findViewById(R.id.viewPager);
 
         tabLayout.addTab(tabLayout.newTab().setText("Tournament"));
         tabLayout.addTab(tabLayout.newTab().setText("Match"));
@@ -232,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        adapter = new TabAdapter(fragmentManager , getLifecycle());
+        adapter = new TabAdapter(fragmentManager, getLifecycle());
         viewPager2.setAdapter(adapter);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -272,17 +273,19 @@ public class MainActivity extends AppCompatActivity {
     private void setItemTextImageOnNavigationDrawer() {
         drawerList = new ArrayList<>();
         drawerList.add(new Drawer(getString(R.string.home), false, R.drawable.home_black_24dp));
+        //drawerList.add(new Drawer(getResources().getString(R.string.my_tournament), false, R.drawable.sports_cricket_black_24dp));
+
         drawerList.add(new Drawer(getString(R.string.live_scoring), false, R.drawable.sports_cricket_black_24dp));
         drawerList.add(new Drawer(getString(R.string.scorecard), false, R.drawable.sports_cricket_black_24dp));
         drawerList.add(new Drawer(getString(R.string.addTournament), false, R.drawable.sports_cricket_black_24dp));
         //drawerList.add(new Drawer(getString(R.string.ScheduleTournament), false, R.drawable.sports_cricket_black_24dp));
-        drawerList.add(new Drawer(getString(R.string.addMatch), false, R.drawable.sports_cricket_black_24dp));
+      //  drawerList.add(new Drawer(getString(R.string.addMatch), false, R.drawable.sports_cricket_black_24dp));
         drawerList.add(new Drawer(getString(R.string.schedule_match), false, R.drawable.sports_cricket_black_24dp));
-        drawerList.add(new Drawer(getString(R.string.add_team), false, R.drawable.team));
-        drawerList.add(new Drawer(getString(R.string.yourteamlist), false, R.drawable.team));
-        drawerList.add(new Drawer(getString(R.string.addPlayer), false, R.drawable.player_icon));
-        drawerList.add(new Drawer(getString(R.string.yourPlayerlist), false, R.drawable.player_icon));
-        drawerList.add(new Drawer(getString(R.string.liveStreamYourLocalMatch), false, R.drawable.stream_icon));
+      //  drawerList.add(new Drawer(getString(R.string.add_team), false, R.drawable.team));
+       // drawerList.add(new Drawer(getString(R.string.yourteamlist), false, R.drawable.team));
+       // drawerList.add(new Drawer(getString(R.string.addPlayer), false, R.drawable.player_icon));
+       // drawerList.add(new Drawer(getString(R.string.yourPlayerlist), false, R.drawable.player_icon));
+        //drawerList.add(new Drawer(getString(R.string.liveStreamYourLocalMatch), false, R.drawable.stream_icon));
         drawerList.add(new Drawer(getString(R.string.logout), false, R.drawable.logout_black_24dp));
 
         menuadapter = new MenuAdapter(mActivity, drawerList);
@@ -307,35 +310,35 @@ public class MainActivity extends AppCompatActivity {
             drawer.closeDrawer(GravityCompat.START);
         }
 
-        if(drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.live_scoring))) {
-            startActivity(new Intent(mActivity,StartLiveScoringActivity.class));
-        }else  if(drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.scorecard))) {
-            startActivity(new Intent(mActivity,ScorecardActivity.class));
-        }
-        else if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.addTournament))) {
+        if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.live_scoring))) {
+            startActivity(new Intent(mActivity, StartLiveScoringActivity.class));
+        } else if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.my_tournament))) {
+           startActivity(new Intent(mContext,MyTournamentActivity.class));
+        } else if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.scorecard))) {
+            startActivity(new Intent(mActivity, ScorecardActivity.class));
+        } else if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.addTournament))) {
             startActivity(new Intent(mActivity, AddTournamentActivity.class));
         }
 //       else if(drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.schedule_tournament))) {
 //           startActivity(new Intent(mActivity, ScheduleTournamentActivity.class));
 //       }
-        else if(drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.addMatch))) {
+        else if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.addMatch))) {
             startActivity(new Intent(mActivity, AddMatchActivity.class));
-        }
-        else if(drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.schedule_match))) {
+        } else if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.schedule_match))) {
             startActivity(new Intent(mActivity, ScheduleMatchActivity.class));
-        }
-        else if(drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.addPlayer))) {
+        } else if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.addPlayer))) {
             startActivity(new Intent(mActivity, AddPlayer.class));
-        }else if(drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.yourteamlist))) {
+        } else if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.yourteamlist))) {
             startActivity(new Intent(mActivity, YourTeamListActivity.class));
-        }else if(drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.add_team))) {
+        } else if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.add_team))) {
             startActivity(new Intent(mActivity, AddTeamActivity.class));
-        }else if(drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.yourPlayerlist))) {
+        } else if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.yourPlayerlist))) {
             startActivity(new Intent(mActivity, YourPlayerListActivity.class));
-        } else if(drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.liveStreamYourLocalMatch))){
-            startActivity(new Intent(mActivity,LiveStreamCameraActivity.class));
         }
-        else if(drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.logout))) {
+//        else if(drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.liveStreamYourLocalMatch))){
+//            startActivity(new Intent(mActivity,LiveStreamCameraActivity.class));
+//        }
+        else if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.logout))) {
 
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle("");

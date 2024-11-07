@@ -33,6 +33,16 @@
         android:src="@drawable/edit_black_24dp"
         app:tint="@color/white" />
 
+    <ImageView
+        android:id="@+id/img_add"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_gravity="right"
+        android:visibility="gone"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:src="@drawable/plus"
+        app:tint="@color/white" />
+
 
 
 

@@ -201,6 +201,7 @@
                                 android:textSize="@dimen/_6sdp" />
 
                             <TextView
+                                android:id="@+id/tvTournamentType"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/opensans_semibold"
@@ -226,6 +227,7 @@
                                 android:textSize="@dimen/_6sdp" />
 
                             <TextView
+                                android:id="@+id/tvFees"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/opensans_semibold"
@@ -252,6 +254,7 @@
 
                             <!--\u20B9 100-->
                             <TextView
+                                android:id="@+id/tvDiscount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/opensans_semibold"
@@ -277,6 +280,7 @@
                                 android:textSize="@dimen/_6sdp" />
 
                             <TextView
+                                android:id="@+id/tvSponser"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/opensans_semibold"
@@ -308,6 +312,7 @@
                                 android:textSize="@dimen/_6sdp" />
 
                             <TextView
+                                android:id="@+id/tvBallType"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/opensans_semibold"
@@ -333,6 +338,7 @@
                                 android:textSize="@dimen/_6sdp" />
 
                             <TextView
+                                android:id="@+id/tvPrize"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/opensans_semibold"
@@ -358,6 +364,7 @@
                                 android:textSize="@dimen/_6sdp" />
 
                             <TextView
+                                android:id="@+id/tvNoOfTeam"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/opensans_semibold"
@@ -372,6 +379,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
                             android:layout_marginTop="@dimen/_10sdp"
+                            android:visibility="gone"
                             android:orientation="vertical">
 
                             <TextView
@@ -467,13 +475,167 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl_schedule"
+            android:layout_above="@+id/liSchedule"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_5sdp"
             android:fadingEdge="vertical"
+            android:visibility="visible"
             android:orientation="horizontal">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/liSchedule"
+            android:layout_below="@+id/rl_schedule"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:visibility="gone"
+            android:layout_marginEnd="@dimen/_20sdp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/circle_white"
+                    android:backgroundTint="@color/dark_grey">
+
+                    <ImageView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/plus"
+                        app:tint="@color/white" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/liSquadTeamOne"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@color/purple_700"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="Select Team A"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10sdp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/circle_camera"
+                    android:backgroundTint="@color/smokewhite"
+                    android:fontFamily="@font/opensans_bold"
+                    android:gravity="center"
+                    android:text="vs"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp">
+
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/circle_white"
+                    android:backgroundTint="@color/dark_grey">
+
+                    <ImageView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/plus"
+                        app:tint="@color/white" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/liSquadTeamB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@color/purple_700"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="Select Team B"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10sdp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/liSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/purple_700"
+            android:padding="@dimen/_10sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvTextSchedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/submit"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:fontFamily="@font/opensans_semibold"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 

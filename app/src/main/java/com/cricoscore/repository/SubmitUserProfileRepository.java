@@ -48,7 +48,7 @@ public class SubmitUserProfileRepository {
         File file=null;
         if(imagePath!=null){
             file = new File(imagePath.getPath());
-            Toaster.customToast(imagePath.getPath());
+            //Toaster.customToast(imagePath.getPath());
         }
 
 

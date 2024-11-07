@@ -49,6 +49,7 @@
     <string name="end_time">End Time</string>
     <string name="organizer_contact_details">Organizer contact detail</string>
     <string name="add_team">Add Team</string>
+    <string name="add_new_team">Add New Team</string>
     <string name="addPlayer">Add Player</string>
     <string name="teamlist">Team List</string>
     <string name="yourteamlist">Your Team List</string>
@@ -102,6 +103,9 @@
     <string name="selection_of_team_error">Choose toss winning team</string>
     <string name="Decision_to_choose">Decision to choose batting or bowling</string>
     <string name="username_msg">Sorry, your username must be between 3 to 21 characters</string>
+    <string name="player_name">Sorry, your player name must be between 3 to 21 characters</string>
+    <string name="team_name">Sorry, your team name  must be between 3 to 21 characters</string>
+    <string name="city_namee">Sorry, your city name  must be between 3 to 21 characters</string>
     <string name="firstname_msg">Sorry, your firstname must be between 2 to 30 characters</string>
     <string name="lastname_msg">Sorry, your lastname must be between 2 to 30 characters</string>
     <string name="edit_profile">Edit Profile</string>
@@ -183,5 +187,20 @@
     <string name="liveStreamYourLocalMatch">Live Stream Your Local Match</string>
     <string name="streamKey_msg">Sorry, your stream key must be between 3 to 21 characters</string>
     <string name="add_awards_message">Fill awards</string>
+    <string name="tournamentName_msg">Sorry, Your TournamentName must be between 3 to 21 characters</string>
+    <string name="location_msg">Location should contain at lest 3 characters</string>
+    <string name="groundName_msg">Ground Name should contain at lest 3 characters</string>
+    <string name="tFess_msg">Enter Tournament Fees</string>
+    <string name="numberOfTeams_msg">Enter Number Of Teams</string>
+    <string name="organizerName_msg">Organizer Name should contain at lest 3 characters</string>
+    <string name="phone_msg">Enter 10-digit mobile number</string>
+    <string name="email_msg">Enter a valid email</string>
+    <string name="my_tournament">My Tournament</string>
+    <string name="city_name">City name can\'t be empty!</string>
+    <string name="squad">Squad</string>
+    <string name="matchType">Match Type</string>
+    <string name="ballType">Ball Type</string>
+    <string name="pitchType">Pitch Type</string>
+
 
 </resources>

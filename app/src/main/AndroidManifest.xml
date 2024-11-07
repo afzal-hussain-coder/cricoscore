@@ -35,6 +35,30 @@
         android:theme="@style/Theme.Cricoscore"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.ScheduleMatchDetailsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Cricoscore.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activity.TeamDetailsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Cricoscore.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activity.MyTournamentActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Cricoscore.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Activity.LiveStreamCameraActivity"
             android:exported="false"
             android:theme="@style/Theme.Cricoscore.NoActionBar">

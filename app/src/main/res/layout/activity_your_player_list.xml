@@ -64,28 +64,28 @@
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:fontFamily="@font/opensans_regular" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/mb_submit"
-                    style="@style/Widget.MaterialComponents.Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:visibility="gone"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:backgroundTint="@color/purple_500"
-                    android:fontFamily="@font/opensans_bold"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10sdp"
-                    android:text="@string/submit"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_10sdp"
-                    app:cornerRadius="@dimen/_50sdp" />
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mb_submit"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:backgroundTint="@color/purple_500"
+            android:fontFamily="@font/opensans_bold"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:text="@string/submit"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10sdp"
+            app:cornerRadius="@dimen/_50sdp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_teamList"

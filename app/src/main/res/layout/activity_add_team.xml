@@ -61,6 +61,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/filledTeamName"
                 style="@style/OutlinedRoundBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,7 +69,7 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:textColorHint="@color/dark_grey"
                 app:boxBackgroundColor="@color/white"
-                app:boxStrokeColor="@color/purple_500"
+                app:boxStrokeColor="@color/green"
                 app:hintTextColor="@color/purple_500"
                 app:startIconDrawable="@drawable/team"
                 app:startIconTint="@null">
@@ -90,14 +91,14 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/OutlinedRoundBox"
-                android:id="@+id/filledTextField_username"
+                android:id="@+id/filledTextFieldCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Type City"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:textColorHint="@color/dark_grey"
                 app:boxBackgroundColor="@color/white"
-                app:boxStrokeColor="@color/purple_500"
+                app:boxStrokeColor="@color/green"
                 app:hintTextColor="@color/purple_500"
                 app:startIconDrawable="@drawable/location_black_24dp"
                 app:startIconTint="@null">
@@ -121,7 +122,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:layout_marginBottom="@dimen/_2sdp"
                 app:cardBackgroundColor="@color/smokewhite"
@@ -168,7 +169,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/_2sdp"
                 android:layout_marginBottom="@dimen/_2sdp"
                 app:cardBackgroundColor="@color/smokewhite"

@@ -86,8 +86,12 @@ public class VisitProfileActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         if (image_uri != null) {
-            activityVisitProfileBinding.profilePic.setImageURI(image_uri);
+           // activityVisitProfileBinding.profilePic.setImageURI(image_uri);
+            Glide.with(mContext)
+                    .load(image_uri) // Load the image from URI
+                    .into(activityVisitProfileBinding.profilePic);
             //image_uri = null;
         }
 

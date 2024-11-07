@@ -1,29 +1,32 @@
 package com.cricoscore.retrofit;
 
+import com.cricoscore.ApiResponse.AddTeamResponse;
 import com.cricoscore.ApiResponse.AddTournamentResponse;
 import com.cricoscore.ApiResponse.SignUpResponse;
+import com.cricoscore.ApiResponse.TournamentResponse;
 import com.cricoscore.ApiResponse.UserProfileResponse;
 import com.cricoscore.ApiResponse.VerifyEmailResponse;
+import com.cricoscore.ParamBody.AddPlayerBody;
+import com.cricoscore.ParamBody.AddPlayerIntoTeamBody;
+import com.cricoscore.ParamBody.AddTeamInTournamnetBody;
 import com.cricoscore.ParamBody.ForgetPasswordBody;
 import com.cricoscore.ParamBody.LoginBody;
 import com.cricoscore.ParamBody.LoginThroughPhoneNumberBody;
+import com.cricoscore.ParamBody.RemovePlayerBody;
 import com.cricoscore.ParamBody.ResetPasswordBody;
 import com.cricoscore.ParamBody.SignUpBody;
-import com.cricoscore.ParamBody.SubmitUserProfileBody;
 import com.cricoscore.ParamBody.VerifyOtpBody;
 import com.cricoscore.Utils.Global;
-import com.cricoscore.Utils.SessionManager;
-import com.cricoscore.model.AddTournamentData;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
+import com.cricoscore.model.TournamentModel.TournamentDetails;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -57,8 +60,8 @@ public interface ApiRequest {
     @POST(Global.VERIFY_EMAIL_OTP)
     Call<VerifyEmailResponse> getVerifyEmailOtp(@Body VerifyOtpBody verifyOtpBody);
 
-    @GET(Global.USER_PROFILE + "{user_id}/{id}")
-    Call<UserProfileResponse> getUserProfile(@Header("token") String token, @Path("user_id") Integer userId, @Path("id") Integer userid);
+    @GET(Global.USER_PROFILE)
+    Call<UserProfileResponse> getUserProfile(@Header("token") String token);
 
     @Multipart
     @POST(Global.USER_SUBMIT_PROFILE)
@@ -98,9 +101,71 @@ public interface ApiRequest {
                                                          @Part("discount") RequestBody discount,
                                                          @Part("no_of_team") RequestBody no_of_team,
                                                          @Part("sponser") RequestBody sponser,
-                                                         @Part("org_contact_name") RequestBody org_contact_name,
-                                                         @Part("org_contact_number") RequestBody org_contact_number,
-                                                         @Part("org_contact_email") RequestBody org_contact_email,
-                                                         @Part("tournament_id") RequestBody tournament_id,
-                                                         @Part("user_id") RequestBody user_id);
+                                                         @Part("user_id") RequestBody user_id,
+                                                         @Part MultipartBody.Part tournament_logo,
+                                                         @Part MultipartBody.Part tournament_banner);
+
+
+    @GET(Global.ALL_TOURNAMENT)
+    Call<TournamentResponse> getAllTournament(@Header("token") String token);
+
+    @GET(Global.GET_MY_TOURNAMENT + "{user_id}/{id}")
+    Call<TournamentResponse> getMyTournament(@Header("token") String token, @Path("user_id") Integer userId);
+
+    @Multipart
+    @POST(Global.ADD_TEAM)
+    Call<AddTeamResponse> getAddTeamResponse(@Header("token") String token,
+                                             @Part("user_id") RequestBody user_id,
+                                             @Part("city") RequestBody city,
+                                             @Part("name") RequestBody name,
+                                             @Part MultipartBody.Part team_logo);
+
+    @GET("tournament/getDetails/{tournamentId}")
+        // Use {tournamentId} in the endpoint
+    Call<ResponseBody> getTournamentDetails(
+            @Header("token") String token,
+            @Path("tournamentId") String tournamentId);
+
+    @GET(Global.GET_MYTEAM)
+    Call<ResponseBody> getMyTeam(
+            @Header("token") String token);
+
+    @POST(Global.ADD_TEAM_IN_TOURNAMENT)
+    Call<ResponseBody> addTeamInTournamnet(@Header("token") String token,
+                                           @Body AddTeamInTournamnetBody addTeamInTournamnetBody);
+
+    @GET("team/getTeamDetails/{teamId}")
+    Call<ResponseBody> getTeamDetails(@Header("token") String token,
+                                      @Path("teamId") String teamId);
+
+    @Multipart
+    @POST(Global.ADD_PLAYER)
+    Call<ResponseBody> addPayer(@Header("token") String token,
+                                @Part("name") RequestBody name,
+                                @Part("phone_number") RequestBody phone_number,
+                                @Part MultipartBody.Part avatar);
+
+    @GET(Global.MY_PLAYER_LIST)
+    Call<ResponseBody> getMyPlayer(@Header("token") String token);
+
+
+    @POST(Global.ADD_PLAYER_INTO_TEAM)
+    Call<ResponseBody> addPlayerInTeam(@Header("token") String token,
+                                       @Body AddPlayerIntoTeamBody addPlayerIntoTeamBody);
+
+    @DELETE("team/removePlayersFromTeam/{team_id}/{player_id}")
+    Call<ResponseBody> removePlayer(@Header("token") String token,
+                                    @Path("team_id") int team_id,
+                                    @Path("player_id") String player_id);
+
+    @DELETE("team/delete/{team_id}")
+    Call<ResponseBody> removeTeam(@Header("token") String token,
+                                  @Path("team_id") int team_id);
+
+    @DELETE("tournament/removeTeam/{tournament_id}/{team_id}")
+    Call<ResponseBody> removeTeamFromTournament(@Header("token") String token,
+                                                @Path("team_id") int team_id,
+                                                @Path("tournament_id") int tournament_id);
+
+
 }

@@ -1,6 +1,6 @@
 package com.cricoscore.ApiResponse;
 
-import com.cricoscore.model.AddTournamentData;
+import com.cricoscore.model.TournamentModel.AddTournamentData;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

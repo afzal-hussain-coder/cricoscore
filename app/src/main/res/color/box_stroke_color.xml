@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true" android:color="@color/purple_700" /> <!-- When focused -->
+    <item android:state_focused="false" android:state_empty="false" android:color="@color/dark_grey" /> <!-- When not focused and not empty -->
+    <item android:color="@color/dark_grey" /> <!-- Default color when empty -->
+</selector>

@@ -2,6 +2,7 @@ package com.cricoscore.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -15,22 +16,41 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.cricoscore.Adapter.YourTeamListAdapterHorizontal;
 import com.cricoscore.R;
 import com.cricoscore.Utils.Global;
+import com.cricoscore.Utils.SessionManager;
 import com.cricoscore.Utils.Toaster;
 import com.cricoscore.databinding.ActivityTournamentDetailsBinding;
 import com.cricoscore.databinding.ToolbarBinding;
+import com.cricoscore.model.TeamModel;
+import com.cricoscore.model.TournamentModel.TournamentDetails;
+import com.cricoscore.retrofit.ApiRequest;
+import com.cricoscore.retrofit.RetrofitRequest;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TournamentDetailsActivity extends AppCompatActivity {
 
@@ -45,7 +65,26 @@ public class TournamentDetailsActivity extends AppCompatActivity {
     Date _currentDate;
     String aTime = "";
     String currentDate = "";
-    String teamName="";
+    String teamName = "";
+    String tournamentId = "";
+    String tournamentName = "";
+    String formatedStartDate = "";
+    String formatedEndDate = "";
+    String location = "";
+    int teamId;
+    ArrayList<TeamModel>teamModelArrayList = new ArrayList<>();
+    // Variables to store selected team details
+    private int team1Id = -1;
+    private String teamNameSelected1 = "";
+    private String teamLogoSelected1 = "";
+
+    private int team2Id = -1;
+    private String teamNameSelected2 = "";
+    private String teamLogoSelected2 = "";
+
+    private int posClick = 0;  // Keeps track of the number of selected teams
+    List<TeamModel> teamIdListt = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,101 +100,71 @@ public class TournamentDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-        String name = getIntent().getStringExtra("Name") +" Details";
-        toolbarBinding.toolbartext.setText(name);
+
+        if (getIntent() != null) {
+            tournamentId = getIntent().getStringExtra("id");
+        }
+
+        if (Global.isOnline(mContext)) {
+            getTournamentDetails(tournamentId);
+        } else {
+            Global.showDialog(mActivity);
+        }
+
+
+        toolbarBinding.toolbartext.setText(tournamentName);
         toolbarBinding.toolbar.setNavigationOnClickListener(v -> finish());
 
-        activityTournamentDetailsBinding.tvInfo.startAnimation((Animation) AnimationUtils.loadAnimation(mContext,R.anim.translate));
+        activityTournamentDetailsBinding.tvInfo.startAnimation((Animation) AnimationUtils.loadAnimation(mContext, R.anim.translate));
 
-        activityTournamentDetailsBinding.rvTeamList.setLayoutManager(new GridLayoutManager(mContext,2));
+        activityTournamentDetailsBinding.rvTeamList.setLayoutManager(new LinearLayoutManager(mContext));
         activityTournamentDetailsBinding.rvTeamList.setHasFixedSize(true);
 
-        yourTeamListAdapter = new YourTeamListAdapterHorizontal(mContext,getTeamList(), (pos,string) -> {
-            position = pos;
-            teamName = string;
-            if(position==2){
-                activityTournamentDetailsBinding.mbScheduleMatch.setVisibility(View.VISIBLE);
-            }else{
-                activityTournamentDetailsBinding.mbScheduleMatch.setVisibility(View.GONE);
-            }
-        });
-        activityTournamentDetailsBinding.rvTeamList.setAdapter(yourTeamListAdapter);
 
-        activityTournamentDetailsBinding.imgBanner.setBackgroundColor(getIntent().getIntExtra("color",0));
-        activityTournamentDetailsBinding.image.setBorderColor(getIntent().getIntExtra("color",0));
-        activityTournamentDetailsBinding.tvTName.setText(getIntent().getStringExtra("Name"));
-        activityTournamentDetailsBinding.tvtLocation.setText(getIntent().getStringExtra("Address"));
-        activityTournamentDetailsBinding.tvdate.setText(getIntent().getStringExtra("Date"));
+
+
         activityTournamentDetailsBinding.mbScheduleMatch.setOnClickListener(v -> {
             showBottomSheetDialog();
         });
+
+
+
+
+        activityTournamentDetailsBinding.liSchedule.setOnClickListener(v -> {
+
+            if(teamModelArrayList.isEmpty()){
+                startActivity(new Intent(mContext,YourTeamListActivity.class).putExtra("Id",tournamentId));
+            }else{
+                if (team1Id != -1 && team2Id != -1 && teamIdListt.size()==2) {
+                    // If both teams are selected, proceed to the next activity
+                    Intent intent = new Intent(mContext, ScheduleMatchDetailsActivity.class);
+                    intent.putExtra("teamName1", teamNameSelected1);
+                    intent.putExtra("teamId1", team1Id);
+                    intent.putExtra("teamLogo1", teamLogoSelected1);
+                    intent.putExtra("teamName2", teamNameSelected2);
+                    intent.putExtra("teamId2", team2Id);
+                    intent.putExtra("teamLogo2", teamLogoSelected2);
+                    intent.putExtra("id",tournamentId);
+                    startActivity(intent);
+                } else {
+                    // Notify the user to select two teams before proceeding
+                    Toast.makeText(mContext, "Please select two teams before submitting", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
+
+
+//            if(position == 2){
+//                startActivity(new Intent(mContext, ScheduleMatchDetailsActivity.class).putExtra("id",tournamentId));
+//                //finish();
+//                //showBottomSheetDialog();
+//            }else{
+//                Toaster.customToast("Select two team to create a schedule");
+//            }
+        });
     }
 
-    public List<YourTeamListActivity.Team> getTeamList(){
-        List<YourTeamListActivity.Team> tList = new ArrayList<>();
-        tList.add(new YourTeamListActivity.Team(
-                Color.parseColor("#E6F587"),"Royal Challengers","Inderjit Singh Bindra Stadium"));
-        tList.add(new YourTeamListActivity.Team(
-                Color.parseColor("#BBEA54"),"Power Hitters","Dr. Y. S. Rajasekhara Reddy International Cricket Stadium"));
-        tList.add(new YourTeamListActivity.Team(
-                Color.parseColor("#F1DB9C"),"Flying Eagles","Rajiv Gandhi International Cricket Stadium"));
-        tList.add(new YourTeamListActivity.Team(
-                Color.parseColor("#F4CEC8"),"Swift Strikers","Vidarbha Cricket Association Stadium"));
-        tList.add(new YourTeamListActivity.Team(
-                Color.parseColor("#E6C2EF"),"Golden Eagles","Arun Jaitley Cricket Stadium"
-        ));
-        tList.add(new YourTeamListActivity.Team(
-                Color.parseColor("#E6F587"),"Rebel Raiders","Inderjit Singh Bindra Stadium"));
-        tList.add(new YourTeamListActivity.Team(
-                Color.parseColor("#BBEA54"),"Dark Knights","Dr. Y. S. Rajasekhara Reddy International Cricket Stadium"));
-        tList.add(new YourTeamListActivity.Team(
-                Color.parseColor("#F1DB9C"),"Red Raptors","Rajiv Gandhi International Cricket Stadium"));
-        tList.add(new YourTeamListActivity.Team(
-                Color.parseColor("#F4CEC8"),"Storm Troopers","Vidarbha Cricket Association Stadium"));
-        tList.add(new YourTeamListActivity.Team(
-                Color.parseColor("#E6C2EF"),"Lightning Lancers","Arun Jaitley Cricket Stadium"
-        ));
-        return tList;
-    }
-    public static class Team{
-
-        public int getLogo() {
-            return logo;
-        }
-
-        public void setLogo(int logo) {
-            this.logo = logo;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
-
-        int logo;
-        String name="";
-        String address="";
-
-
-
-
-        public Team(int logo, String name, String address) {
-            this.logo = logo;
-            this.name = name;
-            this.address = address;
-        }
-    }
 
     private void showBottomSheetDialog() {
 
@@ -169,6 +178,7 @@ public class TournamentDetailsActivity extends AppCompatActivity {
 
 
         bottomSheetDialog.findViewById(R.id.li_start_date).setOnClickListener(v -> {
+
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             final Calendar c = Calendar.getInstance();
 
@@ -256,7 +266,7 @@ public class TournamentDetailsActivity extends AppCompatActivity {
 //                    Toaster.customToast("Invalid Time");
 //
 //                }
-                updateTime(hour, min,tv_start_time);
+                updateTime(hour, min, tv_start_time);
 
 //                int difference = _currentDate.compareTo(_selectedDate);
 //
@@ -291,7 +301,7 @@ public class TournamentDetailsActivity extends AppCompatActivity {
                 datetime.set(Calendar.MINUTE, min);
 
 
-                updateTime(hour, min,tv_end_time);
+                updateTime(hour, min, tv_end_time);
 
 //                if (datetime.getTimeInMillis() > c1.getTimeInMillis()) {
 //                    //it's after current
@@ -324,7 +334,8 @@ public class TournamentDetailsActivity extends AppCompatActivity {
         });
 
         bottomSheetDialog.findViewById(R.id.mb_submit).setOnClickListener(v -> {
-            startActivity(new Intent(mContext,ScheduleMatchActivity.class));
+
+            startActivity(new Intent(mContext, ScheduleMatchActivity.class));
             finish();
             bottomSheetDialog.hide();
         });
@@ -333,7 +344,7 @@ public class TournamentDetailsActivity extends AppCompatActivity {
         bottomSheetDialog.show();
     }
 
-    private void updateTime(int hours, int mins,TextView tv_time) {
+    private void updateTime(int hours, int mins, TextView tv_time) {
         String timeSet;
         if (hours > 12) {
             hours -= 12;
@@ -355,9 +366,219 @@ public class TournamentDetailsActivity extends AppCompatActivity {
 
     }
 
+    public void getTournamentDetails(String tournamentId) {
+        Global.showLoader(getSupportFragmentManager());
+        ApiRequest apiService = RetrofitRequest.getRetrofitInstance().create(ApiRequest.class);
+        Call<ResponseBody> call = apiService.getTournamentDetails(SessionManager.getToken(), tournamentId);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Global.hideLoder();
+
+                if (response.isSuccessful() && response.body() != null) {
+                    try {
+                        String jsonString = response.body().string(); // Get the JSON string
+                        JSONObject jsonObject = new JSONObject(jsonString); // Convert to JSONObject
+
+                        JSONObject finalData = jsonObject.getJSONObject("data");
+                        location = finalData.getString("location");
+                        activityTournamentDetailsBinding.tvtLocation.setText(location);
+
+                        JSONArray jsonArray = finalData.getJSONArray("teams");
+                        for(int i=0;i<jsonArray.length();i++){
+                            teamModelArrayList.add(new TeamModel(jsonArray.getJSONObject(i)));
+                        }
+
+                        if(teamModelArrayList.isEmpty()){
+                            activityTournamentDetailsBinding.tvTextSchedule.setText(mContext.getResources().getString(R.string.add_team));
+                        }else{
+                            activityTournamentDetailsBinding.tvTextSchedule.setText(mContext.getResources().getString(R.string.submit));
+                        }
+
+
+                        yourTeamListAdapter = new YourTeamListAdapterHorizontal(mContext, teamModelArrayList, new YourTeamListAdapterHorizontal.itemClickListener() {
+
+                            @Override
+                            public void checkedItem(int pos,  List<TeamModel> teamIdList) {
+                                position = pos;
+                                teamIdListt = teamIdList;
+                                //Toaster.customToast(teamIdList.size()+"/");
+                                if (pos == 1) {
+                                    team1Id = teamIdList.get(0).getTeam_id();
+                                    teamNameSelected1 = teamIdList.get(0).getName();
+                                    teamLogoSelected1 = teamIdList.get(0).getTeam_logo();
+
+                                    Log.d("TeamSelection", "Team 1 selected: " + team1Id);
+                                } else if (pos == 2) {
+                                    team2Id = teamIdList.get(1).getTeam_id();
+                                    teamNameSelected2 =  teamIdList.get(1).getName();
+                                    teamLogoSelected2 = teamIdList.get(1).getTeam_logo();
+                                    Log.d("TeamSelection", "Team 2 selected: " + team2Id);
+                                }
+
+
+                            }
+
+                            @Override
+                            public void itemRemove(int id, int pos) {
+                                if (Global.isOnline(mContext)) {
+                                    removeTeamFromList(id,pos,tournamentId);
+                                } else {
+                                    Global.showDialog(mActivity);
+                                }
+                            }
+                        });
+
+
+
+
+                        activityTournamentDetailsBinding.rvTeamList.setAdapter(yourTeamListAdapter);
+
+                        TournamentDetails tournamentDetails = new TournamentDetails(finalData);
+                        setData(tournamentDetails);
+
+                        Log.d("Response", tournamentDetails.toString());
+
+
+                    } catch (Exception e) {
+                        Log.e("Error", "JSON parsing error: " + e.getMessage());
+                    }
+                } else {
+                    Log.e("Error", "Response error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Error", "Failed to fetch data: " + t.getMessage());
+                Global.hideLoder();
+            }
+        });
+    }
+
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    public void setData(TournamentDetails tournamentDetails) {
+
+        activityTournamentDetailsBinding.tvTName.setText(tournamentDetails.getName());
+        Glide.with(mContext).load(Global.BASE_URL + "/" + tournamentDetails.getTournament_logo()).into(activityTournamentDetailsBinding.image);
+        Glide.with(mContext).load(Global.BASE_URL + "/" + tournamentDetails.getTournament_banner()).into(activityTournamentDetailsBinding.imgBanner);
+
+        ZonedDateTime zonedDateTime = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            zonedDateTime = ZonedDateTime.parse(tournamentDetails.getStart_date());
+            // Define the output format
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+            // Format the date to the desired output
+            formatedStartDate = zonedDateTime.format(formatter);
+
+        }
+        ZonedDateTime zonedDateTimee = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            zonedDateTimee = ZonedDateTime.parse(tournamentDetails.getEnd_date());
+            // Define the output format
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+            // Format the date to the desired output
+            formatedEndDate = zonedDateTimee.format(formatter);
+
+        }
+
+        activityTournamentDetailsBinding.tvdate.setText(formatedStartDate + " " +
+                "to " + formatedEndDate);
+
+
+        activityTournamentDetailsBinding.tvTournamentType.setText(tournamentDetails.getType());
+        activityTournamentDetailsBinding.tvBallType.setText(tournamentDetails.getBall_type());
+        activityTournamentDetailsBinding.tvFees.setText(tournamentDetails.getFees() + "");
+        activityTournamentDetailsBinding.tvPrize.setText(tournamentDetails.getPrize());
+        activityTournamentDetailsBinding.tvDiscount.setText(tournamentDetails.getDiscount() + "");
+        activityTournamentDetailsBinding.tvNoOfTeam.setText(tournamentDetails.getNo_of_team());
+        activityTournamentDetailsBinding.tvSponser.setText(tournamentDetails.getSponser());
+
+
+
+
+//        yourTeamListAdapter = new YourTeamListAdapterHorizontal(mContext, new ArrayList<>(), (pos, string) -> {
+//            position = pos;
+//            teamName = string;
+//            if (position == 2) {
+//                activityTournamentDetailsBinding.mbScheduleMatch.setVisibility(View.VISIBLE);
+//            } else {
+//                activityTournamentDetailsBinding.mbScheduleMatch.setVisibility(View.GONE);
+//            }
+//        });
+//        activityTournamentDetailsBinding.rvTeamList.setAdapter(yourTeamListAdapter);
+
+
+    }
+
+    public String convertDateFormat(String date) {
+        // Input date string
+        String inputDate = "2024-01-31T18:30:00.000Z";
+        String formattedDate = "";
+
+        // Parse the input date
+        ZonedDateTime zonedDateTime = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            zonedDateTime = ZonedDateTime.parse(date);
+            // Define the output format
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+            // Format the date to the desired output
+            formattedDate = zonedDateTime.format(formatter);
+        }
+
+        Log.d("formateddate", formattedDate);
+        return formattedDate;
+
+    }
+
+    public void removeTeamFromList(int teamId,int pos,String tournamentId) {
+
+        Global.showLoader(getSupportFragmentManager());
+        ApiRequest apiService = RetrofitRequest.getRetrofitInstance().create(ApiRequest.class);
+        Call<ResponseBody> call = apiService.removeTeamFromTournament(SessionManager.getToken(), teamId,Integer.parseInt(tournamentId));
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Global.hideLoder();
+
+                if (response.isSuccessful() && response.body() != null) {
+                    try {
+                        String jsonString = response.body().string(); // Get the JSON string
+                        JSONObject jsonObject = new JSONObject(jsonString); // Convert to JSONObject
+                        JSONObject removedJsonObjectData = jsonObject.getJSONObject("data");
+
+                        if(removedJsonObjectData.length()==0){
+                            activityTournamentDetailsBinding.tvTextSchedule.setText(mContext.getResources().getString(R.string.add_team));
+                        }else{
+                            activityTournamentDetailsBinding.tvTextSchedule.setText(mContext.getResources().getString(R.string.submit));
+                        }
+
+                        yourTeamListAdapter.deleteItem(pos);
+
+                    } catch (Exception e) {
+                        Log.e("Error", "JSON parsing error: " + e.getMessage());
+                    }
+                } else {
+                    Log.e("Error", "Response error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Error", "Failed to fetch data: " + t.getMessage());
+                Global.hideLoder();
+            }
+        });
     }
 }

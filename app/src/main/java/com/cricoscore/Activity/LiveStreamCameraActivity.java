@@ -32,7 +32,7 @@ import com.permissionx.guolindev.PermissionX;
 
 import java.util.Objects;
 
-import cn.nodemedia.NodePublisher;
+//import cn.nodemedia.NodePublisher;
 
  //activityLiveStreamCameraBinding.startBtn.setBackgroundTintList(ColorStateList.valueOf(ResourcesCompat.getColor(
 //                                        getResources(), R.color.purple_700, null)));
@@ -44,7 +44,7 @@ public class LiveStreamCameraActivity extends AppCompatActivity {
     Activity mActivity;
     ToolbarBinding toolbarBinding;
 
-    NodePublisher nodePublisher;
+    //NodePublisher nodePublisher;
     boolean isCameraSwitch = false;
     boolean isAudioEnable = true;
     boolean isStartStreaming = false;
@@ -67,7 +67,7 @@ public class LiveStreamCameraActivity extends AppCompatActivity {
         toolbarBinding.toolbar.setNavigationOnClickListener(v -> finish());
 
 
-        nodePublisher = new NodePublisher(this, "");
+        //nodePublisher = new NodePublisher(this, "");
 
 
         activityLiveStreamCameraBinding.startBtn.setOnClickListener(view -> {
@@ -84,8 +84,8 @@ public class LiveStreamCameraActivity extends AppCompatActivity {
 
                             }else{
                                 activityLiveStreamCameraBinding.startBtn.setText(getResources().getString(R.string.start_streaming));
-                                nodePublisher.closeCamera();
-                                nodePublisher.stop();
+                                //nodePublisher.closeCamera();
+                                //nodePublisher.stop();
                                 toolbarBinding.toolbar.setVisibility(View.VISIBLE);
                             }
 
@@ -98,8 +98,8 @@ public class LiveStreamCameraActivity extends AppCompatActivity {
 
         activityLiveStreamCameraBinding.startSwitch.setOnClickListener(view -> {
             isCameraSwitch = !isCameraSwitch;
-            nodePublisher.closeCamera();
-            nodePublisher.openCamera(isCameraSwitch);
+            //nodePublisher.closeCamera();
+           // nodePublisher.openCamera(isCameraSwitch);
         });
 
         activityLiveStreamCameraBinding.btAudio.setOnClickListener(view -> {
@@ -131,18 +131,18 @@ public class LiveStreamCameraActivity extends AppCompatActivity {
 
     private void startPublishing(boolean value, boolean isAudioEnabled) {
 
-        nodePublisher.closeCamera();
-        if(isAudioEnabled==true){
-            nodePublisher.setAudioCodecParam(NodePublisher.NMC_CODEC_ID_AAC, NodePublisher.NMC_PROFILE_AUTO, 48000, 1, 64_000);
-        }else{
-            nodePublisher.setAudioCodecParam(NodePublisher.NMC_CODEC_ID_H265, NodePublisher.NMC_PROFILE_AUTO, 0, 0, 0);
-        }
-        //nodePublisher.setVideoOrientation(NodePublisher.VIDEO_ORIENTATION_LANDSCAPE_LEFT);
-        nodePublisher.setVideoCodecParam(NodePublisher.NMC_CODEC_ID_H264,
-                NodePublisher.NMC_PROFILE_AUTO, 1280, 720, 20, 25_500_00);
-        nodePublisher.openCamera(value);
-        nodePublisher.attachView(activityLiveStreamCameraBinding.publishingLayout);
-        nodePublisher.start("rtmp://180.179.210.3:1949/show/live");
+//        nodePublisher.closeCamera();
+//        if(isAudioEnabled==true){
+//            nodePublisher.setAudioCodecParam(NodePublisher.NMC_CODEC_ID_AAC, NodePublisher.NMC_PROFILE_AUTO, 48000, 1, 64_000);
+//        }else{
+//            nodePublisher.setAudioCodecParam(NodePublisher.NMC_CODEC_ID_H265, NodePublisher.NMC_PROFILE_AUTO, 0, 0, 0);
+//        }
+//        //nodePublisher.setVideoOrientation(NodePublisher.VIDEO_ORIENTATION_LANDSCAPE_LEFT);
+//        nodePublisher.setVideoCodecParam(NodePublisher.NMC_CODEC_ID_H264,
+//                NodePublisher.NMC_PROFILE_AUTO, 1280, 720, 20, 25_500_00);
+//        nodePublisher.openCamera(value);
+//        nodePublisher.attachView(activityLiveStreamCameraBinding.publishingLayout);
+//        nodePublisher.start("rtmp://180.179.210.3:1949/show/live");
 
     }
 
@@ -220,8 +220,8 @@ public class LiveStreamCameraActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        nodePublisher.detachView();
-        nodePublisher.closeCamera();
-        nodePublisher.stop();
+//        nodePublisher.detachView();
+//        nodePublisher.closeCamera();
+//        nodePublisher.stop();
     }
 }

@@ -20,10 +20,10 @@ public class UserProfileViewModel extends ViewModel {
         userProfileRepository = new UserProfileRepository();
     }
 
-    public void getUserProfile(String token,Integer userId){
+    public void getUserProfile(String token){
         mProgressMutableData.postValue(View.VISIBLE);
 
-        userProfileRepository.getUserProfile(token,userId,userId, new UserProfileRepository.IUserProfileResponse() {
+        userProfileRepository.getUserProfile(token,new UserProfileRepository.IUserProfileResponse() {
             @Override
             public void onResponse(UserProfileResponse userProfileResponse, Boolean status) {
                 mProgressMutableData.postValue(View.GONE);
