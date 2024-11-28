@@ -143,7 +143,7 @@ public class DashboardLiveScoringActivity extends AppCompatActivity {
         toolbarBinding.toolbardahsboard.setNavigationOnClickListener(v ->
                 {
                     showBottomStopMatchSheetDialog();
-                    TossActivity.setIsSaveButtonStatus(true);
+                    //TossActivity.setIsSaveButtonStatus(true);
                     // finish();
                 }
 

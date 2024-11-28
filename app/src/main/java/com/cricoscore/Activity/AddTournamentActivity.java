@@ -68,6 +68,7 @@ public class AddTournamentActivity extends AppCompatActivity {
     private String selectedBallType = "";
     private String selectedState = "";
     private String selectedCity = "";
+    int discount;
 
 
     ActivityAddTournamentBinding activityAddTournamentBinding;
@@ -825,6 +826,11 @@ public class AddTournamentActivity extends AppCompatActivity {
 
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+                    if(!activityAddTournamentBinding.editTextTDiscount.getText().toString().isEmpty()){
+                        discount= Integer.parseInt(activityAddTournamentBinding.editTextTDiscount.getText().toString());
+                    }
+
                     if (Global.isOnline(mContext)) {
 
                         addTournamentViewModel.getAddTournamentResponse(SessionManager.getToken(), tournamentType,
@@ -835,7 +841,7 @@ public class AddTournamentActivity extends AppCompatActivity {
                                 activityAddTournamentBinding.editTextLocation.getText().toString(),
                                 activityAddTournamentBinding.editTextGroundName.getText().toString(),
                                 Float.parseFloat(activityAddTournamentBinding.editTextTfees.getText().toString()),
-                                Integer.parseInt(activityAddTournamentBinding.editTextTDiscount.getText().toString()),
+                                discount,
                                 Integer.parseInt(activityAddTournamentBinding.editTextTNoOfTeam.getText().toString()),
                                 activityAddTournamentBinding.editTextTSponsored.getText().toString(),
                                 SessionManager.getUserId(), 0,image_logo_uri,image_banner_uri);

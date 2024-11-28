@@ -84,6 +84,8 @@ public class YourPlayerListActivity extends AppCompatActivity {
         }
         receivedList = (ArrayList<PlayerModel>) getIntent().getSerializableExtra("List");
 
+        Toaster.customToast("Size"+receivedList.size());
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -197,6 +199,8 @@ public class YourPlayerListActivity extends AppCompatActivity {
 
                             addDtaList = playerModelArrayList1;
 
+                            Log.d("DataSize",addDtaList.size()+"");
+
                             StringBuilder sb = new StringBuilder();
 
                             for (int i = 0; i < addDtaList.size(); i++) {
@@ -207,6 +211,8 @@ public class YourPlayerListActivity extends AppCompatActivity {
                             }
 
                             playerId = sb.toString();
+
+                            Log.d("playerId",addDtaList.size()+"");
 
 
                             if (addDtaList.size() > 0) {

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <!-- Include toolbar if needed -->
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/toolbar"
+        android:padding="@dimen/_20sdp">
+
+        <!-- Batting Section -->
+        <TextView
+            android:id="@+id/tvBatting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Batting -"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_9sdp"
+            android:fontFamily="@font/opensans_semibold" />
+
+        <!-- Striker Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardStriker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardElevation="@dimen/_2sdp"
+            app:cardBackgroundColor="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/ivStriker"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:src="@drawable/batting"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/tvStriker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Select Striker"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_9sdp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/opensans_semibold"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Non-Striker Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardNonStriker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_10sdp"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardElevation="@dimen/_2sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            app:cardBackgroundColor="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/ivNonStriker"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:src="@drawable/batting"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/tvNonStriker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Select Non-Striker"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_9sdp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/opensans_semibold"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Bowling Section -->
+        <TextView
+            android:id="@+id/tvBowlingTeam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bowling -"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_9sdp"
+            android:fontFamily="@font/opensans_semibold"
+            android:layout_marginTop="@dimen/_20sdp"/>
+
+        <!-- Bowler Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardBowler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardElevation="@dimen/_2sdp"
+            app:cardBackgroundColor="@color/white"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/ivBowler"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:src="@drawable/bowling"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/tvBowler"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Select Bowler"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_9sdp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/opensans_semibold"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tvScheduleMatch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="@color/white"
+        android:text="@string/start_scoring"
+        android:textSize="@dimen/_10sdp"
+        android:fontFamily="@font/opensans_semibold"
+        android:background="@color/purple_700"
+        android:padding="@dimen/_10sdp"
+        android:textAllCaps="true"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

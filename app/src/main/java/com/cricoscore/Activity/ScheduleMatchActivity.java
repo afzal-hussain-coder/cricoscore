@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -18,19 +19,32 @@ import com.cricoscore.Adapter.ScheduleTournamentAdapter;
 import com.cricoscore.CustomeCamera.CustomeCameraActivity;
 import com.cricoscore.R;
 import com.cricoscore.Utils.DataModel;
+import com.cricoscore.Utils.Global;
 import com.cricoscore.Utils.SelectTournamentType;
+import com.cricoscore.Utils.SessionManager;
 import com.cricoscore.databinding.ActivityScheduleMatchBinding;
 import com.cricoscore.databinding.ActivityScheduleTournamentBinding;
 import com.cricoscore.databinding.ToolbarBinding;
+import com.cricoscore.model.PlayerModel;
+import com.cricoscore.model.ScheduleMatchDetailsItem;
+import com.cricoscore.retrofit.ApiRequest;
+import com.cricoscore.retrofit.RetrofitRequest;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ScheduleMatchActivity extends AppCompatActivity {
 
@@ -68,86 +82,7 @@ public class ScheduleMatchActivity extends AppCompatActivity {
         activityScheduleMatchBinding.rvScheduleMatchList.setHasFixedSize(true);
         activityScheduleMatchBinding.rvScheduleMatchList.setLayoutManager(new LinearLayoutManager(this));
 
-       scheduleMatchAdapter = new ScheduleMatchAdapter(mContext, getMatchList(), () -> showBottomSheetDialog(null));
-       activityScheduleMatchBinding.rvScheduleMatchList.setAdapter(scheduleMatchAdapter);
-    }
 
-    public List<ScheduleMatchActivity.Match> getMatchList() {
-        List<ScheduleMatchActivity.Match> tList = new ArrayList<>();
-        tList.add(new ScheduleMatchActivity.Match(Color.parseColor("#c8f5ae"),
-                Color.parseColor("#c8f5ae"), "First-class Match", "Inderjit Singh Bindra Stadium",
-                "30-Mar-23 to 31-Sep-23"));
-        tList.add(new ScheduleMatchActivity.Match(Color.parseColor("#d7e09b"),
-                Color.parseColor("#d7e09b"), "One day Match", "Dr. Y. S. Rajasekhara Reddy International Cricket Stadium",
-                "01-Apr-23 to 22-july-23"));
-        tList.add(new ScheduleMatchActivity.Match(Color.parseColor("#F1DB9C"),
-                Color.parseColor("#F1DB9C"), "Twenty 20 (T20)", "Rajiv Gandhi International Cricket Stadium",
-                "9-Jan-23 to 31-Mar-23"));
-        tList.add(new ScheduleMatchActivity.Match(Color.parseColor("#F4CEC8"),
-                Color.parseColor("#F4CEC8"), "One Day Internationals", "Vidarbha Cricket Association Stadium",
-                "5-Feb-23 to 23-May-23"));
-        tList.add(new ScheduleMatchActivity.Match(Color.parseColor("#E6C2EF"),
-                Color.parseColor("#E6C2EF"), "Twenty 20 Internationals", "Arun Jaitley Cricket Stadium", "16-Nov-23 to 27-Dec-23"
-        ));
-        return tList;
-    }
-
-    public class Match {
-        public int getBanner() {
-            return banner;
-        }
-
-        public void setBanner(int banner) {
-            this.banner = banner;
-        }
-
-        public int getLogo() {
-            return logo;
-        }
-
-        public void setLogo(int logo) {
-            this.logo = logo;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
-
-        int banner;
-        int logo;
-        String name = "";
-        String address = "";
-
-        public String getDate() {
-            return date;
-        }
-
-        public void setDate(String date) {
-            this.date = date;
-        }
-
-        String date = "";
-
-
-        public Match(int banner, int logo, String name, String address, String date) {
-            this.banner = banner;
-            this.logo = logo;
-            this.name = name;
-            this.address = address;
-            this.date = date;
-        }
     }
 
     @Override
@@ -162,6 +97,12 @@ public class ScheduleMatchActivity extends AppCompatActivity {
         if(image_uri!=null){
             iv_team_logo.setImageURI(image_uri);
             image_uri = null;
+        }
+
+        if (Global.isOnline(mContext)) {
+            getScheduleMatchList();
+        } else {
+            Global.showDialog(mActivity);
         }
 
     }
@@ -251,5 +192,55 @@ public class ScheduleMatchActivity extends AppCompatActivity {
         option_player_type.add(new DataModel("Wicketkeeper"));
         option_player_type.add(new DataModel("All Rounder"));
         return option_player_type;
+    }
+
+    public void getScheduleMatchList() {
+        Global.showLoader(getSupportFragmentManager());
+        ApiRequest apiService = RetrofitRequest.getRetrofitInstance().create(ApiRequest.class);
+        Call<ResponseBody> call = apiService.getScheduleMatchList(SessionManager.getToken());
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Global.hideLoder();
+
+                if (response.isSuccessful() && response.body() != null) {
+                    try {
+                        String jsonString = response.body().string(); // Get the JSON string
+                        JSONObject jsonObject = new JSONObject(jsonString); // Convert to JSONObject
+
+                        JSONArray finalData = jsonObject.getJSONArray("data");
+
+                        ArrayList<ScheduleMatchDetailsItem>list =new ArrayList<>();
+                        for(int i =0;i<finalData.length();i++){
+                            list.add( new ScheduleMatchDetailsItem(finalData.getJSONObject(i)));
+                        }
+
+                        scheduleMatchAdapter = new ScheduleMatchAdapter(mContext, list, new ScheduleMatchAdapter.getImageCallListener() {
+                            @Override
+                            public void getDetails(int id,String teamA,String teamB) {
+                                startActivity(new Intent(mContext,ScheduleedMatchDetaislUpdateActivity.class).putExtra("ID",id)
+                                        .putExtra("TeamA",teamA)
+                                        .putExtra("TeamB",teamB));
+                            }
+                        });
+                        activityScheduleMatchBinding.rvScheduleMatchList.setAdapter(scheduleMatchAdapter);
+                        Log.d("FinalResponse", finalData.length()+"");
+
+
+                    } catch (Exception e) {
+                        Log.e("Error", "JSON parsing error: " + e.getMessage());
+                    }
+                } else {
+                    Log.e("Error", "Response error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Error", "Failed to fetch data: " + t.getMessage());
+                Global.hideLoder();
+            }
+        });
     }
 }

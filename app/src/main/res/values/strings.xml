@@ -67,9 +67,12 @@
     <string name="add_player">Add Player</string>
     <string name="player">Player</string>
     <string name="schedule_match">Schedule Matches</string>
+    <string name="update_match">Update Schedule</string>
+    <string name="next_toss">NEXT(TOSS)</string>
     <string name="schedule_match_list">Start List Of Matches</string>
     <string name="schedule_tournament">Schedule Tournament</string>
     <string name="schedule_tournament_list">Scheduled Matches of Tournament</string>
+    <string name="schedule_match_details">Scheduled Matches Details</string>
     <string name="select_team_for_schedule">Firstly ! Select only two team to create a schedule!</string>
     <string name="select_the_final_playing_squad_for_both_teams">Select the final playing squad for both teams!</string>
     <string name="match_details">Match Details</string>
@@ -201,6 +204,11 @@
     <string name="matchType">Match Type</string>
     <string name="ballType">Ball Type</string>
     <string name="pitchType">Pitch Type</string>
+    <string name="start_inning">Start Innings</string>
+    <string name="manual_selection">Manual Selection</string>
+    <string name="manual_selection_message">Please select the winning team manually.</string>
+    <string name="tap_the_coin_to_flip">Tap the coin to flip</string>
+    <string name="playing_squad">Playing Squad</string>
 
 
 </resources>

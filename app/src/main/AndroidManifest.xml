@@ -35,6 +35,54 @@
         android:theme="@style/Theme.Cricoscore"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.PlayingSquadActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Cricoscore.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activity.ScoringDashBordActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Cricoscore.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activity.StartInningActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Cricoscore.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activity.FinalScheduledTeamPlayerListActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Cricoscore.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activity.TeamPlayerlistActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Cricoscore.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activity.ScheduleedMatchDetaislUpdateActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Cricoscore.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Activity.ScheduleMatchDetailsActivity"
             android:exported="false"
             android:theme="@style/Theme.Cricoscore.NoActionBar">

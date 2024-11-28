@@ -98,10 +98,6 @@ public class TournamentFragment extends Fragment {
             }));
         });
 
-
-
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (Global.isOnline(getActivity())) {
                 allTournamentViewModel.getTournamentListResponse(SessionManager.getToken());

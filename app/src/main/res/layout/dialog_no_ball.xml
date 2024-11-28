@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/noBallTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Ball (NB=1)"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingBottom="8dp" />
+
+    <!-- Buttons for No Ball Options -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="horizontal">
+
+        <GridLayout
+            android:id="@+id/noBallGrid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="4"
+            android:rowCount="2"
+            android:padding="8dp">
+
+            <!-- No Ball Buttons -->
+            <Button android:id="@+id/btn_nb_0" android:text="NB + 0" style="@style/NoBallButtonStyle"/>
+            <Button android:id="@+id/btn_nb_1" android:text="NB + 1" style="@style/NoBallButtonStyle"/>
+            <Button android:id="@+id/btn_nb_2" android:text="NB + 2" style="@style/NoBallButtonStyle"/>
+            <Button android:id="@+id/btn_nb_3" android:text="NB + 3" style="@style/NoBallButtonStyle"/>
+            <Button android:id="@+id/btn_nb_4" android:text="NB + 4" style="@style/NoBallButtonStyle"/>
+            <Button android:id="@+id/btn_nb_5" android:text="NB + 5" style="@style/NoBallButtonStyle"/>
+            <Button android:id="@+id/btn_nb_6" android:text="NB + 6" style="@style/NoBallButtonStyle"/>
+        </GridLayout>
+
+    </HorizontalScrollView>
+
+
+</LinearLayout>

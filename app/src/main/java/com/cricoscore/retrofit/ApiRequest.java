@@ -1,5 +1,6 @@
 package com.cricoscore.retrofit;
 
+import com.cricoscore.Activity.PlayingSquadActivity;
 import com.cricoscore.ApiResponse.AddTeamResponse;
 import com.cricoscore.ApiResponse.AddTournamentResponse;
 import com.cricoscore.ApiResponse.SignUpResponse;
@@ -9,14 +10,21 @@ import com.cricoscore.ApiResponse.VerifyEmailResponse;
 import com.cricoscore.ParamBody.AddPlayerBody;
 import com.cricoscore.ParamBody.AddPlayerIntoTeamBody;
 import com.cricoscore.ParamBody.AddTeamInTournamnetBody;
+import com.cricoscore.ParamBody.CreateScheduleBody;
 import com.cricoscore.ParamBody.ForgetPasswordBody;
+import com.cricoscore.ParamBody.InningBallParamBody;
+import com.cricoscore.ParamBody.InningNewBody;
 import com.cricoscore.ParamBody.LoginBody;
 import com.cricoscore.ParamBody.LoginThroughPhoneNumberBody;
+import com.cricoscore.ParamBody.PlayingSqudUpdateBody;
 import com.cricoscore.ParamBody.RemovePlayerBody;
 import com.cricoscore.ParamBody.ResetPasswordBody;
 import com.cricoscore.ParamBody.SignUpBody;
+import com.cricoscore.ParamBody.ToasParamBody;
+import com.cricoscore.ParamBody.UpdateScheduleTeamPlayerBody;
 import com.cricoscore.ParamBody.VerifyOtpBody;
 import com.cricoscore.Utils.Global;
+import com.cricoscore.model.BattingPlayersResponse;
 import com.cricoscore.model.TournamentModel.TournamentDetails;
 
 import okhttp3.MultipartBody;
@@ -29,6 +37,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -166,6 +175,55 @@ public interface ApiRequest {
     Call<ResponseBody> removeTeamFromTournament(@Header("token") String token,
                                                 @Path("team_id") int team_id,
                                                 @Path("tournament_id") int tournament_id);
+
+    @POST(Global.CREATE_SCHEDULE)
+    Call<ResponseBody> addSchedule(@Header("token") String token,
+                                   @Body CreateScheduleBody createScheduleBody);
+
+    @GET(Global.SCHEDULE_MATCH_LIST)
+    Call<ResponseBody> getScheduleMatchList(@Header("token") String token);
+
+    @GET("schedule/getDetails/{schedule_match_id}")
+    Call<ResponseBody> getScheduleMatchDetails(@Header("token") String token,
+                                               @Path("schedule_match_id") Integer schedule_match_id);
+
+    @PUT(Global.UPDATE_SELECTED_TEAM_PLAYER)
+    Call<ResponseBody> updateSelectedTeamPlayer(@Header("token") String token,
+                                                @Body UpdateScheduleTeamPlayerBody createScheduleBody);
+
+    @PUT(Global.UPDATE_SCHEDULE)
+    Call<ResponseBody> updateSchedule(@Header("token") String token,
+                                      @Body CreateScheduleBody createScheduleBody);
+
+    @PUT(Global.TOSS_API)
+    Call<ResponseBody> toss(@Header("token") String token,
+                            @Body ToasParamBody createScheduleBody);
+
+    @POST(Global.INNING_NEW)
+    Call<ResponseBody> inningNew(@Header("token") String token,
+                                 @Body InningNewBody inningNewBody);
+
+    @GET("inning/getBattingPlayers")
+    Call<ResponseBody> getBattingPlayers(@Header("token") String token,
+                                         @Query("schedule_match_id") int scheduleMatchId,
+                                         @Query("inning_id") int inningId,
+                                         @Query("team_id") int teamId
+    );
+
+    @GET("inning/getDetails/{inning_id}")
+    Call<ResponseBody> getInningDetails(@Header("token") String token,
+                                        @Path("inning_id") int inningId
+    );
+
+    @PUT(Global.INNING_UPDATE)
+    Call<ResponseBody> inningUpdate(@Header("token") String token,
+                            @Body PlayingSqudUpdateBody createScheduleBody);
+
+
+    @POST(Global.INNING_BALL)
+    Call<ResponseBody> inningBall(@Header("token") String token,
+                                 @Body InningBallParamBody inningBallParamBody);
+
 
 
 }

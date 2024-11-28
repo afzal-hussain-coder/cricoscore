@@ -89,11 +89,6 @@ public class YourTeamListAdapterHorizontal extends RecyclerView.Adapter<YourTeam
         });
 
 
-
-
-
-
-
 //        holder.cb.setOnCheckedChangeListener((buttonView, isChecked) -> {
 //
 //            // Get the team ID based on the current position
@@ -146,6 +141,7 @@ public class YourTeamListAdapterHorizontal extends RecyclerView.Adapter<YourTeam
             // notifyDataSetChanged(); // Uncomment this if necessary
         } // Notify adapter about the removed item
     }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         CheckBox cb;
         private TextView tvTName;

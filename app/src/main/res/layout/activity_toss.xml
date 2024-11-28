@@ -168,11 +168,41 @@
                 android:background="@color/verified_user_color"/>
         </RelativeLayout>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnManualSelection"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:backgroundTint="@color/purple_500"
+            android:fontFamily="@font/opensans_bold"
+            android:text="@string/manual_selection"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_8sdp"
+            android:visibility="gone"
+            app:cornerRadius="@dimen/_50sdp" />
+
+
+        <TextView
+            android:id="@+id/tvFlipMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:padding="@dimen/_10sdp"
+            android:text="@string/tap_the_coin_to_flip"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            app:fontFamily="@font/opensans_semibold" />
         <RelativeLayout
             android:id="@+id/rl_coin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_1sdp"
             android:layout_gravity="center"
             android:padding="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_5sdp">
@@ -205,6 +235,7 @@
 
 
             </com.google.android.material.card.MaterialCardView>
+
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/mbTossBack"
@@ -247,6 +278,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Tap N Flip!"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/_5sdp"
             android:textColor="@color/verified_user_color"
             android:textSize="@dimen/_10sdp"

@@ -28,7 +28,7 @@ public class YourPlayerListAdapter extends RecyclerView.Adapter<YourPlayerListAd
     Context mContext;
     itemClickListener itemClickListener;
     int posClick=0;
-    List<PlayerModel> tList = new ArrayList<>();
+    List<PlayerModel> tList;
     ArrayList<PlayerModel>addList;
     ArrayList<PlayerModel>updatePlayer;
     public YourPlayerListAdapter(Context mContext,List<PlayerModel> tList,ArrayList<PlayerModel>selectedPayer, itemClickListener itemClickListener){
@@ -92,19 +92,16 @@ public class YourPlayerListAdapter extends RecyclerView.Adapter<YourPlayerListAd
             Log.e("Error", "Player list or tournament list is null or empty.");
         }
 
-
-
-
-        holder.cb.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked==true){
-                addList.add(tList.get(position));
-            }else{
-                addList.remove(tList.get(position));
-
-            }
-
-            itemClickListener.checkedItem(addList);
-        });
+//        holder.cb.setOnCheckedChangeListener((buttonView, isChecked) -> {
+//            if(isChecked==true){
+//                addList.add(tList.get(position));
+//            }else{
+//                addList.remove(tList.get(position));
+//
+//            }
+//
+//            itemClickListener.checkedItem(addList);
+//        });
 
 
         holder.itemView.setOnClickListener(v -> {

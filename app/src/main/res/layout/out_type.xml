@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/noBallTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:text="Select Out Type"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Buttons for No Ball Options -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="horizontal">
+
+        <GridLayout
+            android:id="@+id/noBallGrid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="4"
+            android:padding="8dp"
+            android:rowCount="2">
+
+            <!-- No Ball Buttons -->
+            <Button
+                android:id="@+id/bowled"
+                style="@style/NoBallButtonStyle"
+                android:text="Bowled" />
+
+            <Button
+                android:id="@+id/caught"
+                style="@style/NoBallButtonStyle"
+                android:text="Caught" />
+
+            <Button
+                android:id="@+id/runOut"
+                style="@style/NoBallButtonStyle"
+                android:text="Run Out" />
+
+            <Button
+                android:id="@+id/lbw"
+                style="@style/NoBallButtonStyle"
+                android:text="LBW" />
+        </GridLayout>
+
+    </HorizontalScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/lirun"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioGroup
+                android:id="@+id/rg_roles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+                <RadioButton
+                    android:id="@+id/rb_strike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Strike"
+                    android:textSize="16sp" />
+
+                <!-- Non-Strike Option -->
+                <RadioButton
+                    android:id="@+id/rb_non_strike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Non-Strike"
+                    android:textSize="16sp" />
+            </RadioGroup>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:visibility="visible"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/etLegByeCustomRuns"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:inputType="number"
+                android:hint="Runs"
+                android:visibility="visible"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mb_create"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:backgroundTint="@color/purple_500"
+                android:fontFamily="@font/opensans_bold"
+                android:text="@string/save"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_8sdp"
+                android:visibility="visible"
+                app:cornerRadius="@dimen/_50sdp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

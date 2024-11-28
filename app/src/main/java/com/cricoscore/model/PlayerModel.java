@@ -50,6 +50,11 @@ public class PlayerModel implements Serializable {
 
     }
 
+    public PlayerModel(int id,String name,String avtar){
+       this.player_id = id;
+       this.name = name;
+       this.avatar = avtar;
+    }
     public PlayerModel(JSONObject  jsonObject){
         if(jsonObject.has("player_id")){
             try {

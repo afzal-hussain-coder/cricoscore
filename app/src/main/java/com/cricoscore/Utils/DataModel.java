@@ -21,11 +21,12 @@ public class DataModel {
 
     private String Id;
 
-    public DataModel(String name){
-        this.name=name;
+    public DataModel(String name) {
+        this.name = name;
     }
-    public DataModel(String name, String Id){
-        this.name=name;
+
+    public DataModel(String name, String Id) {
+        this.name = name;
         this.Id = Id;
     }
 

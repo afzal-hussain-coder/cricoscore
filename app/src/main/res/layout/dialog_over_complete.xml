@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tvOverCompleteTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Over Complete"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/purple_700"
+        android:layout_gravity="center_horizontal" />
+
+    <!-- Display Current Bowler -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bowler : "
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/tvCurrentBowler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Altaf"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+
+
+    <!-- Grid of 6 Circles for Runs -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:gravity="center">
+
+        <!-- Add dynamic circles here for each ball -->
+        <FrameLayout
+            android:id="@+id/ball_1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:visibility="gone"
+            android:background="@drawable/circle_background">
+
+            <TextView
+                android:id="@+id/ball_1_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/ball_2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:visibility="gone"
+            android:background="@drawable/circle_background">
+
+            <TextView
+                android:id="@+id/ball_2_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <!-- Repeat for other balls (ball 3 to ball 6) -->
+        <!-- Ball 3 -->
+        <FrameLayout
+            android:id="@+id/ball_3"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:visibility="gone"
+            android:background="@drawable/circle_background">
+            <TextView
+                android:id="@+id/ball_3_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_gravity="center" />
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/ball_4"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:visibility="gone"
+            android:background="@drawable/circle_background">
+            <TextView
+                android:id="@+id/ball_4_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_gravity="center" />
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/ball_5"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:visibility="gone"
+            android:background="@drawable/circle_background">
+            <TextView
+                android:id="@+id/ball_5_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_gravity="center" />
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/ball_6"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:visibility="gone"
+            android:background="@drawable/circle_background">
+            <TextView
+                android:id="@+id/ball_6_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="="/>
+
+        <TextView
+            android:id="@+id/tvCurrentBowlerTotalRun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="@dimen/_12sdp"
+            android:text="9"/>
+
+    </LinearLayout>
+
+    <!-- Table for Runs, Overs, Wickets -->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Runs"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="="/>
+            <TextView
+                android:id="@+id/tvTotalRuns"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="21"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:layout_gravity="end"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Overs"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="="/>
+            <TextView
+                android:id="@+id/tvTotalOvers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:layout_gravity="end"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wickets"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="="/>
+            <TextView
+                android:id="@+id/tvTotalWickets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:gravity="left"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textColor="@color/black"
+                android:layout_gravity="end"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Buttons -->
+    <Button
+        android:id="@+id/btnStartNextOver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Start Next Over"
+        android:background="@color/green"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/btnContinueThisOver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        android:text="Continue This Over"
+        android:background="@color/dim_grey"
+        android:textColor="@android:color/white" />
+</LinearLayout>

@@ -82,7 +82,7 @@ public class TournamentDetailsActivity extends AppCompatActivity {
     private String teamNameSelected2 = "";
     private String teamLogoSelected2 = "";
 
-    private int posClick = 0;  // Keeps track of the number of selected teams
+    private int posClick = 0;
     List<TeamModel> teamIdListt = new ArrayList<>();
 
     @Override
@@ -101,6 +101,7 @@ public class TournamentDetailsActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
 
+        /*get tournament id from another activity through intent*/
         if (getIntent() != null) {
             tournamentId = getIntent().getStringExtra("id");
         }
@@ -120,15 +121,9 @@ public class TournamentDetailsActivity extends AppCompatActivity {
         activityTournamentDetailsBinding.rvTeamList.setLayoutManager(new LinearLayoutManager(mContext));
         activityTournamentDetailsBinding.rvTeamList.setHasFixedSize(true);
 
-
-
-
         activityTournamentDetailsBinding.mbScheduleMatch.setOnClickListener(v -> {
             showBottomSheetDialog();
         });
-
-
-
 
         activityTournamentDetailsBinding.liSchedule.setOnClickListener(v -> {
 
@@ -162,9 +157,11 @@ public class TournamentDetailsActivity extends AppCompatActivity {
 //            }else{
 //                Toaster.customToast("Select two team to create a schedule");
 //            }
+
         });
     }
 
+    /*show dialog to select schedule date and time to create schedule*/
 
     private void showBottomSheetDialog() {
 
@@ -344,6 +341,8 @@ public class TournamentDetailsActivity extends AppCompatActivity {
         bottomSheetDialog.show();
     }
 
+    /*Update Time dialog to set time from device*/
+
     private void updateTime(int hours, int mins, TextView tv_time) {
         String timeSet;
         if (hours > 12) {
@@ -365,6 +364,8 @@ public class TournamentDetailsActivity extends AppCompatActivity {
         tv_time.setText(aTime);
 
     }
+
+    /*Here we call get tournament details Api*/
 
     public void getTournamentDetails(String tournamentId) {
         Global.showLoader(getSupportFragmentManager());
@@ -458,12 +459,15 @@ public class TournamentDetailsActivity extends AppCompatActivity {
     }
 
 
+    /* This method is called to onBackPressed for back to the previous activity*/
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
     }
 
+
+    /* this method is used to set data to the activity views*/
     public void setData(TournamentDetails tournamentDetails) {
 
         activityTournamentDetailsBinding.tvTName.setText(tournamentDetails.getName());
@@ -540,6 +544,8 @@ public class TournamentDetailsActivity extends AppCompatActivity {
         return formattedDate;
 
     }
+
+    /*This Method is used to remove item from list using Api*/
 
     public void removeTeamFromList(int teamId,int pos,String tournamentId) {
 

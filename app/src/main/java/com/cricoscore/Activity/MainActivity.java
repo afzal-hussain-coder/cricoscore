@@ -363,6 +363,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        socketManager.disconnect();
+       // socketManager.disconnect();
     }
 }

@@ -174,6 +174,7 @@ public class CustomeCameraActivity extends AppCompatActivity {
         }
     }
 
+    /*Aspect ratio of frame layout of camera */
     private int aspectRatio(int width, int height) {
         double previewRatio = (double) Math.max(width, height) / Math.min(width, height);
         if (Math.abs(previewRatio - 4.0 / 3.0) <= Math.abs(previewRatio - 16.0 / 9.0)) {
@@ -181,6 +182,9 @@ public class CustomeCameraActivity extends AppCompatActivity {
         }
         return AspectRatio.RATIO_16_9;
     }
+
+
+    /*OnActivity result is getting the value of camera feed from device and camera*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

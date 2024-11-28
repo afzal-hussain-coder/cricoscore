@@ -54,11 +54,10 @@ public class Global {
     public static final String BASE_URL = "http://cricosocre.selectronicindia.com/";
     //"http://cricscore.criconetonline.com/";
 
-
     /*API REQUEST END POINTS*/
     public static final String SIGNUP = "singup";
     public static final String VERIFY_PHONE_OTP = "user/verifyPhoneOTP";
-    public static final String VERIFY_OTP = "user/verifyOTP";
+    public static final String VERIFY_OTP = "verifyOTP";
 
     public static final String LOGIN = "login";
     public static final String USER_PROFILE = "user/myProfile";
@@ -79,10 +78,25 @@ public class Global {
     public static final String GET_TEAM_DETAILS = "team/getTeamDetails";
     public static final String ADD_PLAYER = "player/add";
     public static final String MY_PLAYER_LIST = "player/myAllPlayers";
+    public static final String SCHEDULE_MATCH_LIST = "schedule/myScheduleMatchList";
+
 
     public static final String ADD_PLAYER_INTO_TEAM ="team/addPlayerInTeam";
+    public static final String CREATE_SCHEDULE ="schedule/new";
+    public static final String UPDATE_SCHEDULE ="schedule/update";
+
 
     public static final String REMOVE_PLAYER_FROM_TEAM ="team/removePlayersFromTeam";
+    public static final String UPDATE_SELECTED_TEAM_PLAYER ="schedule/updateSelectedTeamPlayer";
+    public static final String TOSS_API = "schedule/updateSeduleMatchTossInfo";
+
+    public static final String INNING_NEW ="inning/new";
+    public static final String INNING_UPDATE ="inning/update";
+    public static final String INNING_BALL ="inning/ball";
+
+
+
+
 
 
     private static LoadingDialogFragment loadingDialogFragment = new LoadingDialogFragment();

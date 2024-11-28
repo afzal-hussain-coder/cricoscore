@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Activity.PlayingSquadActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbSubmit"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        app:cornerRadius="@dimen/_50sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:textColor="@color/white"
+        android:text="@string/submit"
+        android:layout_below="@+id/toolbar"
+        android:fontFamily="@font/opensans_bold"
+        android:textSize="@dimen/_10sdp"
+        android:backgroundTint="@color/purple_500"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mbSubmit">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPlayingSquad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"/>
+
+    </RelativeLayout>
+</RelativeLayout>
