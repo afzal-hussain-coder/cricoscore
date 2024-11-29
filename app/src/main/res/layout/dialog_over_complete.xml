@@ -48,10 +48,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:gravity="center">
 
         <!-- Add dynamic circles here for each ball -->
-        <FrameLayout
+        <!--<FrameLayout
             android:id="@+id/ball_1"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -87,8 +88,8 @@
                 android:layout_gravity="center" />
         </FrameLayout>
 
-        <!-- Repeat for other balls (ball 3 to ball 6) -->
-        <!-- Ball 3 -->
+        &lt;!&ndash; Repeat for other balls (ball 3 to ball 6) &ndash;&gt;
+        &lt;!&ndash; Ball 3 &ndash;&gt;
         <FrameLayout
             android:id="@+id/ball_3"
             android:layout_width="40dp"
@@ -152,7 +153,15 @@
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:layout_gravity="center" />
-        </FrameLayout>
+        </FrameLayout>-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="Current Over Run"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -161,7 +170,6 @@
             android:textColor="@color/black"
             android:textStyle="bold"
             android:text="="/>
-
         <TextView
             android:id="@+id/tvCurrentBowlerTotalRun"
             android:layout_width="wrap_content"
@@ -173,6 +181,19 @@
             android:text="9"/>
 
     </LinearLayout>
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/ballIndicators"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_5sdp" />
+    </HorizontalScrollView>
 
     <!-- Table for Runs, Overs, Wickets -->
 

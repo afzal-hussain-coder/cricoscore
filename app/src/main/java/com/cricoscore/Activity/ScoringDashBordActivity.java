@@ -6,10 +6,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -59,7 +61,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     private GridLayout scoringGrid;
 
     // Variables to store scores
-    private int totalRuns = 0, wickets = 0, overs = 0, balls = 0;
+    private int totalRuns = 0, wickets = 0, overs = 0, balls = 0,actualBall,extraBall;
     private int player1Score = 0, player2Score = 0;
     private boolean isPlayer1OnStrike = true;
     private int lastRun = 0;
@@ -69,7 +71,8 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     private int currentBall = 0; // 0-based index for current ball
     private int totalOvers = 0;
     private int ballsInCurrentOver = 0; // Reset after 6 balls
-    private int[] runsInCurrentOver = new int[6]; // Stores runs for balls in the current over
+    //private int[] runsInCurrentOver = new int[6];
+    private List<Integer> runsInCurrentOver = new ArrayList<>();// Stores runs for balls in the current over
     private int currentOverRuns = 0; // Sum of runs in the current over
 
     int scheduleId, teamIdBatting, inningNumber, currentBowlerId, currentNonStrikerId, currentStrikerId, bowlingTeamId;
@@ -86,6 +89,9 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     String strike = "";
     String isWicket = "0";
     int lastRunn =0;
+    int current_over_total_ball=0;
+
+    LinearLayout ballIndicatorsLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,14 +126,16 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         setUpScoringGrid();
 
         // Initialize ball indicators
-        ballIndicators = new TextView[]{
-                findViewById(R.id.ball1),
-                findViewById(R.id.ball2),
-                findViewById(R.id.ball3),
-                findViewById(R.id.ball4),
-                findViewById(R.id.ball5),
-                findViewById(R.id.ball6)
-        };
+//        ballIndicators = new TextView[]{
+//                findViewById(R.id.ball1),
+//                findViewById(R.id.ball2),
+//                findViewById(R.id.ball3),
+//                findViewById(R.id.ball4),
+//                findViewById(R.id.ball5),
+//                findViewById(R.id.ball6)
+//        };
+
+        ballIndicatorsLayout = findViewById(R.id.ballIndicators);
 
         // Set initial score
         // updateScoreDisplay();
@@ -198,8 +206,12 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     // Call this method whenever a ball is bowled
     private void handleScoringEvent(int runs) {
         // Update total runs
+        lastRun = 0;
+        extras ="";
         totalRuns += runs;
         balls++;
+
+        lastRun =runs;
 
         // Handle strike change on odd runs
 
@@ -214,12 +226,14 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         if (runs % 2 != 0) {
             changeStrike();
         }
+
         if (balls == 6) {
             balls = 0;
             overs++;
         }
 
     }
+
 
     // Show Over Completed Dialog
 
@@ -267,7 +281,6 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         // Update the score display
         //  updateScoreDisplay();
     }
-
 
     /*...Update Squar when strike will be chnage*/
     private void changeStrike() {
@@ -360,7 +373,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                 }
 
                 // Call handleExtras with the correct extra runs
-                handleExtras("WD", 1 + extraRuns); // 1 for the wide ball + additional runs
+                handleExtras("WB", extraRuns); // 1 for the wide ball + additional runs
                 // updateScoreDisplay();
                 bottomSheetDialog.dismiss();
             });
@@ -390,7 +403,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
                 try {
                     int extraRuns = Integer.parseInt(numericPart); // Parse the extracted number
-                    handleExtras("NB", 1 + extraRuns);
+                    handleExtras("NB", extraRuns);
                 } catch (NumberFormatException e) {
                     Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show();
                 }
@@ -523,7 +536,8 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
     private void handleBye(int runs) {
         lastRun = runs;
-
+        extras ="BYE";
+        balls++;
         if (Global.isOnline(this)) {
             dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
                     filederId);
@@ -534,15 +548,22 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     }
 
     private void handleExtras(String type, int runs) {
-        totalRuns += runs;
-        if (type.equalsIgnoreCase("NB")) {
-            balls++;
-            if (balls == 6) {
-                overs++;
-                balls = 0;
-                // changeStrike();
-            }
-        }
+        lastRun = runs;
+        extras = type;
+//        if (type.equalsIgnoreCase("NB")) {
+//            //balls++;
+//            if (balls == 6) {
+//                overs++;
+//                balls = 0;
+//                // changeStrike();
+//            }
+//        }else if(type.equalsIgnoreCase("WD")){
+//            if (balls == 6) {
+//                overs++;
+//                balls = 0;
+//                // changeStrike();
+//            }
+//        }
         wasLastWicket = false;
 
         if (Global.isOnline(this)) {
@@ -551,17 +572,20 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         } else {
             Global.showDialog(this);
         }
+
+        lastRun =0;
     }
 
     private void handleLegByeRuns(int runs) {
+        extras ="LB";
         lastRun = runs;
         //lastRun = totalRuns;
-        balls++;
-        if (balls == 6) {
-            balls = 0;
-            overs++;
-            // showOverCompletedDialog();
-        }
+       balls++;
+//        if (balls == 6) {
+//            balls = 0;
+//            overs++;
+//            // showOverCompletedDialog();
+//        }
 
         // Call updateBallIndicators here
         //  updateBallIndicators(runs);
@@ -610,10 +634,12 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         MaterialButton mb_create = bottomSheetDialog.findViewById(R.id.mb_create);
 
         bowled.setOnClickListener(v -> {
+            balls++;
             lirun.setVisibility(View.GONE);
             wicketType = "bowled";
             lastRun = 0;
             isWicket = "1";
+            extras="";
             if (Global.isOnline(this)) {
                 dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
                         filederId);
@@ -625,10 +651,12 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
         });
         caught.setOnClickListener(v -> {
+            balls++;
             lirun.setVisibility(View.GONE);
             lastRun = 0;
             wicketType = "caught";
             isWicket = "1";
+            extras="";
             if (Global.isOnline(this)) {
                 dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
                         filederId);
@@ -647,6 +675,8 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
         });
         lbw.setOnClickListener(v -> {
+            extras="";
+            balls++;
             lirun.setVisibility(View.GONE);
             lastRun = 0;
             wicketType = "lbw";
@@ -664,6 +694,8 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         });
 
         mb_create.setOnClickListener(v -> {
+            extras="";
+            balls++;
 
             if (!etLegByeCustomRuns.getText().toString().trim().isEmpty()) {
                 lastRun = Integer.parseInt(etLegByeCustomRuns.getText().toString().trim());
@@ -889,6 +921,8 @@ public class ScoringDashBordActivity extends AppCompatActivity {
             totalRuns = dataObject.getInt("total_runs");
             wickets = dataObject.getInt("wickets");
             overs = dataObject.getInt("overs");
+
+            current_over_total_ball = dataObject.getInt("current_over_total_ball");
             JSONArray bolledArray = dataObject.getJSONArray("balled");
 
             if (isWicket.equalsIgnoreCase("1")) {
@@ -938,7 +972,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                 balledList.add(ball);
             }
 
-            updateBallIndicatorsFromResponse(balledList);
+            updateBallIndicatorsFromResponse(balledList,current_over_total_ball);
 
             updateScoreDisplay();
         } catch (JSONException e) {
@@ -947,7 +981,74 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         }
     }
 
-    private void updateBallIndicatorsFromResponse(List<Balled> balledList) {
+//    private void updateBallIndicatorsFromResponse(List<Balled> balledList) {
+//        // Reset the indicators and counters for the current over
+//        ballsInCurrentOver = 0;
+//        currentOverRuns = 0;
+//
+//        // Log the size of the balledList
+//        Log.d("DEBUG", "Size of balledList: " + balledList.size());
+//
+//        // Loop through the list and update ball indicators based on the actual size of the list
+//        for (Balled ballData : balledList) {
+//            Log.d("DEBUG", "Processing ball: " + ballsInCurrentOver); // Log the count of balls being processed
+//
+//            // Extract the runs scored from the API response
+//            int runs = ballData.getRunsScored();
+//
+//            // Store the runs for the current ball
+//            runsInCurrentOver[ballsInCurrentOver] = runs;
+//            currentOverRuns += runs;
+//
+//            // Update the ball indicators (assuming you have up to 6 ball indicators)
+//            if (ballsInCurrentOver < ballIndicators.length) {
+//                ballIndicators[ballsInCurrentOver].setText(String.valueOf(runs));  // Set the run for the ball
+//                ballIndicators[ballsInCurrentOver].setVisibility(View.VISIBLE);  // Make the ball indicator visible
+//            }
+//
+//            ballsInCurrentOver++;  // Move to the next ball
+//        }
+//
+//        // Log after the loop to check the final count of balls
+//        Log.d("DEBUG", "Balls in current over after loop: " + ballsInCurrentOver);
+//
+//        // If the list contains more than 6 balls, handle it by not showing more than 6 balls on the UI
+//        if (ballsInCurrentOver > 6) {
+//            // You can hide the remaining balls if there are more than 6
+//            for (int i = 6; i < ballIndicators.length; i++) {
+//                ballIndicators[i].setVisibility(View.INVISIBLE);
+//            }
+//        }
+//
+//        // Trigger the over completion dialog if the over is finished
+//        if (ballsInCurrentOver >= 6 ) {
+//            Log.d("DEBUG", "Triggering over completion dialog...");
+//
+//            // Ensure that the handler and dialog show are triggered on the main thread
+//            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+//                runOnUiThread(() -> {
+//                    Log.d("DEBUG", "Showing Over Completed Dialog");
+//                    showOverCompletedDialog(balledList);  // Show the dialog
+//                });
+//
+//                // Reset for the next over after showing the dialog
+//                ballsInCurrentOver = 0;
+//                totalOvers++;
+//                currentOverRuns = 0;
+//
+//                // Clear ball indicators for the next over
+//                for (TextView ball : ballIndicators) {
+//                    ball.setText("");
+//                    ball.setVisibility(View.INVISIBLE);
+//                }
+//            }, 1000);  // Delay in milliseconds before showing the dialog
+//        }
+//    }
+
+
+
+
+   /* private void updateBallIndicatorsFromResponse(List<Balled> balledList,int current_over_total_ball) {
         // Reset the indicators and counters for the current over
         ballsInCurrentOver = 0;
         currentOverRuns = 0;
@@ -955,39 +1056,55 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         // Log the size of the balledList
         Log.d("DEBUG", "Size of balledList: " + balledList.size());
 
+        // Clear existing indicators from the layout
+        ballIndicatorsLayout.removeAllViews();
+
         // Loop through the list and update ball indicators based on the actual size of the list
+        // Loop through the ball list and create TextViews dynamically
         for (Balled ballData : balledList) {
-            Log.d("DEBUG", "Processing ball: " + ballsInCurrentOver); // Log the count of balls being processed
+            TextView ballIndicator = new TextView(this);
 
-            // Extract the runs scored from the API response
-            int runs = ballData.getRunsScored();
+            // Set the layout parameters for the TextView
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    90, 90); // Width and height in dp
+            params.setMargins(16, 0, 16, 0); // Margins around each ball indicator
+            ballIndicator.setLayoutParams(params);
 
-            // Store the runs for the current ball
-            runsInCurrentOver[ballsInCurrentOver] = runs;
-            currentOverRuns += runs;
+            // Style the TextView
+            ballIndicator.setGravity(Gravity.CENTER);
+            ballIndicator.setTextColor(Color.WHITE);
+            ballIndicator.setBackgroundResource(R.drawable.circle_background);
 
-            // Update the ball indicators (assuming you have up to 6 ball indicators)
-            if (ballsInCurrentOver < ballIndicators.length) {
-                ballIndicators[ballsInCurrentOver].setText(String.valueOf(runs));  // Set the run for the ball
-                ballIndicators[ballsInCurrentOver].setVisibility(View.VISIBLE);  // Make the ball indicator visible
+            // Set the text for the ball (runs or extra type)
+            String ballText;
+            if ("WB".equalsIgnoreCase(ballData.getExtras())) {
+                ballText = "WB+" + ballData.getRunsScored();
+            } else if ("NB".equalsIgnoreCase(ballData.getExtras())) {
+                ballText = "NB+" + ballData.getRunsScored();
+            } else {
+                ballText = String.valueOf(ballData.getRunsScored());
             }
+            ballIndicator.setText(ballText);
 
-            ballsInCurrentOver++;  // Move to the next ball
+            // Add the TextView to the LinearLayout
+            ballIndicatorsLayout.addView(ballIndicator);
+            ballsInCurrentOver++;
         }
 
         // Log after the loop to check the final count of balls
         Log.d("DEBUG", "Balls in current over after loop: " + ballsInCurrentOver);
 
-        // If the list contains more than 6 balls, handle it by not showing more than 6 balls on the UI
+        // If the list contains more than 6 balls, hide extra balls
         if (ballsInCurrentOver > 6) {
-            // You can hide the remaining balls if there are more than 6
-            for (int i = 6; i < ballIndicators.length; i++) {
-                ballIndicators[i].setVisibility(View.INVISIBLE);
+            // Optionally handle the visibility of balls beyond 6
+            // In this case, just limit the number of TextViews added to the layout
+            for (int i = 6; i < balledList.size(); i++) {
+                // You could add logic here to handle extra balls or notify the user
             }
         }
 
         // Trigger the over completion dialog if the over is finished
-        if (ballsInCurrentOver >= 6 ) {
+        if (current_over_total_ball >= 6) {
             Log.d("DEBUG", "Triggering over completion dialog...");
 
             // Ensure that the handler and dialog show are triggered on the main thread
@@ -1002,14 +1119,126 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                 totalOvers++;
                 currentOverRuns = 0;
 
-                // Clear ball indicators for the next over
-                for (TextView ball : ballIndicators) {
-                    ball.setText("");
-                    ball.setVisibility(View.INVISIBLE);
-                }
+                // Optionally reset or clear the layout if needed
+                ballIndicatorsLayout.removeAllViews();
+            }, 1000);  // Delay in milliseconds before showing the dialog
+        }
+    }*/
+
+    private void updateBallIndicatorsFromResponse(List<Balled> balledList,int current_over_total_ball) {
+        // Reset the indicators and counters for the current over
+        runsInCurrentOver.clear();  // Clear previous runs
+        ballsInCurrentOver = 0;
+        currentOverRuns = 0;
+
+        // Log the size of the balledList
+        Log.d("DEBUG", "Size of balledList: " + balledList.size());
+
+        // Clear existing indicators from the layout
+        ballIndicatorsLayout.removeAllViews();
+
+        // Loop through the list and update ball indicators based on the actual size of the list
+        for (Balled ballData : balledList) {
+            Log.d("DEBUG", "Processing ball: " + ballsInCurrentOver); // Log the count of balls being processed
+
+            // Extract the runs scored from the API response
+            int runs = ballData.getRunsScored();
+            String extras = ballData.getExtras();  // "WB" or "NB" for wide or no-ball
+
+            // Add the runs for the current ball to the list
+            runsInCurrentOver.add(runs);  // Dynamically add runs to the list
+            currentOverRuns += runs;
+
+            // Create a parent layout for each ball (this will hold both run indicators)
+            LinearLayout ballIndicatorWrapper = new LinearLayout(this);
+            ballIndicatorWrapper.setOrientation(LinearLayout.VERTICAL); // Stack run circle and extra ball circle vertically
+            ballIndicatorWrapper.setGravity(Gravity.CENTER);
+
+            // Create the normal run circle TextView
+            TextView ballIndicator = new TextView(this);
+            ballIndicator.setTextSize(14.5f);
+            ballIndicator.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+            ballIndicator.setGravity(Gravity.CENTER);
+            ballIndicator.setTextColor(Color.BLACK);
+            ballIndicator.setBackgroundResource(R.drawable.circle_background); // Add your circle background
+
+            // Set the run text for the ball (either the normal run or the extra ball)
+            String ballText;
+            if ("WB".equalsIgnoreCase(extras)) {
+                ballText = "WB+" + runs;  // Wide ball runs
+            } else if ("NB".equalsIgnoreCase(extras)) {
+                ballText = "NB+" + runs;  // No-ball runs
+            } else {
+                ballText = String.valueOf(runs);  // Normal run
+            }
+            ballIndicator.setText(ballText);
+
+            // Set layout params for the ball indicator
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    dpToPx(50), dpToPx(50)); // Convert 90 dp to px
+            params.setMargins(dpToPx(7), 0, dpToPx(7), 0);  // Set margin around circle
+            ballIndicator.setLayoutParams(params);
+
+            // Add the normal run circle to the wrapper
+            ballIndicatorWrapper.addView(ballIndicator);
+
+            // Check if it is a wide or no-ball, and add an extra ball indicator below it
+            if ("WB".equalsIgnoreCase(extras) || "NB".equalsIgnoreCase(extras)) {
+                TextView extraBallIndicator = new TextView(this);
+                extraBallIndicator.setGravity(Gravity.CENTER);
+                extraBallIndicator.setTextColor(Color.WHITE);
+                extraBallIndicator.setBackgroundResource(R.drawable.circle_background);  // Same background for extra ball
+
+                // Set text for the extra ball (just the type, without runs)
+                extraBallIndicator.setText(extras);
+
+                // Set layout params for the extra ball indicator
+                LinearLayout.LayoutParams extraBallParams = new LinearLayout.LayoutParams(
+                        dpToPx(60), dpToPx(60));  // Smaller circle for extra ball
+                extraBallParams.setMargins(0, dpToPx(8), 0, 0);  // Margin between the circles
+                extraBallIndicator.setLayoutParams(extraBallParams);
+
+                // Add the extra ball indicator to the wrapper
+               // ballIndicatorWrapper.addView(extraBallIndicator);
+            }
+
+            // Add the wrapper to the main layout
+            ballIndicatorsLayout.addView(ballIndicatorWrapper);
+
+            ballsInCurrentOver++;  // Move to the next ball
+        }
+
+        // Log after the loop to check the final count of balls
+        Log.d("DEBUG", "Balls in current over after loop: " + ballsInCurrentOver);
+
+        // Trigger the over completion dialog if the over is finished
+        if (current_over_total_ball == 6) {
+            Log.d("DEBUG", "Triggering over completion dialog...");
+
+            // Ensure that the handler and dialog show are triggered on the main thread
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                runOnUiThread(() -> {
+                    Log.d("DEBUG", "Showing Over Completed Dialog");
+                    showOverCompletedDialog(balledList);  // Show the dialog
+                });
+
+                // Reset for the next over after showing the dialog
+                ballsInCurrentOver = 0;
+                totalOvers++;
+                currentOverRuns = 0;
+
+                // Optionally reset or clear the layout if needed
+                ballIndicatorsLayout.removeAllViews();
             }, 1000);  // Delay in milliseconds before showing the dialog
         }
     }
+
+    // Helper method to convert dp to pixels for consistent sizing
+    private int dpToPx(int dp) {
+        float density = getResources().getDisplayMetrics().density;
+        return (int) (dp * density);
+    }
+
 
     private void showOverCompletedDialog(List<Balled> balledList) {
 
@@ -1020,7 +1249,8 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         View bottomSheetView = getLayoutInflater().inflate(R.layout.dialog_over_complete, null);
         bottomSheetDialog.setContentView(bottomSheetView);
-
+        LinearLayout ballIndicatorsLayout = bottomSheetDialog.findViewById(R.id.ballIndicators);
+        ballIndicatorsLayout.removeAllViews();
         bottomSheetDialog.setOnShowListener(dialog -> {
             BottomSheetBehavior<?> behavior = BottomSheetBehavior.from((View) bottomSheetView.getParent());
             behavior.setHideable(false); // Prevent hiding by sliding down
@@ -1035,21 +1265,21 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         TextView tvTotalWickets = bottomSheetDialog.findViewById(R.id.tvTotalWickets);
 
         // Fetching the ball indicators (TextViews for each ball)
-        TextView[] ballIndicatorsDialog = new TextView[6];
-        FrameLayout[] ballIndicatorsDialogg = new FrameLayout[6];
-        ballIndicatorsDialog[0] = bottomSheetDialog.findViewById(R.id.ball_1_run);
-        ballIndicatorsDialog[1] = bottomSheetDialog.findViewById(R.id.ball_2_run);
-        ballIndicatorsDialog[2] = bottomSheetDialog.findViewById(R.id.ball_3_run);
-        ballIndicatorsDialog[3] = bottomSheetDialog.findViewById(R.id.ball_4_run);
-        ballIndicatorsDialog[4] = bottomSheetDialog.findViewById(R.id.ball_5_run);
-        ballIndicatorsDialog[5] = bottomSheetDialog.findViewById(R.id.ball_6_run);
-
-        ballIndicatorsDialogg[0] = bottomSheetDialog.findViewById(R.id.ball_1);
-        ballIndicatorsDialogg[1] = bottomSheetDialog.findViewById(R.id.ball_2);
-        ballIndicatorsDialogg[2] = bottomSheetDialog.findViewById(R.id.ball_3);
-        ballIndicatorsDialogg[3] = bottomSheetDialog.findViewById(R.id.ball_4);
-        ballIndicatorsDialogg[4] = bottomSheetDialog.findViewById(R.id.ball_5);
-        ballIndicatorsDialogg[5] = bottomSheetDialog.findViewById(R.id.ball_6);
+//        TextView[] ballIndicatorsDialog = new TextView[6];
+//        FrameLayout[] ballIndicatorsDialogg = new FrameLayout[6];
+//        ballIndicatorsDialog[0] = bottomSheetDialog.findViewById(R.id.ball_1_run);
+//        ballIndicatorsDialog[1] = bottomSheetDialog.findViewById(R.id.ball_2_run);
+//        ballIndicatorsDialog[2] = bottomSheetDialog.findViewById(R.id.ball_3_run);
+//        ballIndicatorsDialog[3] = bottomSheetDialog.findViewById(R.id.ball_4_run);
+//        ballIndicatorsDialog[4] = bottomSheetDialog.findViewById(R.id.ball_5_run);
+//        ballIndicatorsDialog[5] = bottomSheetDialog.findViewById(R.id.ball_6_run);
+//
+//        ballIndicatorsDialogg[0] = bottomSheetDialog.findViewById(R.id.ball_1);
+//        ballIndicatorsDialogg[1] = bottomSheetDialog.findViewById(R.id.ball_2);
+//        ballIndicatorsDialogg[2] = bottomSheetDialog.findViewById(R.id.ball_3);
+//        ballIndicatorsDialogg[3] = bottomSheetDialog.findViewById(R.id.ball_4);
+//        ballIndicatorsDialogg[4] = bottomSheetDialog.findViewById(R.id.ball_5);
+//        ballIndicatorsDialogg[5] = bottomSheetDialog.findViewById(R.id.ball_6);
 
         // Update dialog fields with the current data
         tvCurrentBowler.setText(bowlerName);
@@ -1062,7 +1292,35 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         runOnUiThread(() -> {
 
             Log.d("DEBUG", "Dialog showing for over: ");
-            for (int i = 0; i < balledList.size(); i++) {
+           /* for (int i = 0; i < balledList.size(); i++) {
+
+                TextView ballIndicator = new TextView(this);
+
+                // Set the layout parameters for the TextView
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        90, 90); // Width and height in dp
+                params.setMargins(16, 0, 16, 0); // Margins around each ball indicator
+                ballIndicator.setLayoutParams(params);
+
+                // Style the TextView
+                ballIndicator.setGravity(Gravity.CENTER);
+                ballIndicator.setTextColor(Color.WHITE);
+                ballIndicator.setBackgroundResource(R.drawable.circle_background);
+
+                // Set the text for the ball (runs or extra type)
+                String ballText;
+                if ("WB".equalsIgnoreCase(balledList.getExtras())) {
+                    ballText = "WB+" + balledList.getRunsScored();
+                } else if ("NB".equalsIgnoreCase(balledList.getExtras())) {
+                    ballText = "NB+" + balledList.getRunsScored();
+                } else {
+                    ballText = String.valueOf(balledList.getRunsScored());
+                }
+                ballIndicator.setText(ballText);
+
+                // Add the TextView to the LinearLayout
+                ballIndicatorsLayout.addView(ballIndicator);
+
                 if (i < ballsInCurrentOver) {
                     Log.d("DEBUG", "Ball " + (i + 1) + " Run: " + balledList.get(i));
                     ballIndicatorsDialog[i].setText(String.valueOf(balledList.get(i).getRunsScored()));
@@ -1073,6 +1331,108 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                     ballIndicatorsDialog[i].setText("");
                     ballIndicatorsDialogg[i].setVisibility(View.INVISIBLE);
                 }
+            }*/
+
+
+           /* for (Balled ballData : balledList) {
+                TextView ballIndicator = new TextView(this);
+
+                // Set the layout parameters for the TextView
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        90, 90); // Width and height in dp
+                params.setMargins(16, 0, 16, 0); // Margins around each ball indicator
+                ballIndicator.setLayoutParams(params);
+
+                // Style the TextView
+                ballIndicator.setGravity(Gravity.CENTER);
+                ballIndicator.setTextColor(Color.WHITE);
+                ballIndicator.setBackgroundResource(R.drawable.circle_background);
+
+                // Set the text for the ball (runs or extra type)
+                String ballText;
+                if ("WB".equalsIgnoreCase(ballData.getExtras())) {
+                    ballText = "WB+" + ballData.getRunsScored();
+                } else if ("NB".equalsIgnoreCase(ballData.getExtras())) {
+                    ballText = "NB+" + ballData.getRunsScored();
+                } else {
+                    ballText = String.valueOf(ballData.getRunsScored());
+                }
+                ballIndicator.setText(ballText);
+
+                // Add the TextView to the LinearLayout
+                ballIndicatorsLayout.addView(ballIndicator);
+                ballsInCurrentOver++;
+            }*/
+
+
+            for (Balled ballData : balledList) {
+                Log.d("DEBUG", "Processing ball: " + ballsInCurrentOver); // Log the count of balls being processed
+
+                // Extract the runs scored from the API response
+                int runs = ballData.getRunsScored();
+                String extras = ballData.getExtras();  // "WB" or "NB" for wide or no-ball
+
+                // Store the runs for the current ball
+                runsInCurrentOver.add(runs);  // Dynamically add runs to the list
+                currentOverRuns += runs;
+
+                // Create a parent layout for each ball (this will hold both run indicators)
+                LinearLayout ballIndicatorWrapper = new LinearLayout(this);
+                ballIndicatorWrapper.setOrientation(LinearLayout.VERTICAL); // Stack run circle and extra ball circle vertically
+                ballIndicatorWrapper.setGravity(Gravity.CENTER);
+
+                // Create the normal run circle TextView
+                TextView ballIndicator = new TextView(this);
+                ballIndicator.setTextSize(14.5f);
+                ballIndicator.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+                ballIndicator.setGravity(Gravity.CENTER);
+                ballIndicator.setTextColor(Color.BLACK);
+                ballIndicator.setBackgroundResource(R.drawable.circle_background); // Add your circle background
+
+                // Set the run text for the ball (either the normal run or the extra ball)
+                String ballText;
+                if ("WB".equalsIgnoreCase(extras)) {
+                    ballText = "WB+" + runs;  // Wide ball runs
+                } else if ("NB".equalsIgnoreCase(extras)) {
+                    ballText = "NB+" + runs;  // No-ball runs
+                } else {
+                    ballText = String.valueOf(runs);  // Normal run
+                }
+                ballIndicator.setText(ballText);
+
+                // Set layout params for the ball indicator
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        dpToPx(50), dpToPx(50)); // Convert 90 dp to px
+                params.setMargins(dpToPx(6), 0, dpToPx(6), 0);  // Set margin around circle
+                ballIndicator.setLayoutParams(params);
+
+                // Add the normal run circle to the wrapper
+                ballIndicatorWrapper.addView(ballIndicator);
+
+                // Check if it is a wide or no-ball, and add an extra ball indicator below it
+                if ("WB".equalsIgnoreCase(extras) || "NB".equalsIgnoreCase(extras)) {
+                    TextView extraBallIndicator = new TextView(this);
+                    extraBallIndicator.setGravity(Gravity.CENTER);
+                    extraBallIndicator.setTextColor(Color.WHITE);
+                    extraBallIndicator.setBackgroundResource(R.drawable.circle_background);  // Same background for extra ball
+
+                    // Set text for the extra ball (just the type, without runs)
+                    extraBallIndicator.setText(extras);
+
+                    // Set layout params for the extra ball indicator
+                    LinearLayout.LayoutParams extraBallParams = new LinearLayout.LayoutParams(
+                            dpToPx(60), dpToPx(60));  // Smaller circle for extra ball
+                    extraBallParams.setMargins(0, dpToPx(8), 0, 0);  // Margin between the circles
+                    extraBallIndicator.setLayoutParams(extraBallParams);
+
+                    // Add the extra ball indicator to the wrapper
+                   // ballIndicatorWrapper.addView(extraBallIndicator);
+                }
+
+                // Add the wrapper to the main layout
+                ballIndicatorsLayout.addView(ballIndicatorWrapper);
+
+                ballsInCurrentOver++;  // Move to the next ball
             }
         });
 
@@ -1113,7 +1473,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
     private void updateScoreDisplay() {
         // Update the main scoreboard text
-        scoreTextView.setText(String.format("%d/%d (%d.%d ov)", totalRuns, wickets, overs, balls));
+        scoreTextView.setText(String.format("%d/%d (%d.%d ov)", totalRuns, wickets, overs, current_over_total_ball));
 
         // Update individual player scores
         player1ScoreView.setText(String.format("%s: %d", StrikePlayerName, player1Score));
@@ -1123,5 +1483,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         bowlerStatsView.setText(String.format("Overs: %d.%d | Runs: %d | Wickets: %d", overs, balls, totalRuns, wickets));
         tvbowlerName.setText(bowlerName);
     }
+
+
 
 }

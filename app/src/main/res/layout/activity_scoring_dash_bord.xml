@@ -204,7 +204,7 @@
                     android:textColor="#FFF" />
             </RelativeLayout>
             <!-- Add this below the bowler stats or where appropriate -->
-            <LinearLayout
+          <!--  <LinearLayout
                 android:id="@+id/ballIndicators"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -213,7 +213,7 @@
                 android:layout_marginTop="@dimen/_2sdp"
                 android:layout_marginBottom="@dimen/_5sdp">
 
-                <!-- Example of 6 balls (to be updated dynamically in Java code) -->
+                &lt;!&ndash; Example of 6 balls (to be updated dynamically in Java code) &ndash;&gt;
                 <TextView
                     android:id="@+id/ball1"
                     android:layout_width="40dp"
@@ -274,7 +274,22 @@
                     android:layout_margin="4dp"
                     android:visibility="invisible" />
 
-            </LinearLayout>
+            </LinearLayout>-->
+
+            <!--Ball-->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/ballIndicators"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginBottom="@dimen/_5sdp" />
+            </HorizontalScrollView>
+
 
         </LinearLayout>
     </FrameLayout>
