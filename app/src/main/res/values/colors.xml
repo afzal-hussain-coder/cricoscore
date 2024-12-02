@@ -20,6 +20,7 @@
     <color name="lightgrey_dim">#EBEAEC</color>
     <color name="verified_user_color">#55ACEE</color>
     <color name="light_sky">#CAE2F7</color>
+    <color name="dark_selection">#4FB494</color>
 
     <color name="green">#4CAF50</color>
     <color name="black_semi_transparent">#B1000000</color>

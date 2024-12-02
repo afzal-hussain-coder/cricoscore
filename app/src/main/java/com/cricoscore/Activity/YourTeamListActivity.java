@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.cricoscore.Adapter.TeamListAdapter;
 import com.cricoscore.Adapter.YourTeamListAdapter;
+import com.cricoscore.Adapter.YourTeamListAdapterHorizontal;
 import com.cricoscore.ParamBody.AddTeamInTournamnetBody;
 import com.cricoscore.R;
 import com.cricoscore.Utils.DataModel;
@@ -26,6 +27,7 @@ import com.cricoscore.Utils.SelectTournamentType;
 import com.cricoscore.Utils.SessionManager;
 import com.cricoscore.Utils.Toaster;
 import com.cricoscore.model.TeamModel;
+import com.cricoscore.model.TournamentModel.TournamentDetails;
 import com.cricoscore.retrofit.ApiRequest;
 import com.cricoscore.retrofit.RetrofitRequest;
 import com.google.android.material.button.MaterialButton;
@@ -58,6 +60,7 @@ public class YourTeamListActivity extends AppCompatActivity {
     public String teamId = null;
 
     YourTeamListAdapter yourTeamListAdapter;
+    ArrayList<TeamModel>updatedPlayer = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +85,12 @@ public class YourTeamListActivity extends AppCompatActivity {
         }
 
         initView();
+
+        if (Global.isOnline(mContext)) {
+            getTournamentDetails(tournamentId);
+        } else {
+            Global.showDialog(mActivity);
+        }
 
         if (Global.isOnline(mContext)) {
             getMyTeamList();
@@ -130,7 +139,7 @@ public class YourTeamListActivity extends AppCompatActivity {
 //        });
 
         img_add.setOnClickListener(v -> {
-            startActivity(new Intent(mContext, AddTeamActivity.class));
+            startActivity(new Intent(mContext, AddTeamActivity.class).putExtra("Id",tournamentId));
         });
 
         mb_add_new_team.setOnClickListener(v -> {
@@ -169,7 +178,7 @@ public class YourTeamListActivity extends AppCompatActivity {
                         }
 
 
-                        yourTeamListAdapter = new YourTeamListAdapter(mContext, teamModelArrayList, new YourTeamListAdapter.itemClickListener() {
+                        yourTeamListAdapter = new YourTeamListAdapter(mContext, teamModelArrayList,updatedPlayer, new YourTeamListAdapter.itemClickListener() {
                             @Override
                             public void checkedItem(ArrayList<Integer> arrylist) {
 
@@ -293,6 +302,47 @@ public class YourTeamListActivity extends AppCompatActivity {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e("Error", "Failed to fetch data: " + t.getMessage());
                 Global.hideLoder();
+            }
+        });
+    }
+
+    public void getTournamentDetails(String tournamentId) {
+       // Global.showLoader(getSupportFragmentManager());
+        ApiRequest apiService = RetrofitRequest.getRetrofitInstance().create(ApiRequest.class);
+        Call<ResponseBody> call = apiService.getTournamentDetails(SessionManager.getToken(), tournamentId);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+               // Global.hideLoder();
+
+                if (response.isSuccessful() && response.body() != null) {
+                    try {
+                        String jsonString = response.body().string(); // Get the JSON string
+                        JSONObject jsonObject = new JSONObject(jsonString); // Convert to JSONObject
+
+                        JSONObject finalData = jsonObject.getJSONObject("data");
+
+                        JSONArray jsonArray = finalData.getJSONArray("teams");
+                        for(int i=0;i<jsonArray.length();i++){
+                            updatedPlayer.add(new TeamModel(jsonArray.getJSONObject(i)));
+                        }
+
+
+
+
+                    } catch (Exception e) {
+                        Log.e("Error", "JSON parsing error: " + e.getMessage());
+                    }
+                } else {
+                    Log.e("Error", "Response error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Error", "Failed to fetch data: " + t.getMessage());
+              //  Global.hideLoder();
             }
         });
     }

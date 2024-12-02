@@ -145,6 +145,8 @@ public class ScheduleMatchDetailsActivity extends AppCompatActivity {
         String teamLogo2 = intent.getStringExtra("teamLogo2");
         Glide.with(mContext).load(Global.BASE_URL + "/" + teamLogo2).into(activityScheduleMatchDetailsBinding.imgTeamTwoLogo);
 
+        //activityScheduleMatchDetailsBinding.tvNoOfSquad1.setText(String.valueOf(teamAList.size())); // For Team A
+       // activityScheduleMatchDetailsBinding.tvNoOfSquadTeamTwo.setText(String.valueOf(teamBList.size())); // For Team B
 
 //        if (Global.isOnline(mContext)) {
 //            getTournamentDetails(tournamentId);
@@ -453,6 +455,8 @@ public class ScheduleMatchDetailsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+
 
         //activityScheduleMatchDetailsBinding.tvNoOfSquadTeamTwo.setText(TeamPlayerlistActivity.retrieveListB(sharedPreferences).size()+"");
         //activityScheduleMatchDetailsBinding.tvNoOfSquad1.setText(retrieveList(sharedPreferences).size()+"");

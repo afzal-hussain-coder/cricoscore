@@ -123,11 +123,12 @@ public interface ApiRequest {
 
     @Multipart
     @POST(Global.ADD_TEAM)
-    Call<AddTeamResponse> getAddTeamResponse(@Header("token") String token,
-                                             @Part("user_id") RequestBody user_id,
-                                             @Part("city") RequestBody city,
-                                             @Part("name") RequestBody name,
-                                             @Part MultipartBody.Part team_logo);
+    Call<ResponseBody> getAddTeamResponse(@Header("token") String token,
+                                          @Part("user_id") RequestBody user_id,
+                                          @Part("city") RequestBody city,
+                                          @Part("name") RequestBody name,
+                                          @Part("tournament_id") RequestBody tournamentId,
+                                          @Part MultipartBody.Part team_logo);
 
     @GET("tournament/getDetails/{tournamentId}")
         // Use {tournamentId} in the endpoint
@@ -217,13 +218,12 @@ public interface ApiRequest {
 
     @PUT(Global.INNING_UPDATE)
     Call<ResponseBody> inningUpdate(@Header("token") String token,
-                            @Body PlayingSqudUpdateBody createScheduleBody);
+                                    @Body PlayingSqudUpdateBody createScheduleBody);
 
 
     @POST(Global.INNING_BALL)
     Call<ResponseBody> inningBall(@Header("token") String token,
-                                 @Body InningBallParamBody inningBallParamBody);
-
+                                  @Body InningBallParamBody inningBallParamBody);
 
 
 }

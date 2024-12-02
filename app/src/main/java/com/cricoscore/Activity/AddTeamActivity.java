@@ -1,5 +1,7 @@
 package com.cricoscore.Activity;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,9 +15,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 
+import com.cricoscore.ApiResponse.AddTeamResponse;
 import com.cricoscore.CustomeCamera.CustomeCameraActivity;
+import com.cricoscore.ParamBody.AddTeamInTournamnetBody;
 import com.cricoscore.R;
 import com.cricoscore.Utils.DataModel;
 import com.cricoscore.Utils.Global;
@@ -24,11 +29,25 @@ import com.cricoscore.Utils.SessionManager;
 import com.cricoscore.Utils.Toaster;
 import com.cricoscore.databinding.ActivityAddTeamBinding;
 import com.cricoscore.databinding.ToolbarBinding;
+import com.cricoscore.repository.AddTeamRepo;
+import com.cricoscore.retrofit.ApiRequest;
+import com.cricoscore.retrofit.RetrofitRequest;
 import com.cricoscore.view_model.AddTeamViewMode;
 import com.cricoscore.view_model.AddTournamentViewModel;
 
+import org.json.JSONObject;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddTeamActivity extends AppCompatActivity {
 
@@ -43,6 +62,9 @@ public class AddTeamActivity extends AppCompatActivity {
     public static Uri image_uri = null;
 
     AddTeamViewMode addTeamViewMode;
+    public String tournamentId = "";
+    int teamId=0;
+    ArrayList<Integer> arrylistTeamId = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,30 +84,34 @@ public class AddTeamActivity extends AppCompatActivity {
         toolbarBinding.toolbartext.setText(getResources().getString(R.string.add_team));
         toolbarBinding.toolbar.setNavigationOnClickListener(v -> finish());
 
+        if (getIntent() != null) {
+            tournamentId = getIntent().getStringExtra("Id");
+        }
+
 
         /**
          * @AddTeam Result
          * @s --> Check result
          */
 
-        addTeamViewMode = new ViewModelProvider(this).get(AddTeamViewMode.class);
+      //  addTeamViewMode = new ViewModelProvider(this).get(AddTeamViewMode.class);
 
-        addTeamViewMode.getAddTournamentResult().observe(this, responseStatus -> {
-            if (responseStatus.isStatus()) {
-                new Handler().postDelayed(() -> {
-                    Toaster.customToast(responseStatus.getMessage());
-                }, 100);
-
-            }
-        });
-
-        addTeamViewMode.getSubmitProfileProgress().observe(this, integer -> {
-            if (integer == 0) {
-                Global.showLoader(getSupportFragmentManager());
-            } else {
-                Global.hideLoder();
-            }
-        });
+//        addTeamViewMode.getAddTournamentResult().observe(this, responseStatus -> {
+//            if (responseStatus.isStatus()) {
+//                new Handler().postDelayed(() -> {
+//                    Toaster.customToast(responseStatus.getMessage());
+//                }, 100);
+//
+//            }
+//        });
+//
+//        addTeamViewMode.getSubmitProfileProgress().observe(this, integer -> {
+//            if (integer == 0) {
+//                Global.showLoader(getSupportFragmentManager());
+//            } else {
+//                Global.hideLoder();
+//            }
+//        });
 
 
         drop_matchName = activityAddTeamBinding.dropMatchName;
@@ -237,9 +263,9 @@ public class AddTeamActivity extends AppCompatActivity {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (Global.isOnline(mContext)) {
-                        addTeamViewMode.getAddTeamResponse(SessionManager.getToken(),SessionManager.getUserId().toString(),
+                        getAddTeamResponse(SessionManager.getToken(),SessionManager.getUserId().toString(),
                                 activityAddTeamBinding.editTextCity.getText().toString().trim(),
-                                activityAddTeamBinding.editTextTeamName.getText().toString(),
+                                activityAddTeamBinding.editTextTeamName.getText().toString(),tournamentId,
                                 image_uri);
                     } else {
                         Global.showDialog(mActivity);
@@ -279,6 +305,172 @@ public class AddTeamActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    public void getAddTeamResponse(String token, String userId, String city, String name,String tournamentId, Uri teamLogo) {
+        Global.showLoader(getSupportFragmentManager());
+        RequestBody requestUserId = RequestBody.create(MediaType.parse("text/plain"), userId);
+        RequestBody requestCity = RequestBody.create(MediaType.parse("text/plain"), city);
+        RequestBody requestName = RequestBody.create(MediaType.parse("text/plain"), name);
+        RequestBody requestTournamnet = RequestBody.create(MediaType.parse("text/plain"), tournamentId);
+        //RequestBody requestTeamLogo= RequestBody.create(MediaType.parse("text/plain"), teamLogo);
+
+        MultipartBody.Part bodyLogo=null;
+
+        if (teamLogo != null) {
+            File file = new File(teamLogo.getPath());
+            String mimeType = getMimeType(file);
+            RequestBody requestFile = RequestBody.create(MediaType.parse(mimeType), file);
+
+            // MultipartBody.Part is used to send also the actual file name
+            bodyLogo = MultipartBody.Part.createFormData("team_logo", file.getName(), requestFile);
+
+            // Proceed with the rest of your logic, e.g., making a network request with 'body'
+        } else {
+            // Handle the null case
+            Log.e("FileUpload", "URI is null, cannot proceed with file upload.");
+        }
+        ApiRequest apiService = RetrofitRequest.getRetrofitInstance().create(ApiRequest.class);
+        Call<ResponseBody> addTeamResponseCall = apiService.getAddTeamResponse(token, requestUserId, requestCity,
+                requestName,requestTournamnet, bodyLogo);
+
+        addTeamResponseCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Global.hideLoder();
+                Log.e(TAG, response + "");
+
+                if (response.isSuccessful() && response.body() != null) {
+                    try {
+                        // Correctly retrieve the response body as a string
+                        String jsonString = response.body().string();
+
+                        // Log the raw JSON string to verify the server response
+                        Log.d("RawJSON", jsonString);
+
+                        // Parse the JSON string
+                        JSONObject jsonObject = new JSONObject(jsonString);
+
+                        // Extract data from the JSON object
+                        boolean status = jsonObject.getBoolean("status");
+                        String message = jsonObject.getString("message");
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        int teamId = data.getInt("team_id");
+                        String name = data.getString("name");
+                        String city = data.getString("city");
+                        String teamLogo = data.getString("team_logo");
+
+                        // Display the message
+                        Toaster.customToast(message);
+
+                        // Log the extracted teamId
+                        Log.d("TeamId", teamId + "");
+                        arrylistTeamId.add(teamId);
+
+                        StringBuilder sb = new StringBuilder();
+
+//                        for (int i = 0; i < arrylist.size(); i++) {
+//                            sb.append(arrylist.get(i));
+//                            if (i < arrylist.size() - 1) {
+//                                sb.append(",");
+//                            }
+//                        }
+//
+//                        teamId = sb.toString();
+
+                        if(tournamentId.isEmpty()){
+                            finish();
+                        }else{
+                             startActivity(new Intent(mContext, TournamentDetailsActivity.class).putExtra("id", tournamentId));
+                             finish();
+//                            if (Global.isOnline(mContext)) {
+//                                getSubmitTeam(tournamentId,String.valueOf(teamId));
+//                            } else {
+//                                Global.showDialog(mActivity);
+//                            }
+                        }
+
+                        // Handle navigation or further processing here
+                        // startActivity(new Intent(mContext, TournamentDetailsActivity.class).putExtra("id", tournamentId));
+                        // finish();
+
+                    } catch (Exception e) {
+                        Log.e("Error", "JSON parsing error: " + e.getMessage());
+                    }
+                } else {
+                    Log.e("Error", "Response error: " + response.code());
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Error", "Failed to fetch data: " + t.getMessage());
+                Global.hideLoder();
+
+            }
+        });
+
+
+    }
+
+    public void getSubmitTeam(String tournamentId, String teamId) {
+        Global.showLoader(getSupportFragmentManager());
+        ApiRequest apiService = RetrofitRequest.getRetrofitInstance().create(ApiRequest.class);
+        Call<ResponseBody> call = apiService.addTeamInTournamnet(SessionManager.getToken(),new AddTeamInTournamnetBody(tournamentId,teamId));
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Global.hideLoder();
+
+                if (response.isSuccessful() && response.body() != null) {
+                    try {
+                        String jsonString = response.body().string(); // Get the JSON string
+                        JSONObject jsonObject = new JSONObject(jsonString); // Convert to JSONObject
+
+                        //Toaster.customToast(jsonObject.getString("message"));
+
+                        startActivity(new Intent(mContext,TournamentDetailsActivity.class).putExtra("id",tournamentId));
+                        finish();
+
+
+                    } catch (Exception e) {
+                        Log.e("Error", "JSON parsing error: " + e.getMessage());
+                    }
+                } else {
+                    Log.e("Error", "Response error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Error", "Failed to fetch data: " + t.getMessage());
+                Global.hideLoder();
+            }
+        });
+    }
+
+    private String getMimeType(File file) {
+        String mimeType = null;
+        String fileName = file.getName();
+        String extension = fileName.substring(fileName.lastIndexOf('.') + 1);
+        switch (extension.toLowerCase()) {
+            case "jpg":
+            case "jpeg":
+                mimeType = "image/jpeg";
+                break;
+            case "png":
+                mimeType = "image/png";
+                break;
+            case "gif":
+                mimeType = "image/gif";
+                break;
+            default:
+                mimeType = "application/octet-stream"; // Fallback MIME type
+                break;
+        }
+        return mimeType;
     }
 
 

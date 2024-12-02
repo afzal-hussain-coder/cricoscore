@@ -45,6 +45,16 @@ public class BattingPlayersResponse {
         private int wickets_taken;
         private int runs_scored;
 
+        public String getIs_out() {
+            return is_out;
+        }
+
+        public void setIs_out(String is_out) {
+            this.is_out = is_out;
+        }
+
+        private String is_out="";
+
         public Player(JSONObject jsonObject){
             if(jsonObject.has("player_id")){
                 try {
@@ -78,6 +88,14 @@ public class BattingPlayersResponse {
             if(jsonObject.has("runs_scored")){
                 try {
                     this.runs_scored = jsonObject.getInt("runs_scored");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if(jsonObject.has("is_out")){
+                try {
+                    this.is_out = jsonObject.getString("is_out");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

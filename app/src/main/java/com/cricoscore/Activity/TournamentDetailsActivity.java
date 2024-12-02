@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,6 +85,7 @@ public class TournamentDetailsActivity extends AppCompatActivity {
 
     private int posClick = 0;
     List<TeamModel> teamIdListt = new ArrayList<>();
+    ImageView img_add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +101,7 @@ public class TournamentDetailsActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+        img_add = toolbarBinding.imgAdd;
 
 
         /*get tournament id from another activity through intent*/
@@ -116,6 +119,8 @@ public class TournamentDetailsActivity extends AppCompatActivity {
         toolbarBinding.toolbartext.setText(tournamentName);
         toolbarBinding.toolbar.setNavigationOnClickListener(v -> finish());
 
+        img_add.setVisibility(View.VISIBLE);
+
         activityTournamentDetailsBinding.tvInfo.startAnimation((Animation) AnimationUtils.loadAnimation(mContext, R.anim.translate));
 
         activityTournamentDetailsBinding.rvTeamList.setLayoutManager(new LinearLayoutManager(mContext));
@@ -125,11 +130,15 @@ public class TournamentDetailsActivity extends AppCompatActivity {
             showBottomSheetDialog();
         });
 
+        img_add.setOnClickListener(v -> {
+            startActivity(new Intent(mContext,YourTeamListActivity.class).putExtra("Id",tournamentId));
+        });
+
         activityTournamentDetailsBinding.liSchedule.setOnClickListener(v -> {
 
-            if(teamModelArrayList.isEmpty()){
-                startActivity(new Intent(mContext,YourTeamListActivity.class).putExtra("Id",tournamentId));
-            }else{
+           // if(teamModelArrayList.isEmpty()){
+             //   startActivity(new Intent(mContext,YourTeamListActivity.class).putExtra("Id",tournamentId));
+          // }else{
                 if (team1Id != -1 && team2Id != -1 && teamIdListt.size()==2) {
                     // If both teams are selected, proceed to the next activity
                     Intent intent = new Intent(mContext, ScheduleMatchDetailsActivity.class);
@@ -140,12 +149,22 @@ public class TournamentDetailsActivity extends AppCompatActivity {
                     intent.putExtra("teamId2", team2Id);
                     intent.putExtra("teamLogo2", teamLogoSelected2);
                     intent.putExtra("id",tournamentId);
+                    //intent.putExtra("TeamA",);
+                    //intent.putExtra("TeamB",);
                     startActivity(intent);
                 } else {
-                    // Notify the user to select two teams before proceeding
                     Toast.makeText(mContext, "Please select two teams before submitting", Toast.LENGTH_SHORT).show();
+//                    if(activityTournamentDetailsBinding.tvTextSchedule.getText().toString().equalsIgnoreCase("Add Team")){
+//                        startActivity(new Intent(mContext,YourTeamListActivity.class).putExtra("Id",tournamentId)
+//                        );
+//                    }else{
+//                        Toast.makeText(mContext, "Please select two teams before submitting", Toast.LENGTH_SHORT).show();
+//                    }
+
+                    // Notify the user to select two teams before proceeding
+
                 }
-            }
+           // }
 
 
 
@@ -391,9 +410,10 @@ public class TournamentDetailsActivity extends AppCompatActivity {
                             teamModelArrayList.add(new TeamModel(jsonArray.getJSONObject(i)));
                         }
 
-                        if(teamModelArrayList.isEmpty()){
-                            activityTournamentDetailsBinding.tvTextSchedule.setText(mContext.getResources().getString(R.string.add_team));
+                        if(teamModelArrayList.isEmpty() || teamModelArrayList.size()<2){
+                            activityTournamentDetailsBinding.liSchedule.setVisibility(View.GONE);
                         }else{
+                            activityTournamentDetailsBinding.liSchedule.setVisibility(View.VISIBLE);
                             activityTournamentDetailsBinding.tvTextSchedule.setText(mContext.getResources().getString(R.string.submit));
                         }
 
@@ -509,7 +529,6 @@ public class TournamentDetailsActivity extends AppCompatActivity {
 
 
 
-
 //        yourTeamListAdapter = new YourTeamListAdapterHorizontal(mContext, new ArrayList<>(), (pos, string) -> {
 //            position = pos;
 //            teamName = string;
@@ -564,9 +583,10 @@ public class TournamentDetailsActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(jsonString); // Convert to JSONObject
                         JSONObject removedJsonObjectData = jsonObject.getJSONObject("data");
 
-                        if(removedJsonObjectData.length()==0){
-                            activityTournamentDetailsBinding.tvTextSchedule.setText(mContext.getResources().getString(R.string.add_team));
+                        if(removedJsonObjectData.length()<2){
+                            activityTournamentDetailsBinding.liSchedule.setVisibility(View.GONE);
                         }else{
+                            activityTournamentDetailsBinding.liSchedule.setVisibility(View.VISIBLE);
                             activityTournamentDetailsBinding.tvTextSchedule.setText(mContext.getResources().getString(R.string.submit));
                         }
 

@@ -52,34 +52,34 @@ public class AddTeamRepo {
             Log.e("FileUpload", "URI is null, cannot proceed with file upload.");
         }
 
-        Call<AddTeamResponse> addTeamResponseCall = apiRequest.getAddTeamResponse(token, requestUserId, requestCity,
-                requestName, bodyLogo);
-
-        addTeamResponseCall.enqueue(new Callback<AddTeamResponse>() {
-            @Override
-            public void onResponse(Call<AddTeamResponse> call, Response<AddTeamResponse> response) {
-                Log.e(TAG, response + "");
-                if(response.isSuccessful()){
-                    iAddTeamResponse.onResponse(response.body(),false);
-                }else {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Log.e(TAG,jObjError.toString());
-                        iAddTeamResponse.onResponse(response.body(),true);
-                        Toaster.customToast(jObjError.getString("message"));
-                    } catch (Exception e) {
-                        Toaster.customToast(e.getMessage());
-                    }
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<AddTeamResponse> call, Throwable t) {
-                iAddTeamResponse.onFailure(t);
-
-            }
-        });
+//        Call<AddTeamResponse> addTeamResponseCall = apiRequest.getAddTeamResponse(token, requestUserId, requestCity,
+//                requestName, bodyLogo);
+//
+//        addTeamResponseCall.enqueue(new Callback<AddTeamResponse>() {
+//            @Override
+//            public void onResponse(Call<AddTeamResponse> call, Response<AddTeamResponse> response) {
+//                Log.e(TAG, response + "");
+//                if(response.isSuccessful()){
+//                    iAddTeamResponse.onResponse(response.body(),false);
+//                }else {
+//                    try {
+//                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+//                        Log.e(TAG,jObjError.toString());
+//                        iAddTeamResponse.onResponse(response.body(),true);
+//                        Toaster.customToast(jObjError.getString("message"));
+//                    } catch (Exception e) {
+//                        Toaster.customToast(e.getMessage());
+//                    }
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<AddTeamResponse> call, Throwable t) {
+//                iAddTeamResponse.onFailure(t);
+//
+//            }
+//        });
 
 
     }

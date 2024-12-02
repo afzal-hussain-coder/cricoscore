@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -81,7 +83,7 @@ public class CretaedScheduleTeamPlayerListAdapter extends RecyclerView.Adapter<C
                // Log.d("PlaerId",updatePlayer.get(i)+"?"+tournament.getPlayer_id());
                 if (updatePlayer.get(i).getPlayer_id() == tournament.getPlayer_id()) {
                     holder.cb.setChecked(true);
-
+                    holder.rl.setBackgroundColor(ContextCompat.getColor(mContext, R.color.dark_grey));
                     // Add to the selected list
                     addList.add(tList.get(position));
                     itemClickListener.checkedItem(addList);
@@ -89,6 +91,7 @@ public class CretaedScheduleTeamPlayerListAdapter extends RecyclerView.Adapter<C
                 }
             }
         } else {
+            holder.rl.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
             // Handle the case where updatePlayer or tList is null or empty
             // For example, log or show an error message
             Log.e("Error", "Player list or tournament list is null or empty.");
@@ -115,9 +118,11 @@ public class CretaedScheduleTeamPlayerListAdapter extends RecyclerView.Adapter<C
             isChecked = !isChecked; // Update the local variable
 
             if (isChecked) {
+                holder.rl.setBackgroundColor(ContextCompat.getColor(mContext, R.color.dark_grey));
                 // Add team ID if not already present
                 addList.add(tList.get(position));
             } else {
+                holder.rl.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
                 // Remove team ID if present
                 addList.remove(tList.get(position));
             }
@@ -145,6 +150,7 @@ public class CretaedScheduleTeamPlayerListAdapter extends RecyclerView.Adapter<C
 
         private CircleImageView image;
         CheckBox cb;
+        RelativeLayout rl;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             this.cb = itemView.findViewById(R.id.cb);
@@ -152,6 +158,7 @@ public class CretaedScheduleTeamPlayerListAdapter extends RecyclerView.Adapter<C
             tvtLocation = itemView.findViewById(R.id.tvtLocation);
             image = itemView.findViewById(R.id.image);
             tvtRole = itemView.findViewById(R.id.tvtRole);
+            rl = itemView.findViewById(R.id.rl);
         }
     }
 

@@ -11,36 +11,32 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricoscore.R;
-import com.cricoscore.Utils.Toaster;
 import com.cricoscore.model.BattingPlayersResponse;
-import com.cricoscore.model.Player;
 
 import java.util.ArrayList;
 
-public class PlayingsquadAdapter extends RecyclerView.Adapter<PlayingsquadAdapter.ViewHolder>{
+public class PlayingsquadAdapter extends RecyclerView.Adapter<PlayingsquadAdapter.ViewHolder> {
 
     private ArrayList<BattingPlayersResponse.Player> playerList;
     private OnPlayerSelectListener onPlayerSelectListener;
     private CheckBox currentCheckedCheckbox = null;
-    Context mContext;
+    private Context mContext;
 
-    public PlayingsquadAdapter(Context mContext,ArrayList<BattingPlayersResponse.Player> playerList,OnPlayerSelectListener onPlayerSelectListener){
+    public PlayingsquadAdapter(Context mContext, ArrayList<BattingPlayersResponse.Player> playerList, OnPlayerSelectListener onPlayerSelectListener) {
         this.mContext = mContext;
         this.playerList = playerList;
         this.onPlayerSelectListener = onPlayerSelectListener;
-
-        //Toaster.customToast(playerList.size()+"/Size");
     }
 
     @NonNull
     @Override
     public PlayingsquadAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_player, parent, false);
-        return new PlayingsquadAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PlayingsquadAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         BattingPlayersResponse.Player player = playerList.get(position);
         holder.tvPlayerName.setText(player.getName());
 
@@ -61,6 +57,19 @@ public class PlayingsquadAdapter extends RecyclerView.Adapter<PlayingsquadAdapte
     @Override
     public int getItemCount() {
         return playerList.size();
+    }
+
+    // **Filter the players excluding both is_out = "0" and is_out = "1"**
+    public void filterPlayers() {
+        ArrayList<BattingPlayersResponse.Player> filteredList = new ArrayList<>();
+        for (BattingPlayersResponse.Player player : playerList) {
+            // Exclude players where is_out is "0" or "1"
+            if (!"0".equals(player.getIs_out()) && !"1".equals(player.getIs_out())) {
+                filteredList.add(player);
+            }
+        }
+        playerList = filteredList;
+        notifyDataSetChanged(); // Notify the adapter about the changes
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -54,6 +54,7 @@ public class PlayingSquadActivity extends AppCompatActivity {
     String type ="";
     String bowlerType ="";
     int lastRun =0;
+    PlayingsquadAdapter playingsquadAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,22 +170,24 @@ public class PlayingSquadActivity extends AppCompatActivity {
 
                             if (playerList != null && !playerList.isEmpty()) {
                                 // Bind data to RecyclerView
-                                activityPlayingSquadBinding.rvPlayingSquad.setAdapter(
-                                        new PlayingsquadAdapter(mContext, playerList, player -> {
-                                            PlayerName = player.getName();
+
+                                playingsquadAdapter =new PlayingsquadAdapter(mContext, playerList, player -> {
+                                    PlayerName = player.getName();
 
 
-                                            playingId = player.getPlayer_id();
+                                    playingId = player.getPlayer_id();
 
-                                            if(Strike.equalsIgnoreCase("Strike")){
-                                                current_striker_id = playingId;
-                                            }else if(Strike.equalsIgnoreCase("NonStrike")){
-                                                current_non_striker_id = playingId;
-                                            }else{
-                                                current_bowler_id = playingId;
-                                            }
-                                        })
-                                );
+                                    if(Strike.equalsIgnoreCase("Strike")){
+                                        current_striker_id = playingId;
+                                    }else if(Strike.equalsIgnoreCase("NonStrike")){
+                                        current_non_striker_id = playingId;
+                                    }else{
+                                        current_bowler_id = playingId;
+                                    }
+                                });
+                                playingsquadAdapter.filterPlayers();
+                                activityPlayingSquadBinding.rvPlayingSquad.setAdapter(playingsquadAdapter);
+
                             } else {
                                 Log.d("Debug", "Players list is empty.");
                             }

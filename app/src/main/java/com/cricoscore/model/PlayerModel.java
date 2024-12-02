@@ -36,6 +36,16 @@ public class PlayerModel implements Serializable {
     int player_id;
     String name ="";
     String avatar="";
+    private boolean isSelected; // New property
+
+    // Getters and setters for isSelected
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public String getTeamId() {
         return teamId;

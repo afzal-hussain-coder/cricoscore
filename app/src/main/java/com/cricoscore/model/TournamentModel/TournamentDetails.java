@@ -239,9 +239,9 @@ public class TournamentDetails implements Serializable {
                 e.printStackTrace();
             }
         }
-        if(jsonObject.has("fees")){
+        if(jsonObject.has("fee")){
             try {
-                this.fees = jsonObject.getInt("fees");
+                this.fees = jsonObject.getInt("fee");
             } catch (JSONException e) {
                 e.printStackTrace();
             }

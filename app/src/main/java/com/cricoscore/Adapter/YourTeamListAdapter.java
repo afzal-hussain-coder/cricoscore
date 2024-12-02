@@ -1,14 +1,17 @@
 package com.cricoscore.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -28,12 +31,13 @@ public class YourTeamListAdapter extends RecyclerView.Adapter<YourTeamListAdapte
     int posClick = 0;
     List<TeamModel> tList;
     ArrayList<Integer> arrayListUser;
+    ArrayList<TeamModel>updatePlayer;
 
-    public YourTeamListAdapter(Context mContext, List<TeamModel> tList, itemClickListener itemClickListener) {
+    public YourTeamListAdapter(Context mContext, List<TeamModel> tList,ArrayList<TeamModel>selectedPlayer, itemClickListener itemClickListener) {
         this.mContext = mContext;
         this.tList = tList;
         this.itemClickListener = itemClickListener;
-
+        this.updatePlayer = selectedPlayer;
         arrayListUser = new ArrayList<>();
     }
 
@@ -57,9 +61,28 @@ public class YourTeamListAdapter extends RecyclerView.Adapter<YourTeamListAdapte
         }
 
 
-        holder.cb.setVisibility(View.VISIBLE);
+        holder.cb.setVisibility(View.GONE);
 
-        holder.cb.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        if (updatePlayer != null && tList != null && updatePlayer.size() > 0) {
+            for (int i = 0; i < updatePlayer.size(); i++) {
+                // Check if the player ID matches
+                if (updatePlayer.get(i).getTeam_id() == tournament.getTeam_id()) {
+                    holder.cb.setChecked(true);
+                    holder.rl.setBackgroundColor(ContextCompat.getColor(mContext, R.color.dark_grey));
+                    // Add to the selected list
+                    arrayListUser.add(tournament.getTeam_id());
+                    itemClickListener.checkedItem(arrayListUser);
+                    break; // Exit the loop once the match is found
+                }
+            }
+        } else {
+            holder.rl.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
+            // Handle the case where updatePlayer or tList is null or empty
+            // For example, log or show an error message
+            Log.e("Error", "Player list or tournament list is null or empty.");
+        }
+
+        /*holder.cb.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
             // Get the team ID based on the current position
             Integer teamId = tList.get(position).getTeam_id();
@@ -76,7 +99,7 @@ public class YourTeamListAdapter extends RecyclerView.Adapter<YourTeamListAdapte
 
             // Notify the listener of the checked items
             itemClickListener.checkedItem(arrayListUser);
-        });
+        });*/
 
 //        holder.itemView.setOnClickListener(v -> {
 //            boolean isChecked = holder.circleCheckBox.isChecked();
@@ -113,11 +136,13 @@ public class YourTeamListAdapter extends RecyclerView.Adapter<YourTeamListAdapte
             Integer teamId = tList.get(position).getTeam_id();
 
             if (isChecked) {
+                holder.rl.setBackgroundColor(ContextCompat.getColor(mContext, R.color.dark_grey));
                 // Add team ID if not already present
                 if (!arrayListUser.contains(teamId)) {
                     arrayListUser.add(teamId);
                 }
             } else {
+                holder.rl.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
                 // Remove team ID if present
                 arrayListUser.remove(teamId);
             }
@@ -164,6 +189,7 @@ public class YourTeamListAdapter extends RecyclerView.Adapter<YourTeamListAdapte
 
         private CircleImageView image;
         ImageView ivRemove;
+        RelativeLayout rl;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -173,6 +199,7 @@ public class YourTeamListAdapter extends RecyclerView.Adapter<YourTeamListAdapte
             tvtLocation = itemView.findViewById(R.id.tvtLocation);
             image = itemView.findViewById(R.id.image);
             ivRemove = itemView.findViewById(R.id.ivRemove);
+            rl = itemView.findViewById(R.id.rl);
         }
     }
 

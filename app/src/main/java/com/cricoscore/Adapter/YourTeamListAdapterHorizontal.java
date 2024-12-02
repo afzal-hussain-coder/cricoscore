@@ -64,6 +64,7 @@ public class YourTeamListAdapterHorizontal extends RecyclerView.Adapter<YourTeam
 
         holder.cb.setVisibility(View.VISIBLE);
 
+
         // Check if the checkbox is checked based on some saved state
         // Assuming this is inside the Adapter where you handle the checkbox state change
         holder.cb.setOnCheckedChangeListener((buttonView, isChecked) -> {

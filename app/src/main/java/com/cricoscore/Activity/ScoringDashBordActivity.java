@@ -56,15 +56,16 @@ import retrofit2.Response;
 public class ScoringDashBordActivity extends AppCompatActivity {
     CustomLoaderView loaderView;
     private TextView scoreTextView, player1ScoreView, player2ScoreView, bowlerStatsView,
-            playerNameStrike, playerNameNonStrike, tvBattingTeamName, tvbowlerName,tossInfo;
+            playerNameStrike, playerNameNonStrike, tvBattingTeamName, tvbowlerName, tossInfo;
     private Button undoButton, btOut, btn57, btnWideBall, btnNoBall, btnLegBye, btnBye;
     private GridLayout scoringGrid;
 
     // Variables to store scores
-    private int totalRuns = 0, wickets = 0, overs = 0, balls = 0,actualBall,extraBall;
+    private int totalRuns = 0, wickets = 0, overs = 0, balls = 0, actualBall, extraBall;
     private int player1Score = 0, player2Score = 0;
     private boolean isPlayer1OnStrike = true;
     private int lastRun = 0;
+    String overValue = "";
     private boolean wasLastWicket = false;
     // Declare variables
     private TextView[] ballIndicators;
@@ -88,8 +89,8 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     int filederId = 0;
     String strike = "";
     String isWicket = "0";
-    int lastRunn =0;
-    int current_over_total_ball=0;
+    int lastRunn = 0;
+    int current_over_total_ball = 0;
 
     LinearLayout ballIndicatorsLayout;
 
@@ -188,7 +189,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
             // Toaster.customToast(currentBowlerId + "//" + currentStrikerId + "/" + currentNonStrikerId);
 
-            tossInfo.setText(battingTeamName+" "+"elected to bat");
+            tossInfo.setText(battingTeamName + " " + "elected to bat");
             tvBattingTeamName.setText(battingTeamName);
             //playerNameStrike.setText(StrikePlayerName);
             //playerNameNonStrike.setText(nonStrikeName);
@@ -207,11 +208,11 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     private void handleScoringEvent(int runs) {
         // Update total runs
         lastRun = 0;
-        extras ="";
+        extras = "";
         totalRuns += runs;
         balls++;
 
-        lastRun =runs;
+        lastRun = runs;
 
         // Handle strike change on odd runs
 
@@ -287,7 +288,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         isPlayer1OnStrike = !isPlayer1OnStrike;
 
         if (Global.isOnline(this)) {
-            updateSquad(currentNonStrikerId,currentStrikerId, currentBowlerId, inningNumber);
+            updateSquad(currentNonStrikerId, currentStrikerId, currentBowlerId, inningNumber);
         } else {
             Global.showDialog(this);
         }
@@ -536,7 +537,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
     private void handleBye(int runs) {
         lastRun = runs;
-        extras ="BYE";
+        extras = "BYE";
         balls++;
         if (Global.isOnline(this)) {
             dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
@@ -573,14 +574,14 @@ public class ScoringDashBordActivity extends AppCompatActivity {
             Global.showDialog(this);
         }
 
-        lastRun =0;
+        lastRun = 0;
     }
 
     private void handleLegByeRuns(int runs) {
-        extras ="LB";
+        extras = "LB";
         lastRun = runs;
         //lastRun = totalRuns;
-       balls++;
+        balls++;
 //        if (balls == 6) {
 //            balls = 0;
 //            overs++;
@@ -639,7 +640,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
             wicketType = "bowled";
             lastRun = 0;
             isWicket = "1";
-            extras="";
+            extras = "";
             if (Global.isOnline(this)) {
                 dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
                         filederId);
@@ -656,7 +657,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
             lastRun = 0;
             wicketType = "caught";
             isWicket = "1";
-            extras="";
+            extras = "";
             if (Global.isOnline(this)) {
                 dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
                         filederId);
@@ -675,7 +676,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
         });
         lbw.setOnClickListener(v -> {
-            extras="";
+            extras = "";
             balls++;
             lirun.setVisibility(View.GONE);
             lastRun = 0;
@@ -694,7 +695,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         });
 
         mb_create.setOnClickListener(v -> {
-            extras="";
+            extras = "";
             balls++;
 
             if (!etLegByeCustomRuns.getText().toString().trim().isEmpty()) {
@@ -724,7 +725,6 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
                 bottomSheetDialog.dismiss();
             }
-
 
 
         });
@@ -812,9 +812,9 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                             JSONObject dataObject = jsonObject.optJSONObject("data");
                             if (dataObject != null) {
                                 // Extract data
-                               // currentStrikerId=0;
-                              //  currentNonStrikerId=0;
-                               extractAndLoadData(dataObject);
+                                // currentStrikerId=0;
+                                //  currentNonStrikerId=0;
+                                extractAndLoadData(dataObject);
                             } else {
                                 Log.e("Error", "Data object is null");
                             }
@@ -920,7 +920,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
             totalRuns = dataObject.getInt("total_runs");
             wickets = dataObject.getInt("wickets");
-            overs = dataObject.getInt("overs");
+            overValue = dataObject.getString("over");
 
             current_over_total_ball = dataObject.getInt("current_over_total_ball");
             JSONArray bolledArray = dataObject.getJSONArray("balled");
@@ -936,10 +936,10 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                     strike = "NonStrike";
                 }
 
-                if(wicketType.equalsIgnoreCase("runOut")){
+                if (wicketType.equalsIgnoreCase("runOut")) {
                     lastRunn = lastRun;
-                }else{
-                    lastRunn=0;
+                } else {
+                    lastRunn = 0;
                 }
 
                 new Handler().postDelayed(() -> {
@@ -952,7 +952,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                             .putExtra("current_non_striker_id", currentNonStrikerId)
                             .putExtra("current_bowler_id", currentBowlerId)
                             .putExtra("Strike", strike)
-                            .putExtra("lastRun",lastRunn)
+                            .putExtra("lastRun", lastRunn)
                             .putExtra("Bowler", ""));
 
                 }, 2000);
@@ -972,7 +972,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                 balledList.add(ball);
             }
 
-            updateBallIndicatorsFromResponse(balledList,current_over_total_ball);
+            updateBallIndicatorsFromResponse(balledList, current_over_total_ball);
 
             updateScoreDisplay();
         } catch (JSONException e) {
@@ -1125,7 +1125,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         }
     }*/
 
-    private void updateBallIndicatorsFromResponse(List<Balled> balledList,int current_over_total_ball) {
+    private void updateBallIndicatorsFromResponse(List<Balled> balledList, int current_over_total_ball) {
         // Reset the indicators and counters for the current over
         runsInCurrentOver.clear();  // Clear previous runs
         ballsInCurrentOver = 0;
@@ -1175,8 +1175,8 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
             // Set layout params for the ball indicator
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    dpToPx(50), dpToPx(50)); // Convert 90 dp to px
-            params.setMargins(dpToPx(7), 0, dpToPx(7), 0);  // Set margin around circle
+                    dpToPx(45), dpToPx(45)); // Convert 90 dp to px
+            params.setMargins(dpToPx(4), 0, dpToPx(4), 0);  // Set margin around circle
             ballIndicator.setLayoutParams(params);
 
             // Add the normal run circle to the wrapper
@@ -1199,7 +1199,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                 extraBallIndicator.setLayoutParams(extraBallParams);
 
                 // Add the extra ball indicator to the wrapper
-               // ballIndicatorWrapper.addView(extraBallIndicator);
+                // ballIndicatorWrapper.addView(extraBallIndicator);
             }
 
             // Add the wrapper to the main layout
@@ -1426,7 +1426,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                     extraBallIndicator.setLayoutParams(extraBallParams);
 
                     // Add the extra ball indicator to the wrapper
-                   // ballIndicatorWrapper.addView(extraBallIndicator);
+                    // ballIndicatorWrapper.addView(extraBallIndicator);
                 }
 
                 // Add the wrapper to the main layout
@@ -1455,8 +1455,8 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                     .putExtra("current_striker_id", currentStrikerId)
                     .putExtra("current_non_striker_id", currentNonStrikerId)
                     .putExtra("current_bowler_id", currentBowlerId)
-                    .putExtra("Strike","")
-                    .putExtra("lastRun",lastRunn)
+                    .putExtra("Strike", "")
+                    .putExtra("lastRun", lastRunn)
                     .putExtra("Bowler", "Bowler"));
         });
 
@@ -1472,18 +1472,22 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     }
 
     private void updateScoreDisplay() {
+
+        // Extract integer and decimal parts of the overs
+        // int wholeOvers = (int) overs; // Extracts the integer part, e.g., 12
+        // int fractionalPart = Math.round((overs - wholeOvers) * 10); //
+
         // Update the main scoreboard text
-        scoreTextView.setText(String.format("%d/%d (%d.%d ov)", totalRuns, wickets, overs, current_over_total_ball));
+        scoreTextView.setText(totalRuns + "/" + wickets + "(" + overValue + ")");
 
         // Update individual player scores
-        player1ScoreView.setText(String.format("%s: %d", StrikePlayerName, player1Score));
-        player2ScoreView.setText(String.format("%s: %d", nonStrikeName, player2Score));
+        player1ScoreView.setText(StrikePlayerName + ": " + player1Score);
+        player2ScoreView.setText(nonStrikeName + ": " + player2Score);
 
         // Update bowler stats
-        bowlerStatsView.setText(String.format("Overs: %d.%d | Runs: %d | Wickets: %d", overs, balls, totalRuns, wickets));
+        bowlerStatsView.setText("Over :"+" "+overValue + "  -  " +"Run : "+ " "+totalRuns+" " + "  -  " +"Wicket : "+ " "+wickets);
         tvbowlerName.setText(bowlerName);
     }
-
 
 
 }

@@ -91,7 +91,7 @@ public class TeamPlayerlistActivity extends AppCompatActivity {
             teamId = getIntent().getIntExtra("ID",0);
             TeamName = getIntent().getStringExtra("From");
 
-            Toaster.customToast(teamId+"//");
+           // Toaster.customToast(teamId+"//");
         }
 
         initView();

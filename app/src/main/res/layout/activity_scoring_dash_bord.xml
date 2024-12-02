@@ -56,17 +56,19 @@
         <!-- Score Section -->
         <LinearLayout
             android:id="@+id/scoreSection"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="300dp"
             android:background="@color/black_light_tranparent"
             android:backgroundTint="@null"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_marginTop="@dimen/_50sdp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0/0 (0/0)"
+                android:layout_gravity="center_horizontal"
                 android:textColor="#FFF"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:textSize="40sp"
@@ -93,8 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/scoreSection"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:orientation="horizontal">
 
                 <!-- Batsman 1 -->
@@ -156,17 +157,30 @@
             </LinearLayout>
 
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/tvCurrentBowlerHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Current Bowler"
+                    android:gravity="center_horizontal"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:visibility="visible"
+                    android:textColor="#AAAAAA"
+                    android:textStyle="normal" />
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
+                    android:layout_below="@+id/tvCurrentBowlerHint"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     android:orientation="horizontal">
                     <ImageView
                         android:id="@+id/ivBall"
@@ -180,6 +194,7 @@
                         android:id="@+id/bowlerName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_toRightOf="@+id/ivBall"
                         android:layout_marginStart="@dimen/_5sdp"
                         android:text="Abhishek Sir"
@@ -194,15 +209,18 @@
                         app:tint="@color/green" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/bowlerStats"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="20dp"
-                    android:text="0-0-0-0"
-                    android:textColor="#FFF" />
+
             </RelativeLayout>
+            <TextView
+                android:id="@+id/bowlerStats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:text="0-0-0-0"
+                android:textColor="#FFF" />
             <!-- Add this below the bowler stats or where appropriate -->
           <!--  <LinearLayout
                 android:id="@+id/ballIndicators"
@@ -279,7 +297,8 @@
             <!--Ball-->
             <HorizontalScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_5sdp">
                 <LinearLayout
                     android:id="@+id/ballIndicators"
                     android:layout_width="match_parent"
