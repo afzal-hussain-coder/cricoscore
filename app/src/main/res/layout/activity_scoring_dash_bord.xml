@@ -36,6 +36,7 @@
             android:layout_gravity="top">
 
             <ImageView
+                android:id="@+id/imgBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/arrow_back_black_24dp"
@@ -161,6 +162,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginBottom="20dp">
                 <TextView
@@ -198,6 +200,7 @@
                         android:layout_toRightOf="@+id/ivBall"
                         android:layout_marginStart="@dimen/_5sdp"
                         android:text="Abhishek Sir"
+                        android:textStyle="bold"
                         android:textColor="#FFF"
                         android:drawablePadding="8dp" />
                     <ImageView
@@ -220,6 +223,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="20dp"
                 android:text="0-0-0-0"
+                android:textSize="@dimen/_12sdp"
                 android:textColor="#FFF" />
             <!-- Add this below the bowler stats or where appropriate -->
           <!--  <LinearLayout
@@ -298,7 +302,7 @@
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_5sdp">
+                android:layout_marginBottom="@dimen/_10sdp">
                 <LinearLayout
                     android:id="@+id/ballIndicators"
                     android:layout_width="match_parent"

@@ -810,9 +810,6 @@ public class ScheduleMatchDetailsActivity extends AppCompatActivity {
                         String jsonString = response.body().string(); // Get the JSON string
                         JSONObject jsonObject = new JSONObject(jsonString); // Convert to JSONObject
 
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.clear();
-                        editor.apply();
                         startActivity(new Intent(mContext,ScheduleMatchActivity.class));
 
 

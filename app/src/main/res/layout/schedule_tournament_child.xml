@@ -297,22 +297,22 @@
                     app:fontFamily="@font/opensans_semibold" />
 
                 <TextView
-                    android:id="@+id/tvtime"
+                    android:id="@+id/tvLiveStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvdate"
-                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:visibility="gone"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
-                    android:drawableLeft="@drawable/access_time_black_24dp"
-                    android:drawablePadding="@dimen/_5sdp"
                     android:gravity="center_vertical"
-                    android:text="10:00 AM to 4:00 PM"
-                    android:textColor="@color/dim_grey"
-                    android:textSize="@dimen/_9sdp"
+                    android:text="Live"
+                    android:background="@drawable/button_bg_top"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp"
                     app:fontFamily="@font/opensans_semibold" />
 
                 <com.google.android.material.button.MaterialButton

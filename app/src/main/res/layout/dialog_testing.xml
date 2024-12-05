@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white">
+
+
+
+    <!-- Display Current Bowler -->
+
+
+    <!-- Grid of 6 Circles for Runs -->
+
+
+    <!-- Table for Runs, Overs, Wickets -->
+
+
+    <EditText
+        android:id="@+id/editLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Set Link URl">
+
+    </EditText>
+
+    <!-- Buttons -->
+    <Button
+        android:id="@+id/btnStartNextOver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Start Next Over"
+        android:background="@color/green"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/btnContinueThisOver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        android:text="Continue This Over"
+        android:background="@color/dim_grey"
+        android:textColor="@android:color/white" />
+</LinearLayout>

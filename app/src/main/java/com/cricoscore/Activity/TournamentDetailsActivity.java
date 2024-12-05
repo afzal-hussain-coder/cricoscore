@@ -104,17 +104,6 @@ public class TournamentDetailsActivity extends AppCompatActivity {
         img_add = toolbarBinding.imgAdd;
 
 
-        /*get tournament id from another activity through intent*/
-        if (getIntent() != null) {
-            tournamentId = getIntent().getStringExtra("id");
-        }
-
-        if (Global.isOnline(mContext)) {
-            getTournamentDetails(tournamentId);
-        } else {
-            Global.showDialog(mActivity);
-        }
-
 
         toolbarBinding.toolbartext.setText(tournamentName);
         toolbarBinding.toolbar.setNavigationOnClickListener(v -> finish());
@@ -149,8 +138,6 @@ public class TournamentDetailsActivity extends AppCompatActivity {
                     intent.putExtra("teamId2", team2Id);
                     intent.putExtra("teamLogo2", teamLogoSelected2);
                     intent.putExtra("id",tournamentId);
-                    //intent.putExtra("TeamA",);
-                    //intent.putExtra("TeamB",);
                     startActivity(intent);
                 } else {
                     Toast.makeText(mContext, "Please select two teams before submitting", Toast.LENGTH_SHORT).show();
@@ -178,6 +165,21 @@ public class TournamentDetailsActivity extends AppCompatActivity {
 //            }
 
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /*get tournament id from another activity through intent*/
+        if (getIntent() != null) {
+            tournamentId = getIntent().getStringExtra("id");
+        }
+
+        if (Global.isOnline(mContext)) {
+            getTournamentDetails(tournamentId);
+        } else {
+            Global.showDialog(mActivity);
+        }
     }
 
     /*show dialog to select schedule date and time to create schedule*/
@@ -404,7 +406,7 @@ public class TournamentDetailsActivity extends AppCompatActivity {
                         JSONObject finalData = jsonObject.getJSONObject("data");
                         location = finalData.getString("location");
                         activityTournamentDetailsBinding.tvtLocation.setText(location);
-
+                        teamModelArrayList.clear();
                         JSONArray jsonArray = finalData.getJSONArray("teams");
                         for(int i=0;i<jsonArray.length();i++){
                             teamModelArrayList.add(new TeamModel(jsonArray.getJSONObject(i)));
@@ -489,7 +491,7 @@ public class TournamentDetailsActivity extends AppCompatActivity {
 
     /* this method is used to set data to the activity views*/
     public void setData(TournamentDetails tournamentDetails) {
-
+        activityTournamentDetailsBinding.tvTournamentType.setText(tournamentDetails.getType());
         activityTournamentDetailsBinding.tvTName.setText(tournamentDetails.getName());
         Glide.with(mContext).load(Global.BASE_URL + "/" + tournamentDetails.getTournament_logo()).into(activityTournamentDetailsBinding.image);
         Glide.with(mContext).load(Global.BASE_URL + "/" + tournamentDetails.getTournament_banner()).into(activityTournamentDetailsBinding.imgBanner);
@@ -515,11 +517,11 @@ public class TournamentDetailsActivity extends AppCompatActivity {
 
         }
 
+
         activityTournamentDetailsBinding.tvdate.setText(formatedStartDate + " " +
                 "to " + formatedEndDate);
 
 
-        activityTournamentDetailsBinding.tvTournamentType.setText(tournamentDetails.getType());
         activityTournamentDetailsBinding.tvBallType.setText(tournamentDetails.getBall_type());
         activityTournamentDetailsBinding.tvFees.setText(tournamentDetails.getFees() + "");
         activityTournamentDetailsBinding.tvPrize.setText(tournamentDetails.getPrize());

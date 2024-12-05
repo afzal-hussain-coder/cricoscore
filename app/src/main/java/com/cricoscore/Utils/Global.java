@@ -51,7 +51,12 @@ import java.util.regex.Pattern;
 
 public class Global {
 
+
+    //public static String BASE_URL = "http://192.168.1.12:5000";
     public static final String BASE_URL = "http://cricosocre.selectronicindia.com/";
+
+            //"http://cricosocre.selectronicindia.com/"; Main Url
+
     //"http://cricscore.criconetonline.com/";
 
     /*API REQUEST END POINTS*/
@@ -93,6 +98,7 @@ public class Global {
     public static final String INNING_NEW ="inning/new";
     public static final String INNING_UPDATE ="inning/update";
     public static final String INNING_BALL ="inning/ball";
+    public static final String UPDATE_SCHEDULE_INNING ="schedule/updateSeduleInning";
 
 
 

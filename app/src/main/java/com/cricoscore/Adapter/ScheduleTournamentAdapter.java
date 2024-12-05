@@ -166,7 +166,7 @@ public class ScheduleTournamentAdapter extends RecyclerView.Adapter<ScheduleTour
             tvPlayerSecondCount = itemView.findViewById(R.id.tvPlayerSecondCount);
             tvtLocation = itemView.findViewById(R.id.tvtLocation);
             tvdate = itemView.findViewById(R.id.tvdate);
-            tvtime = itemView.findViewById(R.id.tvtime);
+            //tvtime = itemView.findViewById(R.id.tvtime);
             tvTName = itemView.findViewById(R.id.tvTName);
             img_first_team_logo = itemView.findViewById(R.id.img_first_team_logo);
             img_teamTwo_logo = itemView.findViewById(R.id.img_teamTwo_logo);

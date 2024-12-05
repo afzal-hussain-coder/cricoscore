@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricoscore.R;
+import com.cricoscore.Utils.Toaster;
 import com.cricoscore.model.BattingPlayersResponse;
 
 import java.util.ArrayList;
@@ -21,11 +22,15 @@ public class PlayingsquadAdapter extends RecyclerView.Adapter<PlayingsquadAdapte
     private OnPlayerSelectListener onPlayerSelectListener;
     private CheckBox currentCheckedCheckbox = null;
     private Context mContext;
+    int currentBowlerId=0;
 
-    public PlayingsquadAdapter(Context mContext, ArrayList<BattingPlayersResponse.Player> playerList, OnPlayerSelectListener onPlayerSelectListener) {
+    public PlayingsquadAdapter(Context mContext,int currentBowlerId, ArrayList<BattingPlayersResponse.Player> playerList, OnPlayerSelectListener onPlayerSelectListener) {
         this.mContext = mContext;
+        this.currentBowlerId = currentBowlerId;
         this.playerList = playerList;
         this.onPlayerSelectListener = onPlayerSelectListener;
+
+       // Toaster.customToast("Size"+playerList.size());
     }
 
     @NonNull
@@ -39,6 +44,12 @@ public class PlayingsquadAdapter extends RecyclerView.Adapter<PlayingsquadAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         BattingPlayersResponse.Player player = playerList.get(position);
         holder.tvPlayerName.setText(player.getName());
+
+//        if(player.getPlayer_id()==currentBowlerId){
+//            holder.cbPlayer.setEnabled(false);
+//        }else{
+//            holder.cbPlayer.setEnabled(true);
+//        }
 
         holder.cbPlayer.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {

@@ -250,9 +250,9 @@ public class YourTeamListActivity extends AppCompatActivity {
                         String jsonString = response.body().string(); // Get the JSON string
                         JSONObject jsonObject = new JSONObject(jsonString); // Convert to JSONObject
 
-                        Toaster.customToast(jsonObject.getString("message"));
+                        //Toaster.customToast(jsonObject.getString("message"));
 
-                        startActivity(new Intent(mContext,TournamentDetailsActivity.class).putExtra("id",tournamentId));
+                        //startActivity(new Intent(mContext,TournamentDetailsActivity.class).putExtra("id",tournamentId));
                         finish();
 
 

@@ -20,6 +20,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,6 +38,7 @@ import com.cricoscore.Utils.SharedPreferencesManager;
 import com.cricoscore.Utils.Toaster;
 import com.cricoscore.model.Drawer;
 import com.cricoscore.view_model.UserProfileViewModel;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
 
 import java.net.URISyntaxException;
@@ -325,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
         else if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.addMatch))) {
             startActivity(new Intent(mActivity, AddMatchActivity.class));
         } else if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.schedule_match))) {
-            startActivity(new Intent(mActivity, ScheduleMatchActivity.class));
+            startActivity(new Intent(mActivity, ScheduleMatchActivity.class).putExtra("FROM","2"));
         } else if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.addPlayer))) {
             startActivity(new Intent(mActivity, AddPlayer.class));
         } else if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.yourteamlist))) {

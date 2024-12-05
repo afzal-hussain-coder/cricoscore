@@ -275,7 +275,7 @@ public class TossActivity extends AppCompatActivity {
                                 Intent intent = new Intent(mContext, StartInningActivity.class);
 
                                 // Pass the JSON data as a string extra
-                                intent.putExtra("dataObject", dataString);
+                                intent.putExtra("dataObject", dataString).putExtra("FROM","2");
 
                                 // Start the activity
                                 startActivity(intent);

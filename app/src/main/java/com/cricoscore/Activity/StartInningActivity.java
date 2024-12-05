@@ -75,6 +75,7 @@ public class StartInningActivity extends AppCompatActivity {
         tvBowlingTeam = findViewById(R.id.tvBowlingTeam);
         tvScheduleMatch = findViewById(R.id.tvScheduleMatch);
         // Parsing JSON data (assuming you passed it via Intent)
+
         String dataString = getIntent().getStringExtra("dataObject");
         if (dataString != null) {
             parseData(dataString);
@@ -160,6 +161,12 @@ public class StartInningActivity extends AppCompatActivity {
             JSONObject jsonObjectBattingTeamId = dataObject.getJSONObject("batting_team");
             tvBatting.setText("Batting -" + jsonObjectBattingTeamId.getString("name"));
             battingTeamName = jsonObjectBattingTeamId.getString("name");
+
+            inningNumber = dataObject.getInt("inning_no");
+
+
+
+           // Toaster.customToast(inningNumber+"/");
 
             JSONObject jsonObjectBowlingTeamId = dataObject.getJSONObject("bowling_team");
             tvBowlingTeam.setText("Bowling -" + jsonObjectBowlingTeamId.getString("name"));

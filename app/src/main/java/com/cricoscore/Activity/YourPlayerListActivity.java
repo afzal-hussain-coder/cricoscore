@@ -84,7 +84,7 @@ public class YourPlayerListActivity extends AppCompatActivity {
         }
         receivedList = (ArrayList<PlayerModel>) getIntent().getSerializableExtra("List");
 
-        Toaster.customToast("Size"+receivedList.size());
+        //Toaster.customToast("Size"+receivedList.size());
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);

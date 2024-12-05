@@ -33,19 +33,21 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ScheduleMatchAdapter extends RecyclerView.Adapter<ScheduleMatchAdapter.MyHolder>{
+public class ScheduleMatchAdapter extends RecyclerView.Adapter<ScheduleMatchAdapter.MyHolder> {
 
     Context mContext;
-    List<ScheduleMatchDetailsItem> tList =null;
-    getImageCallListener  getImageCallListener;
+    List<ScheduleMatchDetailsItem> tList = null;
+    getImageCallListener getImageCallListener;
 
-    public ScheduleMatchAdapter(Context mContext, List<ScheduleMatchDetailsItem> tList,getImageCallListener  getImageCallListener){
+    public ScheduleMatchAdapter(Context mContext, List<ScheduleMatchDetailsItem> tList, getImageCallListener getImageCallListener) {
         this.mContext = mContext;
         this.tList = tList;
         this.getImageCallListener = getImageCallListener;
@@ -54,7 +56,7 @@ public class ScheduleMatchAdapter extends RecyclerView.Adapter<ScheduleMatchAdap
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.schedule_tournament_child,null,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.schedule_tournament_child, null, false);
         return new MyHolder(view);
     }
 
@@ -65,10 +67,16 @@ public class ScheduleMatchAdapter extends RecyclerView.Adapter<ScheduleMatchAdap
         holder.tvTeamName.setText(tournament.getTeamAInfo().getName());
         holder.tvTName_teamTwo.setText(tournament.getTeamBInfo().getName());
 
-        Glide.with(mContext).load(Global.BASE_URL+"/"+tournament.getTeamAInfo().getTeamLogo()).into(holder.img_first_team_logo);
-        Glide.with(mContext).load(Global.BASE_URL+"/"+tournament.getTeamBInfo().getTeamLogo()).into(holder.img_teamTwo_logo);
-       holder.tvtLocation.setText(tournament.getLocation()+" ,"+tournament.getGround());
-       holder.tvdate.setText(tournament.getStartDateTime());
+        Glide.with(mContext).load(Global.BASE_URL + "/" + tournament.getTeamAInfo().getTeamLogo()).into(holder.img_first_team_logo);
+        Glide.with(mContext).load(Global.BASE_URL + "/" + tournament.getTeamBInfo().getTeamLogo()).into(holder.img_teamTwo_logo);
+        holder.tvtLocation.setText(tournament.getLocation() + " ," + tournament.getGround());
+        holder.tvdate.setText(tournament.getStartDateTime());
+
+        if (tournament.getInning_no() > 0) {
+            holder.tvLiveStatus.setVisibility(View.VISIBLE);
+        } else {
+            holder.tvLiveStatus.setVisibility(View.GONE);
+        }
 //
 //        holder.mb_add_player_first.setOnClickListener(v -> {
 //         getImageCallListener.addPlayer();
@@ -86,13 +94,11 @@ public class ScheduleMatchAdapter extends RecyclerView.Adapter<ScheduleMatchAdap
 //        });
 
         holder.itemView.setOnClickListener(v -> {
-            getImageCallListener.getDetails(tournament.getScheduleMatchId(),tournament.getTeamAInfo().getName(),
-                    tournament.getTeamBInfo().getName());
+            getImageCallListener.getDetails(tournament.getScheduleMatchId(), tournament.getScheduleMatchId(), tournament.getTeamAInfo().getName(),
+                    tournament.getTeamBInfo().getName(), tournament, tournament.getInning_no());
         });
 
     }
-
-
 
 
     @Override
@@ -100,17 +106,17 @@ public class ScheduleMatchAdapter extends RecyclerView.Adapter<ScheduleMatchAdap
         return tList.size();
     }
 
-    public class MyHolder extends RecyclerView.ViewHolder{
-        private MaterialButton mb_add_player_first,mb_add_player2,mb_select_playing_xi;
+    public class MyHolder extends RecyclerView.ViewHolder {
+        private MaterialButton mb_add_player_first, mb_add_player2, mb_select_playing_xi;
 
-        private TextView tvPlayerFirstCount,tvPlayerSecondCount;
+        private TextView tvPlayerFirstCount, tvPlayerSecondCount;
         private TextView tvtLocation;
         private TextView tvdate;
-        private TextView tvtime;
-        private TextView tvTeamName,tvTName_teamTwo;
+        private TextView tvLiveStatus;
+        private TextView tvTeamName, tvTName_teamTwo;
 
 
-        private CircleImageView img_first_team_logo,img_teamTwo_logo;
+        private CircleImageView img_first_team_logo, img_teamTwo_logo;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -121,7 +127,7 @@ public class ScheduleMatchAdapter extends RecyclerView.Adapter<ScheduleMatchAdap
             tvPlayerSecondCount = itemView.findViewById(R.id.tvPlayerSecondCount);
             tvtLocation = itemView.findViewById(R.id.tvtLocation);
             tvdate = itemView.findViewById(R.id.tvdate);
-            tvtime = itemView.findViewById(R.id.tvtime);
+            tvLiveStatus = itemView.findViewById(R.id.tvLiveStatus);
             tvTeamName = itemView.findViewById(R.id.tvTeamName);
             tvTName_teamTwo = itemView.findViewById(R.id.tvTName_teamTwo);
             img_first_team_logo = itemView.findViewById(R.id.img_first_team_logo);
@@ -130,8 +136,8 @@ public class ScheduleMatchAdapter extends RecyclerView.Adapter<ScheduleMatchAdap
         }
     }
 
-    public interface getImageCallListener{
-      //  void addPlayer();
-        void getDetails(int id,String teamA,String teamB);
+    public interface getImageCallListener {
+        //  void addPlayer();
+        void getDetails(int scheduleId, int id, String teamA, String teamB, ScheduleMatchDetailsItem jsonObject, int inningNo);
     }
 }

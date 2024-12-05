@@ -21,6 +21,7 @@ import com.cricoscore.ParamBody.RemovePlayerBody;
 import com.cricoscore.ParamBody.ResetPasswordBody;
 import com.cricoscore.ParamBody.SignUpBody;
 import com.cricoscore.ParamBody.ToasParamBody;
+import com.cricoscore.ParamBody.UpdateScheduleInningParamBody;
 import com.cricoscore.ParamBody.UpdateScheduleTeamPlayerBody;
 import com.cricoscore.ParamBody.VerifyOtpBody;
 import com.cricoscore.Utils.Global;
@@ -224,6 +225,10 @@ public interface ApiRequest {
     @POST(Global.INNING_BALL)
     Call<ResponseBody> inningBall(@Header("token") String token,
                                   @Body InningBallParamBody inningBallParamBody);
+
+    @PUT(Global.UPDATE_SCHEDULE_INNING)
+    Call<ResponseBody> updateScheduleInning(@Header("token") String token,
+                                                @Body UpdateScheduleInningParamBody updateScheduleInningParamBody);
 
 
 }

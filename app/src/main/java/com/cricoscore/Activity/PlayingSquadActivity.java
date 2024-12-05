@@ -171,7 +171,7 @@ public class PlayingSquadActivity extends AppCompatActivity {
                             if (playerList != null && !playerList.isEmpty()) {
                                 // Bind data to RecyclerView
 
-                                playingsquadAdapter =new PlayingsquadAdapter(mContext, playerList, player -> {
+                                playingsquadAdapter =new PlayingsquadAdapter(mContext,current_bowler_id, playerList, player -> {
                                     PlayerName = player.getName();
 
 

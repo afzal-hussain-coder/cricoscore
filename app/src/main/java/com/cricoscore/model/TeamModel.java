@@ -45,6 +45,16 @@ public class TeamModel implements Serializable {
     public String city="";
     public String team_logo="";
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    private boolean isSelected; // New property
+
     public TeamModel(JSONObject jsonObject){
         if(jsonObject.has("team_id")){
             try {

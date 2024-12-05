@@ -89,7 +89,6 @@ public class YourTeamListAdapterHorizontal extends RecyclerView.Adapter<YourTeam
             }
         });
 
-
 //        holder.cb.setOnCheckedChangeListener((buttonView, isChecked) -> {
 //
 //            // Get the team ID based on the current position
@@ -114,8 +113,6 @@ public class YourTeamListAdapterHorizontal extends RecyclerView.Adapter<YourTeam
         });
 
         holder.itemView.setOnClickListener(v -> {
-
-
 
             mContext.startActivity(new Intent(mContext, TeamDetailsActivity.class).putExtra("ID"
                     , tournament.getTeam_id()+"")

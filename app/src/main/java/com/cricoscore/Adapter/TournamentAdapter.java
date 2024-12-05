@@ -17,6 +17,7 @@ import com.cricoscore.Activity.TournamentDetailsActivity;
 import com.cricoscore.ApiResponse.Tournament;
 import com.cricoscore.R;
 import com.cricoscore.Utils.Global;
+import com.cricoscore.Utils.SessionManager;
 import com.cricoscore.Utils.Toaster;
 import com.google.android.material.button.MaterialButton;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -62,6 +63,13 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.My
 
 
         holder.tvdate.setText(_tournamentdata.getStartDate());
+
+        if(_tournamentdata.getCreatedBy()==SessionManager.getUserId()){
+            holder.mb_add_team.setVisibility(View.VISIBLE);
+        }else{
+            holder.mb_add_team.setVisibility(View.GONE);
+        }
+
 
         holder.mb_add_team.setOnClickListener(v -> {
             getImageCallListener.addTeamLogo(_tournamentdata.getTournamentId());

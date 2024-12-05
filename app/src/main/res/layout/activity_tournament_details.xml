@@ -242,6 +242,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
                             android:layout_marginTop="@dimen/_10sdp"
+                            android:visibility="gone"
                             android:orientation="vertical">
 
                             <TextView
@@ -277,7 +278,7 @@
                                 android:fontFamily="@font/opensans_bold"
                                 android:text="Sponsored By"
                                 android:textColor="@color/dark_grey"
-                                android:textSize="@dimen/_6sdp" />
+                                android:textSize="@dimen/_8sdp" />
 
                             <TextView
                                 android:id="@+id/tvSponser"
@@ -326,6 +327,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
+                            android:visibility="gone"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:orientation="vertical">
 

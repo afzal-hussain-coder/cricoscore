@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScheduleMatchDetailsItem {
+public class ScheduleMatchDetailsItem implements Serializable{
     public int getScheduleMatchId() {
         return scheduleMatchId;
     }
@@ -161,6 +161,16 @@ public class ScheduleMatchDetailsItem {
     private TeamInfo teamAInfo;
     private TeamInfo teamBInfo;
 
+    public int getInning_no() {
+        return inning_no;
+    }
+
+    public void setInning_no(int inning_no) {
+        this.inning_no = inning_no;
+    }
+
+    int inning_no;
+
     // New fields for selected players
     private List<PlayerModel> selectedTeamAPlayer;
     private List<PlayerModel> selectedTeamBPlayer;
@@ -199,6 +209,7 @@ public class ScheduleMatchDetailsItem {
         this.noOfOver = jsonObject.optInt("no_of_over");
         this.noOfOverBowler = jsonObject.optInt("no_of_over_bowler");
         this.match_type = jsonObject.optString("match_type");
+        this.inning_no = jsonObject.optInt("inning_no");
 
         // Parsing nested objects for team info
         JSONObject teamAInfoJson = jsonObject.optJSONObject("team_a_info");
