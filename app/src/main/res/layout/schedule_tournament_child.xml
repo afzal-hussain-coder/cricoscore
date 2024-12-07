@@ -258,26 +258,49 @@
 
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tvtLocation"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/litLocation"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/middle"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:drawableLeft="@drawable/location_black_24dp"
-                android:drawablePadding="@dimen/_3sdp"
-                android:gravity="center_vertical"
-                android:text="Bindra Stadium I.S, Sukhna Path, Sector 63, Sahibzada Ajit Singh Nagar, Chandigarh, Punjab 160062"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_8sdp"
-                app:fontFamily="@font/opensans_regular" />
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tvWinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:visibility="visible"
+                    android:textColor="@color/dim_sky"
+                    android:fontFamily="@font/opensans_semibold">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tvtLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/middle"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:drawableLeft="@drawable/location_black_24dp"
+                    android:drawablePadding="@dimen/_3sdp"
+                    android:gravity="center_vertical"
+                    android:text="Bindra Stadium I.S, Sukhna Path, Sector 63, Sahibzada Ajit Singh Nagar, Chandigarh, Punjab 160062"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_8sdp"
+                    app:fontFamily="@font/opensans_regular" />
+            </LinearLayout>
+
 
             <RelativeLayout
                 android:id="@+id/rl_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvtLocation">
+                android:layout_below="@+id/litLocation">
 
                 <TextView
                     android:id="@+id/tvdate"

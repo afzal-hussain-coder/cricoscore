@@ -841,7 +841,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                                 // Extract data
                                 // currentStrikerId=0;
                                 //  currentNonStrikerId=0;
-                                extractAndLoadData(dataObject);
+                              //  extractAndLoadData(dataObject);
                             } else {
                                 Log.e("Error", "Data object is null");
                             }
@@ -1000,16 +1000,22 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
                 new Handler().postDelayed(() -> {
                     isWicket = "0";
-                    startActivity(new Intent(mContext, PlayingSquadActivity.class)
-                            .putExtra("ScheduleId", scheduleId)
-                            .putExtra("InningId", inning_id)
-                            .putExtra("TeamId", teamIdBatting)
-                            .putExtra("current_striker_id", currentStrikerId)
-                            .putExtra("current_non_striker_id", currentNonStrikerId)
-                            .putExtra("current_bowler_id", currentBowlerId)
-                            .putExtra("Strike", strike)
-                            .putExtra("lastRun", lastRunn)
-                            .putExtra("Bowler", ""));
+
+                    if(is_inning_completed !=1 && is_match_completed!=1){
+                        startActivity(new Intent(mContext, PlayingSquadActivity.class)
+                                .putExtra("ScheduleId", scheduleId)
+                                .putExtra("InningId", inning_id)
+                                .putExtra("TeamId", teamIdBatting)
+                                .putExtra("BowlingTeamId",bowling_team_id)
+                                .putExtra("BattingTeamId",batting_team_id)
+                                .putExtra("current_striker_id", currentStrikerId)
+                                .putExtra("current_non_striker_id", currentNonStrikerId)
+                                .putExtra("current_bowler_id", currentBowlerId)
+                                .putExtra("Strike", strike)
+                                .putExtra("lastRun", lastRunn)
+                                .putExtra("Bowler", ""));
+                    }
+
 
                 }, 2000);
             } else {
@@ -1128,7 +1134,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
         // Trigger the over completion dialog if the over is finished
 
-        if (is_inning_completed == 1 && is_match_completed != 1) {
+        if (is_inning_completed == 1) {
             inningCompletedDialog(totalRuns, overs, wicket, teamName);
         } else if (is_match_completed == 1) {
             endMatchDialog();
@@ -1173,6 +1179,10 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         View bottomSheetView = getLayoutInflater().inflate(R.layout.dialog_over_complete, null);
         bottomSheetDialog.setContentView(bottomSheetView);
+
+        bottomSheetDialog.setCancelable(false);
+        bottomSheetDialog.setCanceledOnTouchOutside(false);
+
         LinearLayout ballIndicatorsLayout = bottomSheetDialog.findViewById(R.id.ballIndicators);
         ballIndicatorsLayout.removeAllViews();
         bottomSheetDialog.setOnShowListener(dialog -> {
@@ -1188,23 +1198,6 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         TextView tvTotalOvers = bottomSheetDialog.findViewById(R.id.tvTotalOvers);
         TextView tvTotalWickets = bottomSheetDialog.findViewById(R.id.tvTotalWickets);
 
-        // Fetching the ball indicators (TextViews for each ball)
-//        TextView[] ballIndicatorsDialog = new TextView[6];
-//        FrameLayout[] ballIndicatorsDialogg = new FrameLayout[6];
-//        ballIndicatorsDialog[0] = bottomSheetDialog.findViewById(R.id.ball_1_run);
-//        ballIndicatorsDialog[1] = bottomSheetDialog.findViewById(R.id.ball_2_run);
-//        ballIndicatorsDialog[2] = bottomSheetDialog.findViewById(R.id.ball_3_run);
-//        ballIndicatorsDialog[3] = bottomSheetDialog.findViewById(R.id.ball_4_run);
-//        ballIndicatorsDialog[4] = bottomSheetDialog.findViewById(R.id.ball_5_run);
-//        ballIndicatorsDialog[5] = bottomSheetDialog.findViewById(R.id.ball_6_run);
-//
-//        ballIndicatorsDialogg[0] = bottomSheetDialog.findViewById(R.id.ball_1);
-//        ballIndicatorsDialogg[1] = bottomSheetDialog.findViewById(R.id.ball_2);
-//        ballIndicatorsDialogg[2] = bottomSheetDialog.findViewById(R.id.ball_3);
-//        ballIndicatorsDialogg[3] = bottomSheetDialog.findViewById(R.id.ball_4);
-//        ballIndicatorsDialogg[4] = bottomSheetDialog.findViewById(R.id.ball_5);
-//        ballIndicatorsDialogg[5] = bottomSheetDialog.findViewById(R.id.ball_6);
-
         // Update dialog fields with the current data
         tvCurrentBowler.setText(bowlerName);
         tvCurrentBowlerTotalRun.setText(String.valueOf(currentOverRuns));  // Total runs for the current over
@@ -1216,78 +1209,6 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         runOnUiThread(() -> {
 
             Log.d("DEBUG", "Dialog showing for over: ");
-           /* for (int i = 0; i < balledList.size(); i++) {
-
-                TextView ballIndicator = new TextView(this);
-
-                // Set the layout parameters for the TextView
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        90, 90); // Width and height in dp
-                params.setMargins(16, 0, 16, 0); // Margins around each ball indicator
-                ballIndicator.setLayoutParams(params);
-
-                // Style the TextView
-                ballIndicator.setGravity(Gravity.CENTER);
-                ballIndicator.setTextColor(Color.WHITE);
-                ballIndicator.setBackgroundResource(R.drawable.circle_background);
-
-                // Set the text for the ball (runs or extra type)
-                String ballText;
-                if ("WB".equalsIgnoreCase(balledList.getExtras())) {
-                    ballText = "WB+" + balledList.getRunsScored();
-                } else if ("NB".equalsIgnoreCase(balledList.getExtras())) {
-                    ballText = "NB+" + balledList.getRunsScored();
-                } else {
-                    ballText = String.valueOf(balledList.getRunsScored());
-                }
-                ballIndicator.setText(ballText);
-
-                // Add the TextView to the LinearLayout
-                ballIndicatorsLayout.addView(ballIndicator);
-
-                if (i < ballsInCurrentOver) {
-                    Log.d("DEBUG", "Ball " + (i + 1) + " Run: " + balledList.get(i));
-                    ballIndicatorsDialog[i].setText(String.valueOf(balledList.get(i).getRunsScored()));
-                    lastRunn = balledList.get(5).getRunsScored();
-                    ballIndicatorsDialogg[i].setVisibility(View.VISIBLE);
-                } else {
-                    // Hide ball indicators that are not used yet
-                    ballIndicatorsDialog[i].setText("");
-                    ballIndicatorsDialogg[i].setVisibility(View.INVISIBLE);
-                }
-            }*/
-
-
-           /* for (Balled ballData : balledList) {
-                TextView ballIndicator = new TextView(this);
-
-                // Set the layout parameters for the TextView
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        90, 90); // Width and height in dp
-                params.setMargins(16, 0, 16, 0); // Margins around each ball indicator
-                ballIndicator.setLayoutParams(params);
-
-                // Style the TextView
-                ballIndicator.setGravity(Gravity.CENTER);
-                ballIndicator.setTextColor(Color.WHITE);
-                ballIndicator.setBackgroundResource(R.drawable.circle_background);
-
-                // Set the text for the ball (runs or extra type)
-                String ballText;
-                if ("WB".equalsIgnoreCase(ballData.getExtras())) {
-                    ballText = "WB+" + ballData.getRunsScored();
-                } else if ("NB".equalsIgnoreCase(ballData.getExtras())) {
-                    ballText = "NB+" + ballData.getRunsScored();
-                } else {
-                    ballText = String.valueOf(ballData.getRunsScored());
-                }
-                ballIndicator.setText(ballText);
-
-                // Add the TextView to the LinearLayout
-                ballIndicatorsLayout.addView(ballIndicator);
-                ballsInCurrentOver++;
-            }*/
-
 
             for (Balled ballData : balledList) {
                 Log.d("DEBUG", "Processing ball: " + ballsInCurrentOver); // Log the count of balls being processed
@@ -1378,6 +1299,8 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                     .putExtra("ScheduleId", scheduleId)
                     .putExtra("InningId", inning_id)
                     .putExtra("TeamId", bowlingTeamId)
+                    .putExtra("BowlingTeamId",bowling_team_id)
+                    .putExtra("BattingTeamId",batting_team_id)
                     .putExtra("current_striker_id", currentStrikerId)
                     .putExtra("current_non_striker_id", currentNonStrikerId)
                     .putExtra("current_bowler_id", currentBowlerId)
@@ -1424,6 +1347,9 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         View bottomSheetView = getLayoutInflater().inflate(R.layout.dialog_inning_complete, null);
         bottomSheetDialog.setContentView(bottomSheetView);
+
+        bottomSheetDialog.setCancelable(false);
+        bottomSheetDialog.setCanceledOnTouchOutside(false);
 
         TextView tvRuns = bottomSheetDialog.findViewById(R.id.tvRuns);
         TextView tvOvers = bottomSheetDialog.findViewById(R.id.tvOvers);
@@ -1482,6 +1408,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                             // Extract "data" object if needed
                             startActivity(new Intent(mContext, ScheduleMatchActivity.class)
                                     .putExtra("FROM", "1"));
+                            finish();
 
                         } else {
                             Toaster.customToast(message);
@@ -1516,6 +1443,9 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         View bottomSheetView = getLayoutInflater().inflate(R.layout.dialog_end_match, null);
         bottomSheetDialog.setContentView(bottomSheetView);
+
+        bottomSheetDialog.setCancelable(false);
+        bottomSheetDialog.setCanceledOnTouchOutside(false);
 
         TextView tvTeamNameWinningHeader = bottomSheetDialog.findViewById(R.id.tvTeamNameWinningHeader);
         TextView tvLossingTeam = bottomSheetDialog.findViewById(R.id.tvLossingTeam);

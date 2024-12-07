@@ -161,6 +161,26 @@ public class ScheduleMatchDetailsItem implements Serializable{
     private TeamInfo teamAInfo;
     private TeamInfo teamBInfo;
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    private String message="";
+
+    public int getIs_match_completed() {
+        return is_match_completed;
+    }
+
+    public void setIs_match_completed(int is_match_completed) {
+        this.is_match_completed = is_match_completed;
+    }
+
+    private int is_match_completed;
+
     public int getInning_no() {
         return inning_no;
     }
@@ -210,6 +230,8 @@ public class ScheduleMatchDetailsItem implements Serializable{
         this.noOfOverBowler = jsonObject.optInt("no_of_over_bowler");
         this.match_type = jsonObject.optString("match_type");
         this.inning_no = jsonObject.optInt("inning_no");
+        this.is_match_completed = jsonObject.optInt("is_match_completed");
+        this.message = jsonObject.optString("message");
 
         // Parsing nested objects for team info
         JSONObject teamAInfoJson = jsonObject.optJSONObject("team_a_info");

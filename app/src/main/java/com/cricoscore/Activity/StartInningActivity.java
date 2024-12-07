@@ -34,6 +34,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import okhttp3.ResponseBody;
@@ -82,44 +84,99 @@ public class StartInningActivity extends AppCompatActivity {
         }
 
         // Setting up click listeners for cards
-        findViewById(R.id.cardStriker).setOnClickListener(v ->
-                {
-                    isStrikerSelected = true;
-                    isNonStrikerSelected = false;
-                    isBowlerSelected = false;
-                    showPlayerSelectionDialog("Select Striker", battingTeamPlayers, player -> {
-                        tvStriker.setText(player.getName()
+//        findViewById(R.id.cardStriker).setOnClickListener(v ->
+//                {
+//                    isStrikerSelected = true;
+//                    isNonStrikerSelected = false;
+//                    isBowlerSelected = false;
+//                    showPlayerSelectionDialog("Select Striker", battingTeamPlayers, player -> {
+//                        tvStriker.setText(player.getName()
+//
+//                        );
+//                    });
+//                }
+//        );
+//
+//        findViewById(R.id.cardNonStriker).setOnClickListener(v ->
+//                {
+//                    isStrikerSelected = false;
+//                    isNonStrikerSelected = true;
+//                    isBowlerSelected = false;
+//
+//                    showPlayerSelectionDialog("Select Non-Striker", battingTeamPlayers, player -> {
+//                        tvNonStriker.setText(player.getName());
+//                    });
+//                }
+//
+//
+//        );
+//
+//        findViewById(R.id.cardBowler).setOnClickListener(v ->
+//
+//                {
+//                    isStrikerSelected = false;
+//                    isNonStrikerSelected = false;
+//                    isBowlerSelected = true;
+//                    showPlayerSelectionDialog("Select Bowler", bowlingTeamPlayers, player -> {
+//                        tvBowler.setText(player.getName());
+//                    });
+//                }
+//        );
 
-                        );
-                    });
-                }
-        );
+        findViewById(R.id.cardStriker).setOnClickListener(v -> {
+            isStrikerSelected = true;
+            isNonStrikerSelected = false;
+            isBowlerSelected = false;
 
-        findViewById(R.id.cardNonStriker).setOnClickListener(v ->
-                {
-                    isStrikerSelected = false;
-                    isNonStrikerSelected = true;
-                    isBowlerSelected = false;
+            showPlayerSelectionDialog(
+                    "Select Striker",
+                    battingTeamPlayers,
+                    currentStrikerId, // Pass the currently selected striker ID
+                    null, // No disabled players
+                    player -> {
+                        tvStriker.setText("Striker: " + player.getName());
+                        currentStrikerId = player.getPlayerId(); // Update the selected striker
+                        StrikePlayerName = player.getName();
+                    }
+            );
+        });
 
-                    showPlayerSelectionDialog("Select Non-Striker", battingTeamPlayers, player -> {
-                        tvNonStriker.setText(player.getName());
-                    });
-                }
+        findViewById(R.id.cardNonStriker).setOnClickListener(v -> {
+            isStrikerSelected = false;
+            isNonStrikerSelected = true;
+            isBowlerSelected = false;
+
+            showPlayerSelectionDialog(
+                    "Select Non-Striker",
+                    battingTeamPlayers,
+                    currentNonStrikerId, // Pass the currently selected non-striker ID
+                    Collections.singletonList(currentStrikerId), // Disable the currently selected striker
+                    player -> {
+                        tvNonStriker.setText("Non-Striker: " + player.getName());
+                        currentNonStrikerId = player.getPlayerId(); // Update the selected non-striker
+                        nonStrikeName = player.getName();
+                    }
+            );
+        });
 
 
-        );
+        findViewById(R.id.cardBowler).setOnClickListener(v -> {
+            isStrikerSelected = false;
+            isNonStrikerSelected = false;
+            isBowlerSelected = true;
 
-        findViewById(R.id.cardBowler).setOnClickListener(v ->
-
-                {
-                    isStrikerSelected = false;
-                    isNonStrikerSelected = false;
-                    isBowlerSelected = true;
-                    showPlayerSelectionDialog("Select Bowler", bowlingTeamPlayers, player -> {
-                        tvBowler.setText(player.getName());
-                    });
-                }
-        );
+            showPlayerSelectionDialog(
+                    "Select Bowler",
+                    bowlingTeamPlayers, // Assuming this is the list of bowling team players
+                    currentBowlerId, // Pass the currently selected bowler ID
+                    null,
+                    player -> {
+                        tvBowler.setText("Bowler: " + player.getName());
+                        currentBowlerId = player.getPlayerId(); // Update the selected bowler
+                        bowlerName = player.getName();
+                    }
+            );
+        });
 
         tvScheduleMatch.setOnClickListener(v -> {
             //...go to score card activity
@@ -209,7 +266,32 @@ public class StartInningActivity extends AppCompatActivity {
         }
     }
 
-    private void showPlayerSelectionDialog(String title, ArrayList<Player> players, PlayerAdapterForSelection.OnPlayerSelectListener listener) {
+
+    private void showPlayerSelectionDialog(String title, ArrayList<Player> players, int selectedPlayerId, List<Integer> disabledPlayerIds, PlayerAdapterForSelection.OnPlayerSelectListener listener) {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        View sheetView = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_player_selection, null);
+
+        RecyclerView rvPlayers = sheetView.findViewById(R.id.rvPlayers);
+        TextView tvTitle = sheetView.findViewById(R.id.tvTitle);
+        tvTitle.setText(title);
+
+        rvPlayers.setLayoutManager(new LinearLayoutManager(this));
+
+        PlayerAdapterForSelection adapter = new PlayerAdapterForSelection(mContext,players, player -> {
+            listener.onSelect(player); // Pass selected player to listener
+            new Handler().postDelayed(bottomSheetDialog::dismiss, 1000); // Delay before dismissing
+        }, selectedPlayerId, disabledPlayerIds); // Pass the disabled players
+
+        rvPlayers.setAdapter(adapter);
+
+        bottomSheetDialog.setContentView(sheetView);
+        bottomSheetDialog.show();
+    }
+
+
+
+
+   /* private void showPlayerSelectionDialog(String title, ArrayList<Player> players, PlayerAdapterForSelection.OnPlayerSelectListener listener) {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         View sheetView = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_player_selection, null);
 
@@ -255,7 +337,7 @@ public class StartInningActivity extends AppCompatActivity {
 
         bottomSheetDialog.setContentView(sheetView);
         bottomSheetDialog.show();
-    }
+    }*/
 
     private void startInningNew(int schedule_match_id, int team_id, int inning_number, int current_bowler_id,
                                 int current_non_striker_id, int current_striker_id, int bowling_team_id) {

@@ -115,37 +115,10 @@ public class YourPlayerListActivity extends AppCompatActivity {
         rv_teamList.setHasFixedSize(true);
 
 
-        drop_tournamentName = findViewById(R.id.drop_tournamentName);
-        option_tournament_list.add(new DataModel("Team A"));
-        option_tournament_list.add(new DataModel("Team B"));
-        option_tournament_list.add(new DataModel("Team C"));
-        option_tournament_list.add(new DataModel("Team D"));
-        drop_tournamentName.setOptionList(option_tournament_list);
-        drop_tournamentName.setClickListener(new SelectTournamentType.onClickInterface() {
-            @Override
-            public void onClickAction() {
-            }
-
-            @Override
-            public void onClickDone(String name) {
-                tournamentType = name;
-                if (!tournamentType.isEmpty()) {
-                    mb_submit.setVisibility(View.VISIBLE);
-                } else {
-                    mb_submit.setVisibility(View.GONE);
-                }
-
-            }
-
-
-            @Override
-            public void onDismiss() {
-            }
-        });
-
 
         img_add.setOnClickListener(v -> {
-            startActivity(new Intent(mContext, AddPlayer.class));
+            startActivity(new Intent(mContext, AddPlayer.class).putExtra("ID", teamId));
+            finish();
         });
 
         mb_submit.setOnClickListener(v -> {

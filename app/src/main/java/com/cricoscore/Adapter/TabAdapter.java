@@ -27,9 +27,9 @@ public class TabAdapter extends FragmentStateAdapter {
             case 1:
                 fragment = new MatchFragment();
                 break;
-            case 2:
-                fragment = new LiveFragment();
-                break;
+//            case 2:
+//                fragment = new LiveFragment();
+//                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + position);
         }
@@ -40,6 +40,6 @@ public class TabAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 2;
     }
 }

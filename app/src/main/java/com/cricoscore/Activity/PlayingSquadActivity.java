@@ -49,11 +49,13 @@ public class PlayingSquadActivity extends AppCompatActivity {
     int teamId;
     int current_striker_id;
     int current_non_striker_id;
-    int current_bowler_id;
+    int current_bowler_id=0;
     String Strike ="";
     String type ="";
     String bowlerType ="";
     int lastRun =0;
+    int battingTeamId=0;
+    int bowlingTeamId=0;
     PlayingsquadAdapter playingsquadAdapter;
 
     @Override
@@ -74,6 +76,8 @@ public class PlayingSquadActivity extends AppCompatActivity {
             current_striker_id = getIntent().getIntExtra("current_striker_id",0);
             current_non_striker_id = getIntent().getIntExtra("current_non_striker_id",0);
             current_bowler_id = getIntent().getIntExtra("current_bowler_id",0);
+            battingTeamId = getIntent().getIntExtra("BattingTeamId",0);
+            bowlingTeamId = getIntent().getIntExtra("BowlingTeamId",0);
             Strike = getIntent().getStringExtra("Strike");
             bowlerType = getIntent().getStringExtra("Bowler");
             lastRun = getIntent().getIntExtra("lastRun",0);
@@ -185,7 +189,15 @@ public class PlayingSquadActivity extends AppCompatActivity {
                                         current_bowler_id = playingId;
                                     }
                                 });
-                                playingsquadAdapter.filterPlayers();
+
+                                Toaster.customToast(teamId+"/"+battingTeamId);
+
+
+                                if(teamId==battingTeamId){
+                                    playingsquadAdapter.filterPlayers();
+                                }
+
+                                //
                                 activityPlayingSquadBinding.rvPlayingSquad.setAdapter(playingsquadAdapter);
 
                             } else {

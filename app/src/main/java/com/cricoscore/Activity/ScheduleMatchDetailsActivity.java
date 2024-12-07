@@ -41,6 +41,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -525,7 +526,7 @@ public class ScheduleMatchDetailsActivity extends AppCompatActivity {
 
                         scheduleMatchDetailsItem = new ScheduleMatchDetailsItem(finalData);
 
-                        Toaster.customToast(scheduleMatchDetailsItem.getBallType());
+                       // Toaster.customToast(scheduleMatchDetailsItem.getBallType());
 
 //                        activityScheduleMatchDetailsBinding.tvTeamName.setText(scheduleMatchDetailsItem.getTeamAInfo().getName());
 //
@@ -810,15 +811,33 @@ public class ScheduleMatchDetailsActivity extends AppCompatActivity {
                         String jsonString = response.body().string(); // Get the JSON string
                         JSONObject jsonObject = new JSONObject(jsonString); // Convert to JSONObject
 
-                        startActivity(new Intent(mContext,ScheduleMatchActivity.class));
-
+                        boolean status = jsonObject.optBoolean("status", true);
+                        if (status) {
+                            // If status is true, proceed to the next activity
+                            startActivity(new Intent(mContext, ScheduleMatchActivity.class));
+                        } else {
+                            // If status is false, get and display the error message
+                            String message = jsonObject.optString("message", "Unknown error occurred");
+                            Toaster.customToast(message);
+                            Log.e("Error", "Server Response: " + message);
+                        }
 
                     } catch (Exception e) {
                         Log.e("Error", "JSON parsing error: " + e.getMessage());
                     }
                 } else {
-                    Log.e("Error", "Response error: " + response.code());
+                    try {
+                        // Extract the error body for non-successful responses
+                        String errorBody = response.errorBody() != null ? response.errorBody().string() : "Unknown error occurred";
+                        JSONObject errorObject = new JSONObject(errorBody); // Parse error body as JSON
+                        String message = errorObject.optString("message", "Unknown error occurred");
+                        Toaster.customToast(message);
+                        Log.e("Error", "Response error: " + response.code() + ", Message: " + message);
+                    } catch (Exception e) {
+                        Log.e("Error", "Error handling response: " + e.getMessage());
+                    }
                 }
+
             }
 
             @Override

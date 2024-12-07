@@ -72,6 +72,7 @@ public class TournamentDetailsActivity extends AppCompatActivity {
     String formatedStartDate = "";
     String formatedEndDate = "";
     String location = "";
+    int created_by=0;
     int teamId;
     ArrayList<TeamModel>teamModelArrayList = new ArrayList<>();
     // Variables to store selected team details
@@ -108,7 +109,6 @@ public class TournamentDetailsActivity extends AppCompatActivity {
         toolbarBinding.toolbartext.setText(tournamentName);
         toolbarBinding.toolbar.setNavigationOnClickListener(v -> finish());
 
-        img_add.setVisibility(View.VISIBLE);
 
         activityTournamentDetailsBinding.tvInfo.startAnimation((Animation) AnimationUtils.loadAnimation(mContext, R.anim.translate));
 
@@ -180,6 +180,7 @@ public class TournamentDetailsActivity extends AppCompatActivity {
         } else {
             Global.showDialog(mActivity);
         }
+
     }
 
     /*show dialog to select schedule date and time to create schedule*/
@@ -411,14 +412,17 @@ public class TournamentDetailsActivity extends AppCompatActivity {
                         for(int i=0;i<jsonArray.length();i++){
                             teamModelArrayList.add(new TeamModel(jsonArray.getJSONObject(i)));
                         }
+                        created_by = finalData.getInt("created_by");
 
-                        if(teamModelArrayList.isEmpty() || teamModelArrayList.size()<2){
-                            activityTournamentDetailsBinding.liSchedule.setVisibility(View.GONE);
-                        }else{
-                            activityTournamentDetailsBinding.liSchedule.setVisibility(View.VISIBLE);
-                            activityTournamentDetailsBinding.tvTextSchedule.setText(mContext.getResources().getString(R.string.submit));
+                        if(created_by==SessionManager.getUserId()){
+                            img_add.setVisibility(View.VISIBLE);
+                            if(teamModelArrayList.isEmpty() || teamModelArrayList.size()<2){
+                                activityTournamentDetailsBinding.liSchedule.setVisibility(View.GONE);
+                            }else{
+                                activityTournamentDetailsBinding.liSchedule.setVisibility(View.VISIBLE);
+                                activityTournamentDetailsBinding.tvTextSchedule.setText(mContext.getResources().getString(R.string.submit));
+                            }
                         }
-
 
                         yourTeamListAdapter = new YourTeamListAdapterHorizontal(mContext, teamModelArrayList, new YourTeamListAdapterHorizontal.itemClickListener() {
 
@@ -452,9 +456,6 @@ public class TournamentDetailsActivity extends AppCompatActivity {
                                 }
                             }
                         });
-
-
-
 
                         activityTournamentDetailsBinding.rvTeamList.setAdapter(yourTeamListAdapter);
 

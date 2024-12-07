@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,8 @@ import com.cricoscore.Utils.Toaster;
 import com.cricoscore.model.BattingPlayersResponse;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PlayingsquadAdapter extends RecyclerView.Adapter<PlayingsquadAdapter.ViewHolder> {
 
@@ -30,7 +33,7 @@ public class PlayingsquadAdapter extends RecyclerView.Adapter<PlayingsquadAdapte
         this.playerList = playerList;
         this.onPlayerSelectListener = onPlayerSelectListener;
 
-       // Toaster.customToast("Size"+playerList.size());
+      // Toaster.customToast("Size"+playerList.size());
     }
 
     @NonNull
@@ -45,25 +48,32 @@ public class PlayingsquadAdapter extends RecyclerView.Adapter<PlayingsquadAdapte
         BattingPlayersResponse.Player player = playerList.get(position);
         holder.tvPlayerName.setText(player.getName());
 
-//        if(player.getPlayer_id()==currentBowlerId){
-//            holder.cbPlayer.setEnabled(false);
-//        }else{
-//            holder.cbPlayer.setEnabled(true);
-//        }
+        // Disable selection if the player's ID matches the current bowler ID
+        if (player.getPlayer_id() == currentBowlerId) {
+            holder.rl.setEnabled(false);
+            holder.rl.setBackgroundColor(mContext.getResources().getColor(R.color.light_gray)); // Disabled color
+        } else {
+            holder.rl.setEnabled(true);
+            holder.rl.setBackgroundColor(mContext.getResources().getColor(R.color.white)); // Default color
+        }
 
-        holder.cbPlayer.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                // Uncheck the previous checkbox
-                if (currentCheckedCheckbox != null && currentCheckedCheckbox != holder.cbPlayer) {
-                    currentCheckedCheckbox.setChecked(false);
+        // Handle itemView click to change the background color and notify the listener
+        holder.itemView.setOnClickListener(v -> {
+            if (player.getPlayer_id() != currentBowlerId) { // Ensure it's not disabled
+                // Reset background colors of all items
+                for (int i = 0; i < playerList.size(); i++) {
+                    notifyItemChanged(i); // Refresh all items to reset their background
                 }
-                // Save the reference to the newly checked checkbox
-                currentCheckedCheckbox = holder.cbPlayer;
-                // Notify the listener that a player is selected
+
+                // Highlight the selected item
+                holder.rl.setBackgroundColor(mContext.getResources().getColor(R.color.dark_grey)); // Selected color
+
+                // Notify the listener about the selected player
                 onPlayerSelectListener.onSelect(player);
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -85,12 +95,14 @@ public class PlayingsquadAdapter extends RecyclerView.Adapter<PlayingsquadAdapte
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvPlayerName;
-        CheckBox cbPlayer;
+        CircleImageView image;
+        RelativeLayout rl;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvPlayerName = itemView.findViewById(R.id.tvPlayerName);
-            cbPlayer = itemView.findViewById(R.id.cbPlayer);
+            image = itemView.findViewById(R.id.image);
+            this.rl = itemView.findViewById(R.id.rl);
         }
     }
 

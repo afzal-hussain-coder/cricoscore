@@ -53,6 +53,7 @@ public class TeamDetailsActivity extends AppCompatActivity {
     String teamId = "";
     SharedPreferences sharedPreferences;
     ArrayList<PlayerModel> newList = new ArrayList<>();
+    int UserId=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,7 @@ public class TeamDetailsActivity extends AppCompatActivity {
 
         if (getIntent() != null) {
             teamId = getIntent().getStringExtra("ID");
+            UserId = getIntent().getIntExtra("UserId",0);
         }
         toolbarBinding.toolbartext.setText(teamName);
         toolbarBinding.toolbar.setNavigationOnClickListener(v -> finish());
@@ -93,6 +95,12 @@ public class TeamDetailsActivity extends AppCompatActivity {
             startActivity(new Intent(mContext, YourPlayerListActivity.class).putExtra("ID", teamId)
                     .putExtra("List",newList));
         });
+
+        if(UserId==SessionManager.getUserId()){
+            activityTeamDetailsBinding.mbAddNewTeam.setVisibility(View.VISIBLE);
+        }else{
+            activityTeamDetailsBinding.mbAddNewTeam.setVisibility(View.GONE);
+        }
     }
 
     @Override

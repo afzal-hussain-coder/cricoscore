@@ -154,6 +154,7 @@ public interface ApiRequest {
     Call<ResponseBody> addPayer(@Header("token") String token,
                                 @Part("name") RequestBody name,
                                 @Part("phone_number") RequestBody phone_number,
+                                @Part("team_id") int team_id,
                                 @Part MultipartBody.Part avatar);
 
     @GET(Global.MY_PLAYER_LIST)

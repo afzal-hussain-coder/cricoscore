@@ -34,6 +34,7 @@ public class YourTeamListAdapterHorizontal extends RecyclerView.Adapter<YourTeam
     int posClick = 0;
     List<TeamModel> tList;
     List<TeamModel> teamIdList;
+    int UserId=0;
 
     public YourTeamListAdapterHorizontal(Context mContext, List<TeamModel> tList, itemClickListener itemClickListener) {
         this.mContext = mContext;
@@ -41,6 +42,8 @@ public class YourTeamListAdapterHorizontal extends RecyclerView.Adapter<YourTeam
         this.itemClickListener = itemClickListener;
 
         teamIdList =  new ArrayList<>();
+
+       // Toaster.customToast(tList.size()+"Size");
     }
 
     @NonNull
@@ -115,7 +118,7 @@ public class YourTeamListAdapterHorizontal extends RecyclerView.Adapter<YourTeam
         holder.itemView.setOnClickListener(v -> {
 
             mContext.startActivity(new Intent(mContext, TeamDetailsActivity.class).putExtra("ID"
-                    , tournament.getTeam_id()+"")
+                    , tournament.getTeam_id()+"").putExtra("UserId",UserId)
             );
         });
 

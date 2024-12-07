@@ -57,7 +57,7 @@
         <!-- Score Section -->
         <LinearLayout
             android:id="@+id/scoreSection"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="300dp"
             android:background="@color/black_light_tranparent"
             android:backgroundTint="@null"
@@ -77,8 +77,12 @@
 
             <TextView
                 android:id="@+id/tossInfo"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:gravity="center_horizontal"
                 android:text="Altaf won the toss and elected to bat"
                 android:textColor="#FFF"
                 android:textSize="14sp"
@@ -216,12 +220,14 @@
             </RelativeLayout>
             <TextView
                 android:id="@+id/bowlerStats"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:text="0-0-0-0"
                 android:textSize="@dimen/_12sdp"
                 android:textColor="#FFF" />

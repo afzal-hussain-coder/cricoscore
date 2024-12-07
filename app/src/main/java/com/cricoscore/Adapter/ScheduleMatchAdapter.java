@@ -72,12 +72,25 @@ public class ScheduleMatchAdapter extends RecyclerView.Adapter<ScheduleMatchAdap
         holder.tvtLocation.setText(tournament.getLocation() + " ," + tournament.getGround());
         holder.tvdate.setText(tournament.getStartDateTime());
 
-        if (tournament.getInning_no() > 0) {
+        holder.tvWinner.setText(tournament.getMessage());
+
+        if(tournament.getIs_match_completed()==1){
+            holder.tvtLocation.setVisibility(View.GONE);
+            holder.tvWinner.setVisibility(View.VISIBLE);
             holder.tvLiveStatus.setVisibility(View.VISIBLE);
-        } else {
-            holder.tvLiveStatus.setVisibility(View.GONE);
+            holder.tvLiveStatus.setText("Compleated");
+            holder.itemView.setEnabled(false);
+        }else{
+            holder.itemView.setEnabled(true);
+            if(tournament.getInning_no() > 0){
+                holder.tvLiveStatus.setVisibility(View.VISIBLE);
+            }else{
+                holder.tvLiveStatus.setVisibility(View.GONE);
+            }
         }
-//
+
+
+
 //        holder.mb_add_player_first.setOnClickListener(v -> {
 //         getImageCallListener.addPlayer();
 //        });
@@ -114,6 +127,7 @@ public class ScheduleMatchAdapter extends RecyclerView.Adapter<ScheduleMatchAdap
         private TextView tvdate;
         private TextView tvLiveStatus;
         private TextView tvTeamName, tvTName_teamTwo;
+        private TextView tvWinner;
 
 
         private CircleImageView img_first_team_logo, img_teamTwo_logo;
@@ -132,6 +146,7 @@ public class ScheduleMatchAdapter extends RecyclerView.Adapter<ScheduleMatchAdap
             tvTName_teamTwo = itemView.findViewById(R.id.tvTName_teamTwo);
             img_first_team_logo = itemView.findViewById(R.id.img_first_team_logo);
             img_teamTwo_logo = itemView.findViewById(R.id.img_teamTwo_logo);
+            tvWinner = itemView.findViewById(R.id.tvWinner);
 
         }
     }

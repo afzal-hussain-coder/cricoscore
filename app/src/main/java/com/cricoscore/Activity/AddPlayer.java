@@ -69,6 +69,7 @@ public class AddPlayer extends AppCompatActivity {
     String selectPlayerType = "";
     String selectPlayerRole = "";
     String selectTeam = "";
+    int teamId=0;
 
     private SearchPlayerAdapter userAdapter;
     private List<String> userList;
@@ -90,6 +91,11 @@ public class AddPlayer extends AppCompatActivity {
 
         toolbarBinding.toolbartext.setText(getResources().getString(R.string.addPlayer));
         toolbarBinding.toolbar.setNavigationOnClickListener(v -> finish());
+
+        if (getIntent() != null) {
+            teamId = getIntent().getIntExtra("ID",0);
+            Toaster.customToast(teamId+"//");
+        }
 
 
         initView();
@@ -279,6 +285,7 @@ public class AddPlayer extends AppCompatActivity {
         });
 
 
+
         activityAddPlayerBinding.mbSubmit.setOnClickListener(v -> {
 
             if (activityAddPlayerBinding.editTextPName.getText().toString().isEmpty() ||
@@ -315,12 +322,12 @@ public class AddPlayer extends AppCompatActivity {
 
                 if (Global.isOnline(mContext)) {
                     getAddPlayer(activityAddPlayerBinding.editTextPName.getText().toString(),
-                            activityAddPlayerBinding.editTextPMobile.getText().toString(),image_uri);
+                            activityAddPlayerBinding.editTextPMobile.getText().toString(),teamId,image_uri);
                 } else {
                     Global.showDialog(mActivity);
                 }
 
-                image_uri = null;
+                //image_uri = null;
             }
 
         });
@@ -334,7 +341,7 @@ public class AddPlayer extends AppCompatActivity {
     }
 
 
-    public void getAddPlayer(String name, String phoneNumber,Uri playerAvtar) {
+    public void getAddPlayer(String name, String phoneNumber,int teamId,Uri playerAvtar) {
         Global.showLoader(getSupportFragmentManager());
 
         RequestBody requestName = RequestBody.create(MediaType.parse("text/plain"), name);
@@ -357,12 +364,13 @@ public class AddPlayer extends AppCompatActivity {
         }
 
         ApiRequest apiService = RetrofitRequest.getRetrofitInstance().create(ApiRequest.class);
-        Call<ResponseBody> call = apiService.addPayer(SessionManager.getToken(), requestName,requestPhone,bodyLogo);
+        Call<ResponseBody> call = apiService.addPayer(SessionManager.getToken(), requestName,requestPhone,teamId,bodyLogo);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Global.hideLoder();
+
 
                 if (response.isSuccessful() && response.body() != null) {
                     try {
@@ -378,13 +386,24 @@ public class AddPlayer extends AppCompatActivity {
                             }
                         }, 2000); // Delay for 20 seconds
 
+                        image_uri=null;
 
                     } catch (Exception e) {
                         Log.e("Error", "JSON parsing error: " + e.getMessage());
                     }
                 } else {
-                    Log.e("Error", "Response error: " + response.code());
+                    try {
+                        // Extract the error body for non-successful responses
+                        String errorBody = response.errorBody() != null ? response.errorBody().string() : "Unknown error occurred";
+                        JSONObject errorObject = new JSONObject(errorBody); // Parse error body as JSON
+                        String message = errorObject.optString("message", "Unknown error occurred");
+                        Toaster.customToast(message);
+                        Log.e("Error", "Response error: " + response.code() + ", Message: " + message);
+                    } catch (Exception e) {
+                        Log.e("Error", "Error handling response: " + e.getMessage());
+                    }
                 }
+
             }
 
             @Override

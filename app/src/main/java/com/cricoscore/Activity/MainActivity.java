@@ -91,19 +91,23 @@ public class MainActivity extends AppCompatActivity {
                         into(profile_pic);
             }
         });
-        userProfileViewModel.getUserProfileLoader().observe(this, integer -> {
-            if (integer == 0) {
-                Global.showLoader(getSupportFragmentManager());
-            } else {
-                Global.hideLoder();
-            }
-        });
+
+
 
         if (Global.isOnline(mContext)) {
             userProfileViewModel.getUserProfile(SessionManager.getToken());
         } else {
             Global.showDialog(mActivity);
         }
+
+        userProfileViewModel.getUserProfileLoader().observe(this, integer -> {
+           // Toaster.customToast(integer+"/");
+            if (integer == 0) {
+                Global.showLoader(getSupportFragmentManager());
+            } else {
+                Global.hideLoder();
+            }
+        });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -196,7 +200,6 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-
     }
 
     private void initView() {
@@ -232,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout.addTab(tabLayout.newTab().setText("Tournament"));
         tabLayout.addTab(tabLayout.newTab().setText("Match"));
-        tabLayout.addTab(tabLayout.newTab().setText("Live"));
+        //tabLayout.addTab(tabLayout.newTab().setText("Live"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -278,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
         drawerList.add(new Drawer(getString(R.string.home), false, R.drawable.home_black_24dp));
         //drawerList.add(new Drawer(getResources().getString(R.string.my_tournament), false, R.drawable.sports_cricket_black_24dp));
 
-        drawerList.add(new Drawer(getString(R.string.live_scoring), false, R.drawable.sports_cricket_black_24dp));
+       // drawerList.add(new Drawer(getString(R.string.live_scoring), false, R.drawable.sports_cricket_black_24dp));
         drawerList.add(new Drawer(getString(R.string.scorecard), false, R.drawable.sports_cricket_black_24dp));
         drawerList.add(new Drawer(getString(R.string.addTournament), false, R.drawable.sports_cricket_black_24dp));
         //drawerList.add(new Drawer(getString(R.string.ScheduleTournament), false, R.drawable.sports_cricket_black_24dp));
