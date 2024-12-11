@@ -53,7 +53,8 @@ public class Global {
 
 
     //public static String BASE_URL = "http://192.168.1.12:5000";
-    public static final String BASE_URL = "http://cricosocre.selectronicindia.com/";
+   // public static String BASE_URL2 = "http://192.168.1.16:5000";
+    public static String BASE_URL = "http://cricosocre.selectronicindia.com/";
 
             //"http://cricosocre.selectronicindia.com/"; Main Url
 

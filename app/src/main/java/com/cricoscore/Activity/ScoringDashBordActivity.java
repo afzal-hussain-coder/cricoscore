@@ -65,6 +65,10 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     private Button undoButton, btOut, btn57, btnWideBall, btnNoBall, btnLegBye, btnBye;
     private GridLayout scoringGrid;
     ImageView imgBack;
+    int firstInningScore = 0;
+    int firstInningToatlOver = 0;
+    int firstInningTotalWicket = 0;
+    String firstInningTeamName = "";
 
     // Variables to store scores
     private int totalRuns = 0, wickets = 0, overs = 0, balls = 0, actualBall, extraBall;
@@ -563,6 +567,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     }
 
     private void handleBye(int runs) {
+        is_boundry=0;
         lastRun = runs;
         extras = "BYE";
         balls++;
@@ -576,6 +581,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     }
 
     private void handleExtras(String type, int runs) {
+        is_boundry=0;
         lastRun = runs;
         extras = type;
 //        if (type.equalsIgnoreCase("NB")) {
@@ -605,6 +611,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     }
 
     private void handleLegByeRuns(int runs) {
+        is_boundry=0;
         extras = "LB";
         lastRun = runs;
         //lastRun = totalRuns;
@@ -632,7 +639,6 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     private void outType() {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(R.layout.out_type);
-
 
         Button bowled = bottomSheetDialog.findViewById(R.id.bowled);
         Button caught = bottomSheetDialog.findViewById(R.id.caught);
@@ -841,7 +847,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                                 // Extract data
                                 // currentStrikerId=0;
                                 //  currentNonStrikerId=0;
-                              //  extractAndLoadData(dataObject);
+                                //  extractAndLoadData(dataObject);
                             } else {
                                 Log.e("Error", "Data object is null");
                             }
@@ -966,17 +972,13 @@ public class ScoringDashBordActivity extends AppCompatActivity {
             tossInfo.setText(target_msg);
             is_match_completed = dataObject.getInt("is_match_completed");
 
-            //targetRun = dataObject.getJSONObject("first_inning").getInt("total_runs");
-            // targetOver = dataObject.getJSONObject("first_inning").getInt("overs");
+            if(dataObject.getJSONObject("first_inning").length()>0){
+                firstInningScore = dataObject.getJSONObject("first_inning").getInt("total_runs");
+                firstInningToatlOver = dataObject.getJSONObject("first_inning").getInt("overs");
+                firstInningTotalWicket = dataObject.getJSONObject("first_inning").getInt("wickets");
+                firstInningTeamName = dataObject.getJSONObject("first_inning").getString("team_name");
 
-//            "first_inning": {
-//                "team_id": 1,
-//                        "team_name": "Selectronic Team",
-//                        "team_logo": "uploads/teams/team_logo-189-1732087323707.jpg",
-//                        "total_runs": 36,
-//                        "wickets": 0,
-//                        "overs": 2
-//            }
+            }
 
 
             JSONArray bolledArray = dataObject.getJSONArray("balled");
@@ -1001,13 +1003,13 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                 new Handler().postDelayed(() -> {
                     isWicket = "0";
 
-                    if(is_inning_completed !=1 && is_match_completed!=1){
+                    if (is_inning_completed != 1 && is_match_completed != 1) {
                         startActivity(new Intent(mContext, PlayingSquadActivity.class)
                                 .putExtra("ScheduleId", scheduleId)
                                 .putExtra("InningId", inning_id)
                                 .putExtra("TeamId", teamIdBatting)
-                                .putExtra("BowlingTeamId",bowling_team_id)
-                                .putExtra("BattingTeamId",batting_team_id)
+                                .putExtra("BowlingTeamId", bowling_team_id)
+                                .putExtra("BattingTeamId", batting_team_id)
                                 .putExtra("current_striker_id", currentStrikerId)
                                 .putExtra("current_non_striker_id", currentNonStrikerId)
                                 .putExtra("current_bowler_id", currentBowlerId)
@@ -1133,11 +1135,10 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         Log.d("DEBUG", "Balls in current over after loop: " + ballsInCurrentOver);
 
         // Trigger the over completion dialog if the over is finished
-
-        if (is_inning_completed == 1) {
-            inningCompletedDialog(totalRuns, overs, wicket, teamName);
-        } else if (is_match_completed == 1) {
+        if (is_match_completed == 1) {
             endMatchDialog();
+        } else if (is_inning_completed == 1) {
+            inningCompletedDialog(totalRuns, overs, wicket, teamName);
         } else {
             if (current_over_total_ball == 6) {
                 Log.d("DEBUG", "Triggering over completion dialog...");
@@ -1299,8 +1300,8 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                     .putExtra("ScheduleId", scheduleId)
                     .putExtra("InningId", inning_id)
                     .putExtra("TeamId", bowlingTeamId)
-                    .putExtra("BowlingTeamId",bowling_team_id)
-                    .putExtra("BattingTeamId",batting_team_id)
+                    .putExtra("BowlingTeamId", bowling_team_id)
+                    .putExtra("BattingTeamId", batting_team_id)
                     .putExtra("current_striker_id", currentStrikerId)
                     .putExtra("current_non_striker_id", currentNonStrikerId)
                     .putExtra("current_bowler_id", currentBowlerId)
@@ -1358,13 +1359,15 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         tvTeamName.setText("End of innings for " + "" + name);
 
         tvRuns.setText(totalRunss + "");
-        tvOvers.setText(overss + "");
+        tvOvers.setText(overs + "");
         tvWicket.setText(wickett + "");
 
-        //  "bowling_team_id": 2,
-        //      "batting_team_id": 1,
-        //    "schedule_match_id": 13,
-        //    "inning_id": 62,
+        /**
+          "bowling_team_id": 2,
+          "batting_team_id": 1,
+          "schedule_match_id": 13,
+          "inning_id": 62,
+         +*/
 
         Button btnStartNextOver = bottomSheetDialog.findViewById(R.id.btnStartNextOver);
         btnStartNextOver.setOnClickListener(v -> {
@@ -1448,24 +1451,39 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         bottomSheetDialog.setCanceledOnTouchOutside(false);
 
         TextView tvTeamNameWinningHeader = bottomSheetDialog.findViewById(R.id.tvTeamNameWinningHeader);
+        tvTeamNameWinningHeader.setText(target_msg);
         TextView tvLossingTeam = bottomSheetDialog.findViewById(R.id.tvLossingTeam);
-        TextView tvWinningTeamName = bottomSheetDialog.findViewById(R.id.tvWinningTeamName);
-        TextView tvRunLoosingTeam = bottomSheetDialog.findViewById(R.id.tvRunLoosingTeam);
+        tvLossingTeam.setText(firstInningTeamName);
         TextView tvLoosingTeamWicket = bottomSheetDialog.findViewById(R.id.tvLoosingTeamWicket);
+        tvLoosingTeamWicket.setText(firstInningTotalWicket+"");
         TextView tvLoosingTeamOver = bottomSheetDialog.findViewById(R.id.tvLoosingTeamOver);
+        tvLoosingTeamOver.setText(firstInningToatlOver+"");
+        TextView tvRunLoosingTeam = bottomSheetDialog.findViewById(R.id.tvRunLoosingTeam);
+        tvRunLoosingTeam.setText(firstInningScore+"");
+
+        TextView tvWinningTeamName = bottomSheetDialog.findViewById(R.id.tvWinningTeamName);
+        tvWinningTeamName.setText(battingTeamName+"");
         TextView tvWinningTeamRun = bottomSheetDialog.findViewById(R.id.tvWinningTeamRun);
+       tvWinningTeamRun.setText(totalRuns+"");
         TextView tvWinningTeamWicket = bottomSheetDialog.findViewById(R.id.tvWinningTeamWicket);
+       tvWinningTeamWicket.setText(wickets+"");
         TextView tvWinningTeamOver = bottomSheetDialog.findViewById(R.id.tvWinningTeamOver);
+       tvWinningTeamOver.setText(overs+"");
 
 
         Button btnStartNextOver = bottomSheetDialog.findViewById(R.id.btnStartNextOver);
         btnStartNextOver.setOnClickListener(v -> {
 
-            if (Global.isOnline(this)) {
-                updateInning(batting_team_id, bowling_team_id, scheduleId);
-            } else {
-                Global.showDialog(this);
-            }
+            startActivity(new Intent(mContext, ScheduleMatchActivity.class)
+                    .putExtra("FROM", "1"));
+            finish();
+            bottomSheetDialog.dismiss();
+
+//            if (Global.isOnline(this)) {
+//                updateInning(batting_team_id, bowling_team_id, scheduleId);
+//            } else {
+//                Global.showDialog(this);
+//            }
         });
 
         bottomSheetDialog.show();
@@ -1968,7 +1986,6 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         });
 
         bottomSheetDialog.show();
-
 
     }
 

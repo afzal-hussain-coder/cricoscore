@@ -190,7 +190,7 @@ public class PlayingSquadActivity extends AppCompatActivity {
                                     }
                                 });
 
-                                Toaster.customToast(teamId+"/"+battingTeamId);
+                                //Toaster.customToast(teamId+"/"+battingTeamId);
 
 
                                 if(teamId==battingTeamId){

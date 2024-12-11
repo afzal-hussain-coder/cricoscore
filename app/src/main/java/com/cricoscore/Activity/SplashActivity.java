@@ -13,11 +13,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.cricoscore.R;
+import com.cricoscore.Utils.Global;
 import com.cricoscore.Utils.SessionManager;
+import com.cricoscore.Utils.Toaster;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +45,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
         mContext = this;
-
+       //inningCompletedDialog();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // only for gingerbread and newer versions
@@ -148,5 +154,42 @@ public class SplashActivity extends AppCompatActivity {
         };
         Timer timer = new Timer();
         timer.schedule(task, 2000);
+    }
+
+
+    private void inningCompletedDialog() {
+
+        // Create and set up the BottomSheet dialog
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        View bottomSheetView = getLayoutInflater().inflate(R.layout.dialog_testing, null);
+        bottomSheetDialog.setContentView(bottomSheetView);
+
+        EditText editLink = bottomSheetDialog.findViewById(R.id.editLink);
+
+
+        Button btnStartNextOver = bottomSheetDialog.findViewById(R.id.btnStartNextOver);
+
+        btnStartNextOver.setOnClickListener(v -> {
+            String UrL = editLink.getText().toString().trim();
+           // Global.BASE_URL2 ="";
+          //  Global.BASE_URL2= UrL;
+          //  Toaster.customToast(Global.BASE_URL2 );
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                // only for gingerbread and newer versions
+                if (!permission) {
+                    if (checkAndRequestPermissions()) {
+                        // carry on the normal flow, as the case of  permissions  granted.
+                        sendIntent();
+                        permission = true;
+                    }
+                }
+            } else {
+                sendIntent();
+            }
+        });
+
+
+        bottomSheetDialog.show();
     }
 }

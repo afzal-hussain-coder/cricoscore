@@ -44,6 +44,17 @@ public class BattingPlayersResponse {
         private String avatar;
         private int wickets_taken;
         private int runs_scored;
+        private int total_overs;
+
+        public int getIs_over_completed() {
+            return is_over_completed;
+        }
+
+        public void setIs_over_completed(int is_over_completed) {
+            this.is_over_completed = is_over_completed;
+        }
+
+        private int is_over_completed;
 
         public String getIs_out() {
             return is_out;
@@ -96,6 +107,13 @@ public class BattingPlayersResponse {
             if(jsonObject.has("is_out")){
                 try {
                     this.is_out = jsonObject.getString("is_out");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(jsonObject.has("is_over_completed")){
+                try {
+                    this.is_over_completed = jsonObject.getInt("is_over_completed");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

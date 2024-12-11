@@ -25,6 +25,7 @@ public class PlayingsquadAdapter extends RecyclerView.Adapter<PlayingsquadAdapte
     private OnPlayerSelectListener onPlayerSelectListener;
     private CheckBox currentCheckedCheckbox = null;
     private Context mContext;
+    private int selectedPosition = RecyclerView.NO_POSITION;
     int currentBowlerId=0;
 
     public PlayingsquadAdapter(Context mContext,int currentBowlerId, ArrayList<BattingPlayersResponse.Player> playerList, OnPlayerSelectListener onPlayerSelectListener) {
@@ -49,24 +50,46 @@ public class PlayingsquadAdapter extends RecyclerView.Adapter<PlayingsquadAdapte
         holder.tvPlayerName.setText(player.getName());
 
         // Disable selection if the player's ID matches the current bowler ID
-        if (player.getPlayer_id() == currentBowlerId) {
+
+       if (player.getPlayer_id() == currentBowlerId) {
+
+           if(player.getIs_over_completed()==1){
+               //holder.rl.setEnabled(false);
+               holder.tvStatus.setVisibility(View.VISIBLE);
+               holder.tvStatus.setText("Over Limit Exceeded");
+           }
+
+           // holder.tvStatus.setVisibility(View.GONE);
             holder.rl.setEnabled(false);
-            holder.rl.setBackgroundColor(mContext.getResources().getColor(R.color.light_gray)); // Disabled color
+            holder.rl.setBackgroundColor(mContext.getResources().getColor(R.color.light_gray));
+           // holder.rl.setVisibility(View.GONE);// Disabled color
         } else {
+           if(player.getIs_over_completed()==1){
+               //holder.rl.setEnabled(false);
+               holder.tvStatus.setVisibility(View.VISIBLE);
+               holder.tvStatus.setText("Over Limit Exceeded");
+           }
+           // holder.tvStatus.setVisibility(View.GONE);
+           // holder.rl.setVisibility(View.VISIBLE);
             holder.rl.setEnabled(true);
-            holder.rl.setBackgroundColor(mContext.getResources().getColor(R.color.white)); // Default color
+            // Set the background based on the selection
+            if (position == selectedPosition) {
+                holder.rl.setBackgroundColor(mContext.getResources().getColor(R.color.dark_grey)); // Selected color
+            } else {
+                holder.rl.setBackgroundColor(mContext.getResources().getColor(R.color.white)); // Default color
+            }
         }
 
         // Handle itemView click to change the background color and notify the listener
         holder.itemView.setOnClickListener(v -> {
             if (player.getPlayer_id() != currentBowlerId) { // Ensure it's not disabled
-                // Reset background colors of all items
-                for (int i = 0; i < playerList.size(); i++) {
-                    notifyItemChanged(i); // Refresh all items to reset their background
-                }
+                // Update selected position
+                int previousPosition = selectedPosition;
+                selectedPosition = holder.getAdapterPosition();
 
-                // Highlight the selected item
-                holder.rl.setBackgroundColor(mContext.getResources().getColor(R.color.dark_grey)); // Selected color
+                // Notify changes for the old and new selected positions
+                notifyItemChanged(previousPosition);
+                notifyItemChanged(selectedPosition);
 
                 // Notify the listener about the selected player
                 onPlayerSelectListener.onSelect(player);
@@ -97,12 +120,14 @@ public class PlayingsquadAdapter extends RecyclerView.Adapter<PlayingsquadAdapte
         TextView tvPlayerName;
         CircleImageView image;
         RelativeLayout rl;
+        TextView tvStatus;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvPlayerName = itemView.findViewById(R.id.tvPlayerName);
             image = itemView.findViewById(R.id.image);
             this.rl = itemView.findViewById(R.id.rl);
+            this.tvStatus = itemView.findViewById(R.id.tvStatus);
         }
     }
 

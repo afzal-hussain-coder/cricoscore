@@ -77,7 +77,7 @@
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:layout_marginEnd="@dimen/_3sdp"
                                 android:background="@drawable/circle_camera"
-                                android:visibility="visible">
+                                android:visibility="gone">
 
                                 <TextView
                                     android:id="@+id/tvPlayerFirstCount"
@@ -88,6 +88,7 @@
                                     android:text="0"
                                     android:textColor="@color/purple_700"
                                     android:textSize="@dimen/_6sdp"
+                                    android:visibility="gone"
                                     app:fontFamily="@font/opensans_semibold" />
                             </RelativeLayout>
                         </RelativeLayout>
@@ -182,7 +183,7 @@
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:layout_marginEnd="@dimen/_3sdp"
                                 android:background="@drawable/circle_camera"
-                                android:visibility="visible">
+                                android:visibility="gone">
 
                                 <TextView
                                     android:id="@+id/tvPlayerSecondCount"
@@ -191,6 +192,7 @@
                                     android:layout_centerInParent="true"
                                     android:gravity="center_vertical"
                                     android:text="0"
+                                    android:visibility="gone"
                                     android:textColor="@color/purple_700"
                                     android:textSize="@dimen/_6sdp"
                                     app:fontFamily="@font/opensans_semibold" />
