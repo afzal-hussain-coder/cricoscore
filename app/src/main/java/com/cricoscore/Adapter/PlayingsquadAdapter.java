@@ -27,10 +27,12 @@ public class PlayingsquadAdapter extends RecyclerView.Adapter<PlayingsquadAdapte
     private Context mContext;
     private int selectedPosition = RecyclerView.NO_POSITION;
     int currentBowlerId=0;
+    String type="";
 
-    public PlayingsquadAdapter(Context mContext,int currentBowlerId, ArrayList<BattingPlayersResponse.Player> playerList, OnPlayerSelectListener onPlayerSelectListener) {
+    public PlayingsquadAdapter(Context mContext,int currentBowlerId,String type, ArrayList<BattingPlayersResponse.Player> playerList, OnPlayerSelectListener onPlayerSelectListener) {
         this.mContext = mContext;
         this.currentBowlerId = currentBowlerId;
+        this.type = type;
         this.playerList = playerList;
         this.onPlayerSelectListener = onPlayerSelectListener;
 
@@ -63,8 +65,10 @@ public class PlayingsquadAdapter extends RecyclerView.Adapter<PlayingsquadAdapte
             holder.rl.setEnabled(false);
             holder.rl.setBackgroundColor(mContext.getResources().getColor(R.color.light_gray));
            // holder.rl.setVisibility(View.GONE);// Disabled color
-        } else {
-           if(player.getIs_over_completed()==1){
+        }
+       else {
+          // Toaster.customToast(type+"/");
+           if(player.getIs_over_completed()==1  && type.equalsIgnoreCase("Bowler")){
                //holder.rl.setEnabled(false);
                holder.tvStatus.setVisibility(View.VISIBLE);
                holder.tvStatus.setText("Over Limit Exceeded");

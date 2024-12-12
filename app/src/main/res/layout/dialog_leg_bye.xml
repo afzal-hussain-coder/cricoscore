@@ -71,8 +71,8 @@
         android:id="@+id/chkBoundary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Boundary"
-        android:paddingTop="10dp" />
+        android:visibility="gone"
+        android:text="Boundary" />
 
     <!-- OK and Cancel buttons -->
     <LinearLayout

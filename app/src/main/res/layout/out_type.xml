@@ -60,43 +60,130 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:layout_marginTop="@dimen/_10sdp"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioGroup
-                android:id="@+id/rg_roles"
-                android:layout_width="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvLegByeTitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
-                <RadioButton
-                    android:id="@+id/rb_strike"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Strike"
-                    android:textSize="16sp" />
+                android:paddingBottom="10dp"
+                android:text="Who?"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
+                android:fontFamily="@font/opensans_bold" />
 
-                <!-- Non-Strike Option -->
-                <RadioButton
-                    android:id="@+id/rb_non_strike"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcvStrike"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardElevation="8dp"
+                    app:strokeColor="@color/dark_grey"
+                    app:strokeWidth="2dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Non-Strike"
-                    android:textSize="16sp" />
-            </RadioGroup>
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imgStrike"
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_height="@dimen/_100sdp"
+                            android:src="@drawable/profile_avtar"></ImageView>
+
+                        <TextView
+                            android:id="@+id/tvStrikeName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="@font/opensans_semibold"
+                            android:text="Afzal Hussain"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="@font/opensans_semibold"
+                            android:text="Strike"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:textColor="@color/dim_grey"
+                            android:textSize="@dimen/_9sdp" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcvNonStrike"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardElevation="8dp"
+                    app:strokeColor="@color/dark_grey"
+                    app:strokeWidth="2dp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imgNonStrike"
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_height="@dimen/_100sdp"
+                            android:src="@drawable/profile_avtar"></ImageView>
+
+                        <TextView
+                            android:id="@+id/tvNonStrikeName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="@font/opensans_semibold"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Pooja"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="@font/opensans_semibold"
+                            android:text="Non-Strike"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:textColor="@color/dim_grey"
+                            android:textSize="@dimen/_9sdp" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_10sdp"
             android:visibility="visible"
             android:orientation="horizontal">
             <EditText
                 android:id="@+id/etLegByeCustomRuns"
-                android:layout_width="80dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="wrap_content"
                 android:inputType="number"
                 android:hint="Runs"
                 android:visibility="visible"/>

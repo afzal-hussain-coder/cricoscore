@@ -112,6 +112,10 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     int targetOver = 0;
     String target_msg = "";
     int is_match_completed = 0;
+    int selected = 0;
+    int runOutPlayerId = 0;
+    int finalStrikeId;
+    int finalNonStrikeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +131,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         playerNameNonStrike = findViewById(R.id.playerNameNonStrike);
         tvbowlerName = findViewById(R.id.bowlerName);
         imgBack = findViewById(R.id.imgBack);
+
 
         // Set up the OnBackPressedDispatcher
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
@@ -250,7 +255,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
         if (Global.isOnline(this)) {
             dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
-                    filederId);
+                    filederId, runOutPlayerId);
         } else {
             Global.showDialog(this);
         }
@@ -464,6 +469,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         Button btnCancel = bottomSheetDialog.findViewById(R.id.btnCancel);
         Button btnOK = bottomSheetDialog.findViewById(R.id.btnOK);
 
+
         // Set click listeners for predefined buttons
         View.OnClickListener runClickListener = v -> {
             Button btn = (Button) v;
@@ -472,6 +478,10 @@ public class ScoringDashBordActivity extends AppCompatActivity {
             // updateScoreDisplay();
             bottomSheetDialog.dismiss();
         };
+
+        chkBoundary.setOnCheckedChangeListener((buttonView, isChecked) -> {
+
+        });
 
         btnLegBye1.setOnClickListener(runClickListener);
         btnLegBye2.setOnClickListener(runClickListener);
@@ -567,13 +577,13 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     }
 
     private void handleBye(int runs) {
-        is_boundry=0;
+        is_boundry = 0;
         lastRun = runs;
         extras = "BYE";
         balls++;
         if (Global.isOnline(this)) {
             dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
-                    filederId);
+                    filederId, runOutPlayerId);
         } else {
             Global.showDialog(this);
         }
@@ -581,7 +591,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     }
 
     private void handleExtras(String type, int runs) {
-        is_boundry=0;
+        is_boundry = 0;
         lastRun = runs;
         extras = type;
 //        if (type.equalsIgnoreCase("NB")) {
@@ -602,7 +612,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
         if (Global.isOnline(this)) {
             dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
-                    filederId);
+                    filederId, runOutPlayerId);
         } else {
             Global.showDialog(this);
         }
@@ -611,7 +621,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     }
 
     private void handleLegByeRuns(int runs) {
-        is_boundry=0;
+        is_boundry = 0;
         extras = "LB";
         lastRun = runs;
         //lastRun = totalRuns;
@@ -627,7 +637,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
         if (Global.isOnline(this)) {
             dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
-                    filederId);
+                    filederId, runOutPlayerId);
         } else {
             Global.showDialog(this);
         }
@@ -644,23 +654,34 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         Button caught = bottomSheetDialog.findViewById(R.id.caught);
         Button runOut = bottomSheetDialog.findViewById(R.id.runOut);
         Button lbw = bottomSheetDialog.findViewById(R.id.lbw);
-        RadioGroup radioGroupRoles = bottomSheetDialog.findViewById(R.id.rg_roles);
-        RadioButton rb_strike = bottomSheetDialog.findViewById(R.id.rb_strike);
-        RadioButton rb_non_strike = bottomSheetDialog.findViewById(R.id.rb_non_strike);
+
+        MaterialCardView mcvStrike = bottomSheetDialog.findViewById(R.id.mcvStrike);
+        MaterialCardView mcvNonStrike = bottomSheetDialog.findViewById(R.id.mcvNonStrike);
+        TextView tvStrikeName = bottomSheetDialog.findViewById(R.id.tvStrikeName);
+        TextView tvNonStrikeName = bottomSheetDialog.findViewById(R.id.tvNonStrikeName);
+        ImageView imgStrike = bottomSheetDialog.findViewById(R.id.imgStrike);
+        ImageView imgNonStrike = bottomSheetDialog.findViewById(R.id.imgNonStrike);
+
+        tvStrikeName.setText(StrikePlayerName);
+        tvNonStrikeName.setText(nonStrikeName);
 
 
-        rb_strike.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        mcvStrike.setOnClickListener(v -> {
+            runOutPlayerId = currentStrikerId;
 
-            }
+            selected = 0;
+            selected = 1;
+            mcvStrike.setBackgroundColor(ContextCompat.getColor(mContext, R.color.dark_selection));
+            mcvNonStrike.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
         });
 
-        rb_non_strike.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        mcvNonStrike.setOnClickListener(v -> {
+            runOutPlayerId = currentNonStrikerId;
 
-            }
+            selected = 0;
+            selected = 1;
+            mcvStrike.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
+            mcvNonStrike.setBackgroundColor(ContextCompat.getColor(mContext, R.color.dark_selection));
         });
 
         EditText etLegByeCustomRuns = bottomSheetDialog.findViewById(R.id.etLegByeCustomRuns);
@@ -676,7 +697,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
             extras = "";
             if (Global.isOnline(this)) {
                 dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
-                        filederId);
+                        filederId, runOutPlayerId);
             } else {
                 Global.showDialog(this);
             }
@@ -693,7 +714,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
             extras = "";
             if (Global.isOnline(this)) {
                 dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
-                        filederId);
+                        filederId, runOutPlayerId);
             } else {
                 Global.showDialog(this);
             }
@@ -701,9 +722,9 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
         });
         runOut.setOnClickListener(v -> {
+            runOut.setBackgroundColor(ContextCompat.getColor(mContext, R.color.dark_selection));
             lirun.setVisibility(View.VISIBLE);
-            wicketType = "runOut";
-            isWicket = "1";
+
             //bottomSheetDialog.dismiss();
 
 
@@ -717,7 +738,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
             isWicket = "1";
             if (Global.isOnline(this)) {
                 dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
-                        filederId);
+                        filederId, runOutPlayerId);
             } else {
                 Global.showDialog(this);
             }
@@ -727,31 +748,24 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
         });
 
+
         mb_create.setOnClickListener(v -> {
             extras = "";
             balls++;
+            wicketType = "runOut";
+            isWicket = "0";
 
             if (!etLegByeCustomRuns.getText().toString().trim().isEmpty()) {
                 lastRun = Integer.parseInt(etLegByeCustomRuns.getText().toString().trim());
             }
 
-            isWicket = "1";
-            int selectedId = radioGroupRoles.getCheckedRadioButtonId();
-
-            if (selectedId == -1) {
+            if (selected == 0) {
                 // No selection made
-                Toast.makeText(mContext, "Please select a Strike or Non-Strike", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Please select a Striker or Non-Striker", Toast.LENGTH_SHORT).show();
             } else {
-                // Check which RadioButton is selected
-                if (selectedId == R.id.rb_strike) {
-                    strike = "Strike";
-                } else if (selectedId == R.id.rb_non_strike) {
-                    strike = "NonStrike";
-                }
-
                 if (Global.isOnline(this)) {
                     dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
-                            filederId);
+                            filederId, runOutPlayerId);
                 } else {
                     Global.showDialog(this);
                 }
@@ -873,14 +887,14 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     }
 
     private void dataHitBallByBall(int inning_idd, int overss, int balls, int currentBowlerIdd, int current_striker_id, int lastRun,
-                                   int is_boundry, String extras, String wicketss, String wicketType, int fielderId) {
+                                   int is_boundry, String extras, String wicketss, String wicketType, int fielderId, int runOutPlayerId) {
 
         loaderView.showLoader();
         ApiRequest apiService = RetrofitRequest.getRetrofitInstance().create(ApiRequest.class);
         Call<ResponseBody> call = apiService.inningBall(
                 SessionManager.getToken(),
                 new InningBallParamBody(inning_idd, overss, balls, currentBowlerIdd, current_striker_id, lastRun,
-                        String.valueOf(is_boundry), extras, wicketss, wicketType, fielderId)
+                        String.valueOf(is_boundry), extras, wicketss, wicketType, fielderId, runOutPlayerId)
         );
 
         call.enqueue(new Callback<ResponseBody>() {
@@ -900,7 +914,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                         if (status) {
                             JSONObject dataObject = jsonObject.optJSONObject("data");
                             if (dataObject != null) {
-                                // Extract data
+                                // Extract data here ...
                                 extractAndLoadData(dataObject);
                             } else {
                                 Log.e("Error", "Data object is null");
@@ -972,7 +986,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
             tossInfo.setText(target_msg);
             is_match_completed = dataObject.getInt("is_match_completed");
 
-            if(dataObject.getJSONObject("first_inning").length()>0){
+            if (dataObject.getJSONObject("first_inning").length() > 0) {
                 firstInningScore = dataObject.getJSONObject("first_inning").getInt("total_runs");
                 firstInningToatlOver = dataObject.getJSONObject("first_inning").getInt("overs");
                 firstInningTotalWicket = dataObject.getJSONObject("first_inning").getInt("wickets");
@@ -983,7 +997,14 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
             JSONArray bolledArray = dataObject.getJSONArray("balled");
 
-            if (isWicket.equalsIgnoreCase("1")) {
+
+            // wicketType = bolledArray.getJSONObject(bolledArray.length()-1).getString("wicket_type");
+
+//            if(wicketType.equalsIgnoreCase("runOut")){
+//                showRunOutSelectionDialog();
+//            }
+
+            if (isWicket.equalsIgnoreCase("1") || runOutPlayerId > 0) {
                 Toast.makeText(this, "Wicket fallen!", Toast.LENGTH_SHORT).show();
                 balledList.clear();
                 //  updateScoreDisplay();
@@ -1002,7 +1023,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
                 new Handler().postDelayed(() -> {
                     isWicket = "0";
-
+                    runOutPlayerId = 0;
                     if (is_inning_completed != 1 && is_match_completed != 1) {
                         startActivity(new Intent(mContext, PlayingSquadActivity.class)
                                 .putExtra("ScheduleId", scheduleId)
@@ -1328,7 +1349,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         // int fractionalPart = Math.round((overs - wholeOvers) * 10); //
 
         // Update the main scoreboard text
-        scoreTextView.setText(totalRuns + "/" + wickets + "(" + overValue + "/" + over_limit_inning + ")");
+        scoreTextView.setText(totalRuns + "/" + wickets + "(" + overValue + " : " + over_limit_inning + ")");
 
         // Update individual player scores
         player1ScoreView.setText(StrikePlayerName + ": " + player1Score);
@@ -1363,10 +1384,10 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         tvWicket.setText(wickett + "");
 
         /**
-          "bowling_team_id": 2,
-          "batting_team_id": 1,
-          "schedule_match_id": 13,
-          "inning_id": 62,
+         "bowling_team_id": 2,
+         "batting_team_id": 1,
+         "schedule_match_id": 13,
+         "inning_id": 62,
          +*/
 
         Button btnStartNextOver = bottomSheetDialog.findViewById(R.id.btnStartNextOver);
@@ -1455,20 +1476,20 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         TextView tvLossingTeam = bottomSheetDialog.findViewById(R.id.tvLossingTeam);
         tvLossingTeam.setText(firstInningTeamName);
         TextView tvLoosingTeamWicket = bottomSheetDialog.findViewById(R.id.tvLoosingTeamWicket);
-        tvLoosingTeamWicket.setText(firstInningTotalWicket+"");
+        tvLoosingTeamWicket.setText(firstInningTotalWicket + "");
         TextView tvLoosingTeamOver = bottomSheetDialog.findViewById(R.id.tvLoosingTeamOver);
-        tvLoosingTeamOver.setText(firstInningToatlOver+"");
+        tvLoosingTeamOver.setText(firstInningToatlOver + "");
         TextView tvRunLoosingTeam = bottomSheetDialog.findViewById(R.id.tvRunLoosingTeam);
-        tvRunLoosingTeam.setText(firstInningScore+"");
+        tvRunLoosingTeam.setText(firstInningScore + "");
 
         TextView tvWinningTeamName = bottomSheetDialog.findViewById(R.id.tvWinningTeamName);
-        tvWinningTeamName.setText(battingTeamName+"");
+        tvWinningTeamName.setText(battingTeamName + "");
         TextView tvWinningTeamRun = bottomSheetDialog.findViewById(R.id.tvWinningTeamRun);
-       tvWinningTeamRun.setText(totalRuns+"");
+        tvWinningTeamRun.setText(totalRuns + "");
         TextView tvWinningTeamWicket = bottomSheetDialog.findViewById(R.id.tvWinningTeamWicket);
-       tvWinningTeamWicket.setText(wickets+"");
+        tvWinningTeamWicket.setText(wickets + "");
         TextView tvWinningTeamOver = bottomSheetDialog.findViewById(R.id.tvWinningTeamOver);
-       tvWinningTeamOver.setText(overs+"");
+        tvWinningTeamOver.setText(overs + "");
 
 
         Button btnStartNextOver = bottomSheetDialog.findViewById(R.id.btnStartNextOver);
@@ -1987,6 +2008,121 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
         bottomSheetDialog.show();
 
+    }
+
+    private void showRunOutSelectionDialog() {
+
+        if (isDialogOpen) return;  // Prevent reopening if already open
+        isDialogOpen = true;
+
+        // Create and set up the BottomSheet dialog
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        View bottomSheetView = getLayoutInflater().inflate(R.layout.dialog_out_selection, null);
+        bottomSheetDialog.setContentView(bottomSheetView);
+
+        bottomSheetDialog.setCancelable(false);
+        bottomSheetDialog.setCanceledOnTouchOutside(false);
+
+        MaterialCardView mcvStrike = bottomSheetDialog.findViewById(R.id.mcvStrike);
+        MaterialCardView mcvNonStrike = bottomSheetDialog.findViewById(R.id.mcvNonStrike);
+        TextView tvStrikeName = bottomSheetDialog.findViewById(R.id.tvStrikeName);
+        TextView tvNonStrikeName = bottomSheetDialog.findViewById(R.id.tvNonStrikeName);
+        ImageView imgStrike = bottomSheetDialog.findViewById(R.id.imgStrike);
+        ImageView imgNonStrike = bottomSheetDialog.findViewById(R.id.imgNonStrike);
+        EditText etLegByeCustomRuns = bottomSheetDialog.findViewById(R.id.etLegByeCustomRuns);
+
+        tvStrikeName.setText(StrikePlayerName);
+        tvNonStrikeName.setText(nonStrikeName);
+
+
+        mcvStrike.setOnClickListener(v -> {
+            finalStrikeId = currentStrikerId;
+            strike = "Strike";
+            mcvStrike.setBackgroundColor(ContextCompat.getColor(mContext, R.color.dark_selection));
+            mcvNonStrike.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
+        });
+
+        mcvNonStrike.setOnClickListener(v -> {
+            strike = "NonStrike";
+            finalNonStrikeId = currentNonStrikerId;
+            mcvStrike.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
+            mcvNonStrike.setBackgroundColor(ContextCompat.getColor(mContext, R.color.dark_selection));
+        });
+
+        Button btnOK = bottomSheetDialog.findViewById(R.id.btnOK);
+
+
+        btnOK.setOnClickListener(v -> {
+
+            if (finalStrikeId == 0 || finalNonStrikeId == 0) {
+                Toast.makeText(mContext, "Please select a Striker or Non-Striker", Toast.LENGTH_SHORT).show();
+            } else {
+                if (Global.isOnline(this)) {
+                    updateSquadStrike(finalNonStrikeId, finalStrikeId, currentBowlerId, inningNumber, strike);
+                } else {
+                    Global.showDialog(this);
+                }
+            }
+
+
+            bottomSheetDialog.dismiss();
+        });
+
+
+        bottomSheetDialog.show();
+    }
+
+    private void updateSquadStrike(int current_striker_id, int current_non_striker_id, int current_bowler_id, int inning_id, String type) {
+        Global.showLoader(getSupportFragmentManager());
+        ApiRequest apiService = RetrofitRequest.getRetrofitInstance().create(ApiRequest.class);
+        Call<ResponseBody> call = apiService.inningUpdate(
+                SessionManager.getToken(),
+                new PlayingSqudUpdateBody(current_striker_id, current_non_striker_id, current_bowler_id, inning_id, type));
+
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Global.hideLoder();
+                if (response.isSuccessful() && response.body() != null) {
+                    try {
+                        // Parse Response
+                        String responseBodyString = response.body().string();
+                        Log.d("ResponseDetails", responseBodyString);
+
+                        JSONObject jsonObject = new JSONObject(responseBodyString);
+                        boolean status = jsonObject.optBoolean("status", false);
+                        String message = jsonObject.optString("message", "No message");
+
+                        if (status) {
+                            JSONObject dataObject = jsonObject.optJSONObject("data");
+                            if (dataObject != null) {
+                                // Extract data
+                                // currentStrikerId=0;
+                                //  currentNonStrikerId=0;
+                                //  extractAndLoadData(dataObject);
+                            } else {
+                                Log.e("Error", "Data object is null");
+                            }
+                        } else {
+                            Toaster.customToast(message);
+                        }
+                    } catch (Exception e) {
+                        loaderView.hideLoader();
+                        Log.e("Error", "Response parsing failed", e);
+                        Toaster.customToast("Failed to parse response!");
+                    }
+                } else {
+                    Toaster.customToast("Failed to save toss result!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Global.hideLoder();
+                Toaster.customToast("Network error: " + t.getMessage());
+            }
+        });
     }
 
 }

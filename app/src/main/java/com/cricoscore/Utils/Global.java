@@ -53,12 +53,11 @@ public class Global {
 
 
     //public static String BASE_URL = "http://192.168.1.12:5000";
-   // public static String BASE_URL2 = "http://192.168.1.16:5000";
+   // public static String BASE_URL2 = "http://192.168.1.32:5000";
     public static String BASE_URL = "http://cricosocre.selectronicindia.com/";
 
-            //"http://cricosocre.selectronicindia.com/"; Main Url
+    //"http://cricosocre.selectronicindia.com/"; Main Url
 
-    //"http://cricscore.criconetonline.com/";
 
     /*API REQUEST END POINTS*/
     public static final String SIGNUP = "singup";

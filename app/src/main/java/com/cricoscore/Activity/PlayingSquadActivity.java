@@ -175,7 +175,7 @@ public class PlayingSquadActivity extends AppCompatActivity {
                             if (playerList != null && !playerList.isEmpty()) {
                                 // Bind data to RecyclerView
 
-                                playingsquadAdapter =new PlayingsquadAdapter(mContext,current_bowler_id, playerList, player -> {
+                                playingsquadAdapter =new PlayingsquadAdapter(mContext,current_bowler_id,bowlerType, playerList, player -> {
                                     PlayerName = player.getName();
 
 
@@ -240,7 +240,6 @@ public class PlayingSquadActivity extends AppCompatActivity {
         Call<ResponseBody> call = apiService.inningUpdate(
                 SessionManager.getToken(),
                 new PlayingSqudUpdateBody(current_striker_id, current_non_striker_id, current_bowler_id, inning_id,type));
-
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
