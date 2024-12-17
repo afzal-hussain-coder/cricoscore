@@ -36,7 +36,8 @@ public class YourTeamListAdapterHorizontal extends RecyclerView.Adapter<YourTeam
     List<TeamModel> teamIdList;
     int UserId=0;
 
-    public YourTeamListAdapterHorizontal(Context mContext, List<TeamModel> tList, itemClickListener itemClickListener) {
+    public YourTeamListAdapterHorizontal(int userId,Context mContext, List<TeamModel> tList, itemClickListener itemClickListener) {
+        this.UserId = userId;
         this.mContext = mContext;
         this.tList = tList;
         this.itemClickListener = itemClickListener;

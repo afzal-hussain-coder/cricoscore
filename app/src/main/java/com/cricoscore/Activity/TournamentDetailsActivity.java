@@ -424,7 +424,7 @@ public class TournamentDetailsActivity extends AppCompatActivity {
                             }
                         }
 
-                        yourTeamListAdapter = new YourTeamListAdapterHorizontal(mContext, teamModelArrayList, new YourTeamListAdapterHorizontal.itemClickListener() {
+                        yourTeamListAdapter = new YourTeamListAdapterHorizontal(created_by,mContext, teamModelArrayList, new YourTeamListAdapterHorizontal.itemClickListener() {
 
                             @Override
                             public void checkedItem(int pos,  List<TeamModel> teamIdList) {

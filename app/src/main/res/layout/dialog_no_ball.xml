@@ -30,13 +30,35 @@
             android:padding="8dp">
 
             <!-- No Ball Buttons -->
-            <Button android:id="@+id/btn_nb_0" android:text="NB + 0" style="@style/NoBallButtonStyle"/>
-            <Button android:id="@+id/btn_nb_1" android:text="NB + 1" style="@style/NoBallButtonStyle"/>
-            <Button android:id="@+id/btn_nb_2" android:text="NB + 2" style="@style/NoBallButtonStyle"/>
-            <Button android:id="@+id/btn_nb_3" android:text="NB + 3" style="@style/NoBallButtonStyle"/>
-            <Button android:id="@+id/btn_nb_4" android:text="NB + 4" style="@style/NoBallButtonStyle"/>
-            <Button android:id="@+id/btn_nb_5" android:text="NB + 5" style="@style/NoBallButtonStyle"/>
-            <Button android:id="@+id/btn_nb_6" android:text="NB + 6" style="@style/NoBallButtonStyle"/>
+            <Button android:id="@+id/btn_nb_0"
+                android:text="NB + 0"
+                android:layout_margin="8dp"
+                style="@style/NoBallButtonStyle"/>
+
+            <Button android:id="@+id/btn_nb_1"
+                android:text="NB + 1"
+                android:layout_margin="8dp"
+                style="@style/NoBallButtonStyle"/>
+            <Button android:id="@+id/btn_nb_2"
+                android:text="NB + 2"
+                android:layout_margin="8dp"
+                style="@style/NoBallButtonStyle"/>
+            <Button android:id="@+id/btn_nb_3"
+                android:text="NB + 3"
+                android:layout_margin="8dp"
+                style="@style/NoBallButtonStyle"/>
+            <Button android:id="@+id/btn_nb_4"
+                android:layout_margin="8dp"
+                android:text="NB + 4"
+                style="@style/NoBallButtonStyle"/>
+            <Button android:id="@+id/btn_nb_5"
+                android:layout_margin="8dp"
+                android:text="NB + 5"
+                style="@style/NoBallButtonStyle"/>
+            <Button android:id="@+id/btn_nb_6"
+                android:layout_margin="8dp"
+                android:text="NB + 6"
+                style="@style/NoBallButtonStyle"/>
         </GridLayout>
 
     </HorizontalScrollView>

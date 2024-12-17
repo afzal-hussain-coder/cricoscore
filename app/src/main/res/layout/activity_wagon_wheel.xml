@@ -123,6 +123,7 @@
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:fontFamily="@font/opensans_regular"
                     android:minHeight="48dp"
+                    android:visibility="gone"
                     android:text="@string/dont_show_ww_for_dots_ball"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp" />
@@ -134,6 +135,7 @@
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
+                    android:visibility="gone"
                     android:fontFamily="@font/opensans_regular"
                     android:minHeight="48dp"
                     android:text="@string/dont_show_ww_for_1s_2s_3s"

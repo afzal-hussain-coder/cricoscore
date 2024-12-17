@@ -252,6 +252,11 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
         // Handle strike change on odd runs
 
+//        if (SessionManager.getWW1sBoolean() == false) {
+//            startActivity(new Intent(mContext, WagonWheelActivity.class));
+//        }
+
+       startActivity(new Intent(mContext, WagonWheelActivity.class));
 
         if (Global.isOnline(this)) {
             dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
@@ -1353,7 +1358,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
         // Update individual player scores
         player1ScoreView.setText(StrikePlayerName + ": " + player1Score);
-        player2ScoreView.setText(nonStrikeName + ": " + player2Score);
+        player2ScoreView.setText(nonStrikeName + " : " + player2Score);
 
         // Update bowler stats
         bowlerStatsView.setText("Over :" + " " + overValue + "  -  " + "Run : " + " " + totalRuns + " " + "  -  " + "Wicket : " + " " + wickets);

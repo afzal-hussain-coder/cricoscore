@@ -31,26 +31,31 @@
             <Button
                 android:id="@+id/btnLegBye1"
                 style="@style/LegByeButtonStyle"
+                android:layout_margin="@dimen/_5sdp"
                 android:text="1" />
 
             <Button
                 android:id="@+id/btnLegBye2"
                 style="@style/LegByeButtonStyle"
+                android:layout_margin="@dimen/_5sdp"
                 android:text="2" />
 
             <Button
                 android:id="@+id/btnLegBye3"
                 style="@style/LegByeButtonStyle"
+                android:layout_margin="@dimen/_5sdp"
                 android:text="3" />
 
             <Button
                 android:id="@+id/btnLegBye4"
                 style="@style/LegByeButtonStyle"
+                android:layout_margin="@dimen/_5sdp"
                 android:text="4" />
 
             <Button
                 android:id="@+id/btnLegByeCustom"
                 style="@style/LegByeButtonStyle"
+                android:layout_margin="@dimen/_5sdp"
                 android:text="+" />
 
             <EditText

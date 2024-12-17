@@ -16,36 +16,43 @@
         <Button
             android:id="@+id/btn_wd_0"
             style="@style/LegByeButtonStyle"
+            android:layout_margin="8dp"
             android:text="WD + 0" />
 
         <Button
             android:id="@+id/btn_wd_1"
             style="@style/LegByeButtonStyle"
+            android:layout_margin="8dp"
             android:text="WD + 1" />
 
         <Button
             android:id="@+id/btn_wd_2"
             style="@style/LegByeButtonStyle"
+            android:layout_margin="8dp"
             android:text="WD + 2" />
 
         <Button
             android:id="@+id/btn_wd_3"
             style="@style/LegByeButtonStyle"
+            android:layout_margin="8dp"
             android:text="WD + 3" />
 
         <Button
             android:id="@+id/btn_wd_4"
             style="@style/LegByeButtonStyle"
+            android:layout_margin="8dp"
             android:text="WD + 4" />
 
         <Button
             android:id="@+id/btn_wd_5"
             style="@style/LegByeButtonStyle"
+            android:layout_margin="8dp"
             android:text="WD + 5" />
 
         <Button
             android:id="@+id/btn_wd_6"
             style="@style/LegByeButtonStyle"
+            android:layout_margin="8dp"
             android:text="WD + 6" />
     </GridLayout>
 </LinearLayout>

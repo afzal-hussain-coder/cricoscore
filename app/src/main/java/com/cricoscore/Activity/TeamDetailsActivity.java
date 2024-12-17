@@ -96,6 +96,8 @@ public class TeamDetailsActivity extends AppCompatActivity {
                     .putExtra("List",newList));
         });
 
+     //   Toaster.customToast(UserId+"/"+SessionManager.getUserId());
+
         if(UserId==SessionManager.getUserId()){
             activityTeamDetailsBinding.mbAddNewTeam.setVisibility(View.VISIBLE);
         }else{

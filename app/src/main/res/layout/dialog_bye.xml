@@ -31,26 +31,31 @@
             <Button
                 android:id="@+id/btnLegBye1"
                 style="@style/LegByeButtonStyle"
+                android:layout_margin="8dp"
                 android:text="1" />
 
             <Button
                 android:id="@+id/btnLegBye2"
                 style="@style/LegByeButtonStyle"
+                android:layout_margin="8dp"
                 android:text="2" />
 
             <Button
                 android:id="@+id/btnLegBye3"
                 style="@style/LegByeButtonStyle"
+                android:layout_margin="8dp"
                 android:text="3" />
 
             <Button
                 android:id="@+id/btnLegBye4"
                 style="@style/LegByeButtonStyle"
+                android:layout_margin="8dp"
                 android:text="4" />
 
             <Button
                 android:id="@+id/btnLegByeCustom"
                 style="@style/LegByeButtonStyle"
+                android:layout_margin="8dp"
                 android:text="+" />
 
             <EditText
@@ -80,18 +85,21 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="end"
+        android:visibility="visible"
         android:paddingTop="20dp">
 
         <Button
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
             android:text="CANCEL" />
 
         <Button
             android:id="@+id/btnOK"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
             android:text="OK" />
     </LinearLayout>
 </LinearLayout>

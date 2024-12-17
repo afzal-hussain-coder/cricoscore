@@ -80,7 +80,7 @@ public class YourPlayerListActivity extends AppCompatActivity {
 
         if (getIntent() != null) {
             teamId = Integer.parseInt(getIntent().getStringExtra("ID"));
-            Toaster.customToast(teamId+"//");
+            //Toaster.customToast(teamId+"//");
         }
         receivedList = (ArrayList<PlayerModel>) getIntent().getSerializableExtra("List");
 

@@ -36,9 +36,9 @@ public class TabScorcardAdapter extends FragmentStateAdapter {
             case 2:
                 fragment = new CommentaryFragment();
                 break;
-            case 3:
-                fragment = new TeamsFragments();
-                break;
+//            case 3:
+//                fragment = new TeamsFragments();
+//                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + position);
         }
@@ -49,6 +49,6 @@ public class TabScorcardAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 3;
     }
 }

@@ -22,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter score (5 or 7)"
+        android:background="@drawable/green_button_border"
         android:inputType="number"
         android:padding="8dp" />
 
