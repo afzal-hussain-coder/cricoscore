@@ -444,7 +444,6 @@ public class TournamentDetailsActivity extends AppCompatActivity {
                                     Log.d("TeamSelection", "Team 2 selected: " + team2Id);
                                 }
 
-
                             }
 
                             @Override
@@ -494,41 +493,60 @@ public class TournamentDetailsActivity extends AppCompatActivity {
     public void setData(TournamentDetails tournamentDetails) {
         activityTournamentDetailsBinding.tvTournamentType.setText(tournamentDetails.getType());
         activityTournamentDetailsBinding.tvTName.setText(tournamentDetails.getName());
-        Glide.with(mContext).load(Global.BASE_URL + "/" + tournamentDetails.getTournament_logo()).into(activityTournamentDetailsBinding.image);
-        Glide.with(mContext).load(Global.BASE_URL + "/" + tournamentDetails.getTournament_banner()).into(activityTournamentDetailsBinding.imgBanner);
-
-        ZonedDateTime zonedDateTime = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            zonedDateTime = ZonedDateTime.parse(tournamentDetails.getStart_date());
-            // Define the output format
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
-            // Format the date to the desired output
-            formatedStartDate = zonedDateTime.format(formatter);
-
-        }
-        ZonedDateTime zonedDateTimee = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            zonedDateTimee = ZonedDateTime.parse(tournamentDetails.getEnd_date());
-            // Define the output format
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
-            // Format the date to the desired output
-            formatedEndDate = zonedDateTimee.format(formatter);
-
-        }
-
-
-        activityTournamentDetailsBinding.tvdate.setText(formatedStartDate + " " +
-                "to " + formatedEndDate);
-
-
         activityTournamentDetailsBinding.tvBallType.setText(tournamentDetails.getBall_type());
         activityTournamentDetailsBinding.tvFees.setText(tournamentDetails.getFees() + "");
         activityTournamentDetailsBinding.tvPrize.setText(tournamentDetails.getPrize());
         activityTournamentDetailsBinding.tvDiscount.setText(tournamentDetails.getDiscount() + "");
-        activityTournamentDetailsBinding.tvNoOfTeam.setText(tournamentDetails.getNo_of_team());
-        activityTournamentDetailsBinding.tvSponser.setText(tournamentDetails.getSponser());
+        activityTournamentDetailsBinding.tvNoOfTeam.setText(tournamentDetails.getNo_of_team()+"");
+
+        if(tournamentDetails.getSponser().isEmpty()){
+            activityTournamentDetailsBinding.liSpopnsort.setVisibility(View.GONE);
+        }else{
+            activityTournamentDetailsBinding.liSpopnsort.setVisibility(View.VISIBLE);
+            activityTournamentDetailsBinding.tvSponser.setText(tournamentDetails.getSponser());
+        }
+
+
+
+        if(!tournamentDetails.getTournament_logo().isEmpty()){
+            Glide.with(mContext).load(Global.BASE_URL + "/" + tournamentDetails.getTournament_logo()).into(activityTournamentDetailsBinding.image);
+        }
+
+        if(!tournamentDetails.getTournament_banner().isEmpty()){
+            Glide.with(mContext).load(Global.BASE_URL + "/" + tournamentDetails.getTournament_banner()).into(activityTournamentDetailsBinding.imgBanner);
+        }
+
+
+//
+//
+//        ZonedDateTime zonedDateTime = null;
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//            zonedDateTime = ZonedDateTime.parse(tournamentDetails.getStart_date());
+//            // Define the output format
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+//
+//            // Format the date to the desired output
+//            formatedStartDate = zonedDateTime.format(formatter);
+//
+//        }
+//        ZonedDateTime zonedDateTimee = null;
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//            zonedDateTimee = ZonedDateTime.parse(tournamentDetails.getEnd_date());
+//            // Define the output format
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+//
+//            // Format the date to the desired output
+//            formatedEndDate = zonedDateTimee.format(formatter);
+//
+//        }
+
+
+        activityTournamentDetailsBinding.tvdate.setText(tournamentDetails.getStart_date() + " " +
+                "to " + tournamentDetails.getEnd_date());
+
+
+       // Toaster.customToast(tournamentDetails.getBall_type());
+
 
 
 

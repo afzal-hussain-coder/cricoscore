@@ -34,7 +34,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cricoscore"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".Activity.LeaderboardActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".Activity.PlayingSquadActivity"
             android:exported="false"

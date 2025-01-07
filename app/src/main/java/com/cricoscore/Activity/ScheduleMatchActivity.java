@@ -371,11 +371,11 @@ public class ScheduleMatchActivity extends AppCompatActivity {
 //            rb_resumeScoring.setChecked(false);
 //            radioSelectionText = rb_startStreaming.getText().toString().trim();
 //        });
-//        rbViewFullScorecard.setOnCheckedChangeListener((compoundButton, b) -> {
-//            rb_startStreaming.setChecked(false);
-//            rb_resumeScoring.setChecked(false);
-//            radioSelectionText = rbViewFullScorecard.getText().toString().trim();
-//        });
+        rbViewFullScorecard.setOnCheckedChangeListener((compoundButton, b) -> {
+            rb_startStreaming.setChecked(false);
+            rb_resumeScoring.setChecked(false);
+            radioSelectionText = rbViewFullScorecard.getText().toString().trim();
+        });
 
 
         bottomSheetDialog.findViewById(R.id.mb_save).setOnClickListener(v -> {
@@ -385,8 +385,8 @@ public class ScheduleMatchActivity extends AppCompatActivity {
                 finish();
 
             } else {
-                //  startActivity(new Intent(mContext, DashboardLiveScoringActivity.class).putExtra("FROM","SCORECARD"));
-                // finish();
+                startActivity(new Intent(mContext, ScorecardActivity.class).putExtra("FROM","SCORECARD"));
+                finish();
             }
 
 

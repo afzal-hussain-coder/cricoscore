@@ -21,6 +21,16 @@ public class DataModel {
 
     private String Id;
 
+    public int getIdd() {
+        return idd;
+    }
+
+    public void setIdd(int idd) {
+        this.idd = idd;
+    }
+
+    private int idd;
+
     public DataModel(String name) {
         this.name = name;
     }
@@ -28,6 +38,11 @@ public class DataModel {
     public DataModel(String name, String Id) {
         this.name = name;
         this.Id = Id;
+    }
+
+    public DataModel(String name, int Id) {
+        this.name = name;
+        this.idd = Id;
     }
 
 }

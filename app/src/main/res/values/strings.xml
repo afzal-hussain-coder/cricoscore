@@ -190,7 +190,7 @@
     <string name="liveStreamYourLocalMatch">Live Stream Your Local Match</string>
     <string name="streamKey_msg">Sorry, your stream key must be between 3 to 21 characters</string>
     <string name="add_awards_message">Fill awards</string>
-    <string name="tournamentName_msg">Sorry, Your TournamentName must be between 3 to 21 characters</string>
+    <string name="tournamentName_msg">Tournament name should contain at lest 3 characters!</string>
     <string name="location_msg">Location should contain at lest 3 characters</string>
     <string name="groundName_msg">Ground Name should contain at lest 3 characters</string>
     <string name="tFess_msg">Enter Tournament Fees</string>
@@ -209,6 +209,8 @@
     <string name="manual_selection_message">Please select the winning team manually.</string>
     <string name="tap_the_coin_to_flip">Tap the coin to flip</string>
     <string name="playing_squad">Playing Squad</string>
+    <string name="replace_underlined"><u>Replace</u></string>
+    <string name="leaderboard">Cricoscore Leaderboard</string>
 
 
 </resources>

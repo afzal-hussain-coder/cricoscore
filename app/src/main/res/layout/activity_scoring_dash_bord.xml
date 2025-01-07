@@ -27,7 +27,7 @@
             android:foreground="@color/black_semi_transparent"/>
 
         <!-- Top Section with Back Icon and Team Name -->
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -39,6 +39,7 @@
                 android:id="@+id/imgBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:src="@drawable/arrow_back_black_24dp"
                 app:tint="@color/white"
                 android:contentDescription="Back" />
@@ -47,12 +48,22 @@
                 android:id="@+id/tvBattingTeamName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/imgBack"
                 android:layout_marginStart="10dp"
                 android:text="Achintya"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:textSize="18sp" />
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/imgSetting"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:src="@drawable/permissionx_ic_setting"
+                app:tint="@color/white"
+                android:contentDescription="Back" />
+        </RelativeLayout>
 
         <!-- Score Section -->
         <LinearLayout
@@ -129,6 +140,16 @@
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold"
                         android:textColor="#FDBA21" />
+                    <TextView
+                        android:id="@+id/tvStrikerReplace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:textSize="@dimen/_10sdp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textAllCaps="true"
+                        android:textColor="#77DD77"
+                        android:text="@string/replace_underlined"/>
                 </LinearLayout>
 
                 <!-- Batsman 2 -->
@@ -158,6 +179,16 @@
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold"
                         android:textColor="#FFF" />
+                    <TextView
+                        android:id="@+id/tvNonStrikerReplace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:textSize="@dimen/_10sdp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textAllCaps="true"
+                        android:textColor="#77DD77"
+                        android:text="@string/replace_underlined"/>
                 </LinearLayout>
             </LinearLayout>
 

@@ -105,6 +105,53 @@ public class InningBallParamBody {
     String wicket_type;
     int fielder_id;
 
+    public String getCurrentBatsman() {
+        return currentBatsman;
+    }
+
+    public void setCurrentBatsman(String currentBatsman) {
+        this.currentBatsman = currentBatsman;
+    }
+
+    public String getCurrentBowlerName() {
+        return currentBowlerName;
+    }
+
+    public void setCurrentBowlerName(String currentBowlerName) {
+        this.currentBowlerName = currentBowlerName;
+    }
+
+    String currentBatsman="";
+    String currentBowlerName ="";
+
+    public String getShorts_area() {
+        return shorts_area;
+    }
+
+    public void setShorts_area(String shorts_area) {
+        this.shorts_area = shorts_area;
+    }
+
+    public String getShorts_type() {
+        return shorts_type;
+    }
+
+    public void setShorts_type(String shorts_type) {
+        this.shorts_type = shorts_type;
+    }
+
+    public int getRun_out_player_id() {
+        return run_out_player_id;
+    }
+
+    public void setRun_out_player_id(int run_out_player_id) {
+        this.run_out_player_id = run_out_player_id;
+    }
+
+    String shorts_area;
+    String shorts_type;
+
+
     public int getRunOutPlayerId() {
         return run_out_player_id;
     }
@@ -119,7 +166,9 @@ public class InningBallParamBody {
     public InningBallParamBody(int inning_id, int over_number, int ball_number, int bowler_id,
                                int batsman_id, int runs_scored,
                                String is_boundry, String extras, String is_wicket,
-                               String wicket_type, int fielder_id,int run_out_player_id) {
+                               String wicket_type, int fielder_id,int run_out_player_id,
+                               String shorts_area,String shorts_type,
+                               String currentBatsmanName,String currentBowlerName) {
         this.inning_id = inning_id;
         this.over_number = over_number;
         this.ball_number = ball_number;
@@ -132,6 +181,10 @@ public class InningBallParamBody {
         this.wicket_type = wicket_type;
         this.fielder_id = fielder_id;
         this.run_out_player_id = run_out_player_id;
+        this.shorts_area = shorts_area;
+        this.shorts_type = shorts_type;
+        this.currentBatsman = currentBatsmanName;
+        this.currentBowlerName = currentBowlerName;
 
     }
 

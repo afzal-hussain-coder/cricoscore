@@ -3,6 +3,6 @@
     <solid android:color="@android:color/transparent" /> <!-- Transparent background -->
     <stroke
         android:width="2dp"
-        android:color="@color/verified_user_color" /> <!-- Green border -->
+        android:color="@color/purple_700" /> <!-- Green border -->
     <corners android:radius="4dp" /> <!-- Optional: rounded corners -->
 </shape>

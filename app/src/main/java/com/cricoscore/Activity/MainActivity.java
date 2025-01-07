@@ -103,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
         userProfileViewModel.getUserProfileLoader().observe(this, integer -> {
            // Toaster.customToast(integer+"/");
             if (integer == 0) {
-                Global.showLoader(getSupportFragmentManager());
+                Global.hideLoder();
+                //Global.showLoader(getSupportFragmentManager());
             } else {
                 Global.hideLoder();
             }
@@ -279,9 +280,10 @@ public class MainActivity extends AppCompatActivity {
     private void setItemTextImageOnNavigationDrawer() {
         drawerList = new ArrayList<>();
         drawerList.add(new Drawer(getString(R.string.home), false, R.drawable.home_black_24dp));
+
         //drawerList.add(new Drawer(getResources().getString(R.string.my_tournament), false, R.drawable.sports_cricket_black_24dp));
 
-       // drawerList.add(new Drawer(getString(R.string.live_scoring), false, R.drawable.sports_cricket_black_24dp));
+       drawerList.add(new Drawer(getString(R.string.leaderboard), false, R.drawable.sports_cricket_black_24dp));
         drawerList.add(new Drawer(getString(R.string.scorecard), false, R.drawable.sports_cricket_black_24dp));
         drawerList.add(new Drawer(getString(R.string.addTournament), false, R.drawable.sports_cricket_black_24dp));
         //drawerList.add(new Drawer(getString(R.string.ScheduleTournament), false, R.drawable.sports_cricket_black_24dp));
@@ -318,7 +320,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.live_scoring))) {
             startActivity(new Intent(mActivity, StartLiveScoringActivity.class));
-        } else if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.my_tournament))) {
+        }else if(drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.leaderboard))){
+            startActivity(new Intent(mContext,LeaderboardActivity.class));
+        }
+        else if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.my_tournament))) {
            startActivity(new Intent(mContext,MyTournamentActivity.class));
         } else if (drawerList.get(position).getTitle().equalsIgnoreCase(getResources().getString(R.string.scorecard))) {
             startActivity(new Intent(mActivity, ScorecardActivity.class));

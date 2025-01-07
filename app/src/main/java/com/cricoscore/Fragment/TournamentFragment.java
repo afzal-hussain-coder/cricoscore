@@ -98,13 +98,7 @@ public class TournamentFragment extends Fragment {
             }));
         });
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (Global.isOnline(getActivity())) {
-                allTournamentViewModel.getTournamentListResponse(SessionManager.getToken());
-            } else {
-                Global.showDialog(getActivity());
-            }
-        }
+
 
 
         /**
@@ -147,10 +141,20 @@ public class TournamentFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Global.isOnline(getActivity())) {
+                allTournamentViewModel.getTournamentListResponse(SessionManager.getToken());
+            } else {
+                Global.showDialog(getActivity());
+            }
+        }
+
         if (image_uri != null) {
             iv_team_logo.setImageURI(image_uri);
             image_uri = null;
         }
+
+
 
     }
 

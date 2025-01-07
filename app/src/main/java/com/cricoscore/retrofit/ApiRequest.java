@@ -3,7 +3,9 @@ package com.cricoscore.retrofit;
 import com.cricoscore.Activity.PlayingSquadActivity;
 import com.cricoscore.ApiResponse.AddTeamResponse;
 import com.cricoscore.ApiResponse.AddTournamentResponse;
+import com.cricoscore.ApiResponse.CityModel;
 import com.cricoscore.ApiResponse.SignUpResponse;
+import com.cricoscore.ApiResponse.StateModel;
 import com.cricoscore.ApiResponse.TournamentResponse;
 import com.cricoscore.ApiResponse.UserProfileResponse;
 import com.cricoscore.ApiResponse.VerifyEmailResponse;
@@ -230,6 +232,18 @@ public interface ApiRequest {
     @PUT(Global.UPDATE_SCHEDULE_INNING)
     Call<ResponseBody> updateScheduleInning(@Header("token") String token,
                                                 @Body UpdateScheduleInningParamBody updateScheduleInningParamBody);
+
+
+    @GET(Global.GET_STATE)
+    Call<ResponseBody> getState(@Header("token") String token);
+
+    @GET(Global.GET_LEADER_BOARD)
+    Call<ResponseBody> getLeaderBoard(@Header("token") String token);
+
+
+    @GET(Global.GET_CITY+"/{city_id}")
+    Call<ResponseBody> getCity(@Header("token") String token,
+                            @Path("city_id") Integer city_id);
 
 
 }

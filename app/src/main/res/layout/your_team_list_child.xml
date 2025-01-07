@@ -7,7 +7,7 @@
     android:layout_marginTop="@dimen/_2sdp"
     android:layout_marginBottom="@dimen/_2sdp"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="@dimen/_5sdp"
+    app:cardCornerRadius="@dimen/_2sdp"
     app:cardElevation="@dimen/_2sdp"
     app:cardUseCompatPadding="true"
     android:id="@+id/cardView"
@@ -31,9 +31,23 @@
                 android:id="@+id/image"
                 android:layout_width="@dimen/_45sdp"
                 android:layout_height="@dimen/_45sdp"
-                app:civ_border_width="@dimen/_4sdp"
                 android:src="@drawable/placeholder_user"
                 tools:ignore="ImageContrastCheck" />
+
+            <RelativeLayout
+                android:id="@+id/rlChcek"
+                android:layout_width="@dimen/_45sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:visibility="gone"
+                android:background="@drawable/green_circle_background">
+                <ImageView
+                    android:id="@+id/ok_icon"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/done_ok"
+                    android:visibility="visible" />
+            </RelativeLayout>
 
         </RelativeLayout>
 

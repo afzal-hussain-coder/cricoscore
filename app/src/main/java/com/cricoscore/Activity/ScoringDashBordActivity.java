@@ -3,6 +3,7 @@ package com.cricoscore.Activity;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,7 +16,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -24,11 +29,13 @@ import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cricoscore.Adapter.ShortAreaSubCategoryAdapter;
 import com.cricoscore.ParamBody.InningBallParamBody;
 import com.cricoscore.ParamBody.InningNewBody;
 import com.cricoscore.ParamBody.PlayingSqudUpdateBody;
@@ -38,7 +45,9 @@ import com.cricoscore.Utils.CustomLoaderView;
 import com.cricoscore.Utils.Global;
 import com.cricoscore.Utils.SessionManager;
 import com.cricoscore.Utils.Toaster;
+import com.cricoscore.databinding.BottomDialogShowWagonWheelBinding;
 import com.cricoscore.model.Balled;
+import com.cricoscore.model.ShortAreaSubCategoryModel;
 import com.cricoscore.retrofit.ApiRequest;
 import com.cricoscore.retrofit.RetrofitRequest;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -117,6 +126,21 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     int finalStrikeId;
     int finalNonStrikeId;
 
+    private String selectedSegment = "";
+    private String selectedShortArea = "";
+    boolean checkBoxStatus;
+    boolean checkBoxDitBallStatus;
+
+    private boolean isShowDialogForRuns = true; // Global variable for 1, 2, 3 runs
+    private boolean isShowDialogForBoundaries = true;  // Always true for boundaries
+    String short_area="";
+    String short_type ="";
+    ImageView imgSetting;
+    TextView tvStrikerReplace;
+    TextView tvNonStrikerReplace;
+    String strikeChangeMessage="";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,6 +156,9 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         tvbowlerName = findViewById(R.id.bowlerName);
         imgBack = findViewById(R.id.imgBack);
 
+        checkBoxStatus = SessionManager.getWW1sBoolean();
+        checkBoxDitBallStatus = SessionManager.getWWDotBoolean();
+
 
         // Set up the OnBackPressedDispatcher
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
@@ -145,6 +172,10 @@ public class ScoringDashBordActivity extends AppCompatActivity {
             showBottomStopMatchSheetDialog();
         });
         //endMatchDialog();
+        imgSetting = findViewById(R.id.imgSetting);
+        tvStrikerReplace = findViewById(R.id.tvStrikerReplace);
+        tvNonStrikerReplace = findViewById(R.id.tvNonStrikerReplace);
+
         scoreTextView = findViewById(R.id.score);
         player1ScoreView = findViewById(R.id.player1Score);
         player2ScoreView = findViewById(R.id.player2Score);
@@ -204,6 +235,32 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         btnBye.setOnClickListener(v -> {
             showByeDialog();
         });
+
+        imgSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupMenu(v);
+            }
+        });
+
+        tvStrikerReplace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showRunOutSelectionDialog("Strike");
+            }
+        });
+        tvNonStrikerReplace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showRunOutSelectionDialog("NonStrike");
+            }
+        });
+
+        player2ScoreView.setOnClickListener(v -> {
+            showChangeStrikerDialog();
+        });
+
+
     }
 
     @Override
@@ -240,6 +297,43 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
     }
 
+    private void showPopupMenu(View view) {
+        // PopupMenu banayein
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        MenuInflater inflater = popupMenu.getMenuInflater();
+        inflater.inflate(R.menu.menu_settings, popupMenu.getMenu());
+
+        // Item click listener set karein
+        popupMenu.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+//                case R.id.change_batsman:
+//                    return true;
+                case R.id.change_bowler:
+
+                    startActivity(new Intent(this, PlayingSquadActivity.class)
+                            .putExtra("ScheduleId", scheduleId)
+                            .putExtra("InningId", inning_id)
+                            .putExtra("TeamId", bowlingTeamId)
+                            .putExtra("BowlingTeamId", bowling_team_id)
+                            .putExtra("BattingTeamId", batting_team_id)
+                            .putExtra("current_striker_id", currentStrikerId)
+                            .putExtra("current_non_striker_id", currentNonStrikerId)
+                            .putExtra("current_bowler_id", currentBowlerId)
+                            .putExtra("Strike", "")
+                            .putExtra("lastRun", lastRunn)
+                            .putExtra("Bowler", "Bowler"));
+
+                    return true;
+                default:
+                    return false;
+            }
+        });
+
+        // PopupMenu dikhayein
+        popupMenu.show();
+    }
+
+    // Call this method whenever a ball is bowled
     // Call this method whenever a ball is bowled
     private void handleScoringEvent(int runs) {
         // Update total runs
@@ -250,32 +344,57 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
         lastRun = runs;
 
-        // Handle strike change on odd runs
 
-//        if (SessionManager.getWW1sBoolean() == false) {
-//            startActivity(new Intent(mContext, WagonWheelActivity.class));
-//        }
+         boolean shouldShowDialog = false;
 
-       startActivity(new Intent(mContext, WagonWheelActivity.class));
+        // Always show dialog for boundaries (4 and 6)
+        if (runs >= 4) {
+            shouldShowDialog = true;
+      } else if (runs > 0 && runs < 4) {
+           // Show dialog for 1, 2, 3 runs if allowed by the checkbox
+            shouldShowDialog = isShowDialogForRuns;
+       }
 
-        if (Global.isOnline(this)) {
-            dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
-                    filederId, runOutPlayerId);
-        } else {
-            Global.showDialog(this);
-        }
+        // Log to check if dialog should be shown
+        //Log.d("ScoringEvent", "Runs: " + runs + ", ShouldShowDialog: " + shouldShowDialog);
 
-        if (runs % 2 != 0) {
-            changeStrike();
-        }
+        // Show the dialog based on the condition
 
-        if (balls == 6) {
-            balls = 0;
-            overs++;
-        }
+
+       if (shouldShowDialog==true) {
+
+           if (runs % 2 != 0) {
+               changeStrike();
+           }
+
+           if (balls == 6) {
+               balls = 0;
+               overs++;
+           }
+           showWagonWheelDialog();
+        }else{
+           if (Global.isOnline(this)) {
+               dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
+                       filederId, runOutPlayerId,short_area,short_type,StrikePlayerName,bowlerName);
+           } else {
+               Global.showDialog(this);
+           }
+
+           if (runs % 2 != 0) {
+               changeStrike();
+           }
+
+           if (balls == 6) {
+               balls = 0;
+               overs++;
+           }
+       }
+
+        //startActivity(new Intent(mContext,WagonWheelActivity.class));
+
+
 
     }
-
 
     // Show Over Completed Dialog
 
@@ -303,7 +422,6 @@ public class ScoringDashBordActivity extends AppCompatActivity {
             lastRun = Integer.parseInt(buttonText.split("\n")[0]);
 
             // Determine if the run is a boundary (4 or 6)
-
             if (buttonText.contains("4\nFOUR")) {
                 is_boundry = 1; // It's a boundary
                 lastRun = 4;
@@ -314,14 +432,14 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                 is_boundry = 0; // Not a boundary
             }
 
+            // Log to check the run value
+            Log.d("ScoreButtonClick", "LastRun: " + lastRun + ", IsBoundary: " + is_boundry);
+
             // Call the scoring event handler
             handleScoringEvent(lastRun); // This method updates balls, overs, and runs.
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-
-        // Update the score display
-        //  updateScoreDisplay();
     }
 
     /*...Update Squar when strike will be chnage*/
@@ -588,7 +706,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         balls++;
         if (Global.isOnline(this)) {
             dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
-                    filederId, runOutPlayerId);
+                    filederId, runOutPlayerId,short_area,short_type,StrikePlayerName,bowlerName);
         } else {
             Global.showDialog(this);
         }
@@ -617,7 +735,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
         if (Global.isOnline(this)) {
             dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
-                    filederId, runOutPlayerId);
+                    filederId, runOutPlayerId,short_area,short_type,StrikePlayerName,bowlerName);
         } else {
             Global.showDialog(this);
         }
@@ -642,7 +760,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
         if (Global.isOnline(this)) {
             dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
-                    filederId, runOutPlayerId);
+                    filederId, runOutPlayerId,short_area,short_type,StrikePlayerName,bowlerName);
         } else {
             Global.showDialog(this);
         }
@@ -702,7 +820,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
             extras = "";
             if (Global.isOnline(this)) {
                 dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
-                        filederId, runOutPlayerId);
+                        filederId, runOutPlayerId,short_area,short_type,StrikePlayerName,bowlerName);
             } else {
                 Global.showDialog(this);
             }
@@ -719,7 +837,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
             extras = "";
             if (Global.isOnline(this)) {
                 dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
-                        filederId, runOutPlayerId);
+                        filederId, runOutPlayerId,short_area,short_type,StrikePlayerName,bowlerName);
             } else {
                 Global.showDialog(this);
             }
@@ -743,7 +861,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
             isWicket = "1";
             if (Global.isOnline(this)) {
                 dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
-                        filederId, runOutPlayerId);
+                        filederId, runOutPlayerId,short_area,short_type,StrikePlayerName,bowlerName);
             } else {
                 Global.showDialog(this);
             }
@@ -770,7 +888,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
             } else {
                 if (Global.isOnline(this)) {
                     dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
-                            filederId, runOutPlayerId);
+                            filederId, runOutPlayerId,short_area,short_type,StrikePlayerName,bowlerName);
                 } else {
                     Global.showDialog(this);
                 }
@@ -863,6 +981,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                         if (status) {
                             JSONObject dataObject = jsonObject.optJSONObject("data");
                             if (dataObject != null) {
+
                                 // Extract data
                                 // currentStrikerId=0;
                                 //  currentNonStrikerId=0;
@@ -892,14 +1011,15 @@ public class ScoringDashBordActivity extends AppCompatActivity {
     }
 
     private void dataHitBallByBall(int inning_idd, int overss, int balls, int currentBowlerIdd, int current_striker_id, int lastRun,
-                                   int is_boundry, String extras, String wicketss, String wicketType, int fielderId, int runOutPlayerId) {
+                                   int is_boundry, String extras, String wicketss, String wicketType, int fielderId,
+                                   int runOutPlayerId,String short_area,String short_type,String currentStrikerName,String currentBowlerName) {
 
         loaderView.showLoader();
         ApiRequest apiService = RetrofitRequest.getRetrofitInstance().create(ApiRequest.class);
         Call<ResponseBody> call = apiService.inningBall(
                 SessionManager.getToken(),
                 new InningBallParamBody(inning_idd, overss, balls, currentBowlerIdd, current_striker_id, lastRun,
-                        String.valueOf(is_boundry), extras, wicketss, wicketType, fielderId, runOutPlayerId)
+                        String.valueOf(is_boundry), extras, wicketss, wicketType, fielderId, runOutPlayerId,short_area,short_type,currentStrikerName,currentBowlerName)
         );
 
         call.enqueue(new Callback<ResponseBody>() {
@@ -1951,7 +2071,6 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                 tvRain.setTextSize(14);
             }
 
-
             iv_drinks.setColorFilter(ContextCompat.getColor(mContext, R.color.dark_grey));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 tvDrinks.setTextColor(mContext.getColor(R.color.dark_grey));
@@ -2015,10 +2134,183 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
     }
 
-    private void showRunOutSelectionDialog() {
+    // Method to display the Wagon Wheel dialog
+    private void showWagonWheelDialog() {
 
-        if (isDialogOpen) return;  // Prevent reopening if already open
-        isDialogOpen = true;
+
+
+        // Initialize the ViewBinding for the BottomSheet layout
+        BottomDialogShowWagonWheelBinding bottomSheetBinding =
+                BottomDialogShowWagonWheelBinding.inflate(getLayoutInflater());
+
+        // Create the BottomSheetDialog and set the content view using ViewBinding
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this, R.style.BottomSheetDialogTheme);
+        bottomSheetDialog.setContentView(bottomSheetBinding.getRoot());
+
+        // Adjust the dialog appearance
+        if (bottomSheetDialog.getWindow() != null)
+            bottomSheetDialog.getWindow().setDimAmount(0);
+        bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
+
+
+        bottomSheetDialog.setCancelable(false);
+
+        // Wagon Wheel segment click listener
+        bottomSheetBinding.wagonWheel.setOnSegmentClickListener(segmentText -> {
+
+            switch (segmentText) {
+                case "Deep\n Mid Wicket":
+                    updateShortAreaRecyclerView(
+                            bottomSheetBinding, Global.getMidWicketSubShortArea(mContext)
+                    );
+                    break;
+                case "Long On":
+                    updateShortAreaRecyclerView(
+                            bottomSheetBinding, Global.getLongOnSubShortArea(mContext)
+                    );
+                    break;
+                case "Long Off":
+                    updateShortAreaRecyclerView(
+                            bottomSheetBinding, Global.getLongOffSubShortArea(mContext)
+                    );
+                    break;
+                case "Deep Cover":
+                    updateShortAreaRecyclerView(
+                            bottomSheetBinding,
+                            Global.getDeepCoverSubShortArea(mContext)
+                    );
+                    break;
+                case "Deep Point":
+                    updateShortAreaRecyclerView(
+                            bottomSheetBinding, Global.getDeepPointSubShortArea(mContext)
+                    );
+                    break;
+                case "Third Man":
+                    updateShortAreaRecyclerView(
+                            bottomSheetBinding,
+                            Global.getThirdManSubShortArea(mContext)
+                    );
+                    break;
+                case "Deep\n Fine Leg":
+                    updateShortAreaRecyclerView(
+                            bottomSheetBinding,
+                            Global.getDeepFineLegSubShortArea(mContext)
+                    );
+                    break;
+                case "Deep\n Square Leg":
+                    updateShortAreaRecyclerView(
+                            bottomSheetBinding,
+                            Global.getDeepSquareLegSubShortArea(mContext)
+                    );
+                    break;
+            }
+
+            if (segmentText.contains("\n")) {
+                segmentText = segmentText.replace("\n", "");
+            }
+            selectedSegment = segmentText;
+            bottomSheetBinding.tvShortArea.setText(segmentText);
+        });
+
+        // Click listeners for the dialog buttons
+        bottomSheetBinding.tvNonOfAbove.setOnClickListener(view -> {
+            bottomSheetBinding.rlButtonGroup.setVisibility(View.GONE);
+            Toaster.customToast(selectedSegment);
+            bottomSheetDialog.dismiss();
+        });
+
+        bottomSheetBinding.mbSave.setOnClickListener(view -> {
+
+           //Toaster.customToast(selectedSegment + "  " + selectedShortArea);
+
+            isShowDialogForRuns = bottomSheetBinding.cbDontShowWWFor1s.isChecked();
+
+
+            short_area =selectedSegment;
+            short_type = selectedShortArea;
+
+            if (Global.isOnline(this)) {
+                dataHitBallByBall(inning_id, overs, balls, currentBowlerId, currentStrikerId, lastRun, is_boundry, extras, isWicket, wicketType,
+                        filederId, runOutPlayerId,short_area,short_type,StrikePlayerName,bowlerName);
+            } else {
+                Global.showDialog(this);
+            }
+
+            short_type ="";
+            short_area ="";
+
+            Log.d("Checkbox", "isShowDialogForRuns updated: " + isShowDialogForRuns);
+
+            bottomSheetDialog.dismiss();
+        });
+
+
+        bottomSheetBinding.mbCancel.setOnClickListener(view -> bottomSheetDialog.dismiss());
+
+        // Checkbox to enable/disable dialog for 1, 2, 3 runs
+        bottomSheetBinding.cbDontShowWWFor1s.setChecked(isShowDialogForRuns); // Set initial state from global variable
+
+        bottomSheetBinding.cbDontShowWWFor1s.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // Update the checkbox state live
+            isShowDialogForRuns = isChecked;
+            Log.d("Checkbox", "isShowDialogForRuns changed to: " + isChecked);
+        });
+
+        // Show the dialog
+        bottomSheetDialog.show();
+    }
+
+    // Helper method to update RecyclerView
+    private void updateShortAreaRecyclerView(BottomDialogShowWagonWheelBinding binding, ArrayList<ShortAreaSubCategoryModel> subShortAreas) {
+        // Make liShortAreaDetails visible
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                binding.liWagonWheel.setVisibility(View.GONE);
+
+                TranslateAnimation slideIn = new TranslateAnimation(
+                        Animation.RELATIVE_TO_SELF, -1.0f, // Start from left (-1.0f)
+                        Animation.RELATIVE_TO_SELF, 0.0f, // End at original position (0.0f)
+                        Animation.RELATIVE_TO_SELF, 0.0f, // Keep vertical position fixed
+                        Animation.RELATIVE_TO_SELF, 0.0f  // Keep vertical position fixed
+                );
+                slideIn.setDuration(500); // Slide duration in milliseconds
+                slideIn.setInterpolator(new DecelerateInterpolator()); // Optional smooth effect
+                binding.liShortAreaDetails.startAnimation(slideIn);
+
+                binding.liShortAreaDetails.setVisibility(View.VISIBLE);
+            }
+        },500);
+
+
+        // Apply left-to-right slide-in animation
+
+
+        // Set up the RecyclerView with a GridLayoutManager
+        binding.rcvSubCategoryShortArea.setLayoutManager(new GridLayoutManager(mContext, 3));
+        binding.rcvSubCategoryShortArea.setHasFixedSize(true);
+
+        // Set the adapter with the subShortAreas list
+        ShortAreaSubCategoryAdapter adapter = new ShortAreaSubCategoryAdapter(mContext, subShortAreas, value -> {
+            selectedShortArea = value;
+            // Show the button group when a selection is made
+            binding.rlButtonGroup.setVisibility(View.VISIBLE);
+        });
+
+        // Set the adapter to the RecyclerView
+        binding.rcvSubCategoryShortArea.setAdapter(adapter);
+
+        // If you want to make sure the RecyclerView fits perfectly into the layout without needing scrolling
+        // Ensure the RecyclerView's layout takes up the available space
+      //  binding.rcvSubCategoryShortArea.setVisibility(View.VISIBLE); // Make RecyclerView visible
+    }
+
+
+    // Helper method to map List<String> to ArrayList<ShortAreaSubCategoryModel>
+
+
+    private void showRunOutSelectionDialog(String type) {
 
         // Create and set up the BottomSheet dialog
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
@@ -2036,8 +2328,18 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         ImageView imgNonStrike = bottomSheetDialog.findViewById(R.id.imgNonStrike);
         EditText etLegByeCustomRuns = bottomSheetDialog.findViewById(R.id.etLegByeCustomRuns);
 
+
+
         tvStrikeName.setText(StrikePlayerName);
         tvNonStrikeName.setText(nonStrikeName);
+
+        if(type.equalsIgnoreCase("Strike")){
+            strike = "Strike";
+            mcvStrike.setBackgroundColor(ContextCompat.getColor(mContext, R.color.dark_selection));
+        }else if(type.equalsIgnoreCase("NonStrike")){
+            strike = "NonStrike";
+            mcvNonStrike.setBackgroundColor(ContextCompat.getColor(mContext, R.color.dark_selection));
+        }
 
 
         mcvStrike.setOnClickListener(v -> {
@@ -2055,22 +2357,35 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         });
 
         Button btnOK = bottomSheetDialog.findViewById(R.id.btnOK);
+        Button btnCancel = bottomSheetDialog.findViewById(R.id.btnCancel);
 
 
         btnOK.setOnClickListener(v -> {
 
-            if (finalStrikeId == 0 || finalNonStrikeId == 0) {
-                Toast.makeText(mContext, "Please select a Striker or Non-Striker", Toast.LENGTH_SHORT).show();
-            } else {
-                if (Global.isOnline(this)) {
-                    updateSquadStrike(finalNonStrikeId, finalStrikeId, currentBowlerId, inningNumber, strike);
-                } else {
-                    Global.showDialog(this);
-                }
+
+            if (is_inning_completed != 1 && is_match_completed != 1) {
+                startActivity(new Intent(mContext, PlayingSquadActivity.class)
+                        .putExtra("ScheduleId", scheduleId)
+                        .putExtra("InningId", inning_id)
+                        .putExtra("TeamId", teamIdBatting)
+                        .putExtra("BowlingTeamId", bowling_team_id)
+                        .putExtra("BattingTeamId", batting_team_id)
+                        .putExtra("current_striker_id", currentStrikerId)
+                        .putExtra("current_non_striker_id", currentNonStrikerId)
+                        .putExtra("current_bowler_id", currentBowlerId)
+                        .putExtra("Strike", strike)
+                        .putExtra("lastRun", lastRunn)
+                        .putExtra("Bowler", ""));
             }
 
-
             bottomSheetDialog.dismiss();
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialog.dismiss();
+            }
         });
 
 
@@ -2093,7 +2408,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
                     try {
                         // Parse Response
                         String responseBodyString = response.body().string();
-                        Log.d("ResponseDetails", responseBodyString);
+                        Log.d("ResponseStrikerChange", responseBodyString);
 
                         JSONObject jsonObject = new JSONObject(responseBodyString);
                         boolean status = jsonObject.optBoolean("status", false);
@@ -2129,5 +2444,125 @@ public class ScoringDashBordActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void updateSquadChnage(int current_striker_id, int current_non_striker_id, int current_bowler_id, int inning_id) {
+        loaderView.showLoader();
+        ApiRequest apiService = RetrofitRequest.getRetrofitInstance().create(ApiRequest.class);
+        Call<ResponseBody> call = apiService.inningUpdate(
+                SessionManager.getToken(),
+                new PlayingSqudUpdateBody(current_striker_id, current_non_striker_id, current_bowler_id, inning_id, strike));
+
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                loaderView.hideLoader();
+                if (response.isSuccessful() && response.body() != null) {
+                    try {
+                        // Parse Response
+                        String responseBodyString = response.body().string();
+                        Log.d("ResponseDetails", responseBodyString);
+
+                        JSONObject jsonObject = new JSONObject(responseBodyString);
+                        boolean status = jsonObject.optBoolean("status", false);
+                        String message = jsonObject.optString("message", "No message");
+
+                        if (status) {
+                            JSONObject dataObject = jsonObject.optJSONObject("data");
+                            if (dataObject != null) {
+
+                                if (Global.isOnline(mContext)) {
+                                    getInningDetails(inningNumber);
+                                } else {
+                                    Global.showDialog(mActivity);
+                                }
+
+                                // Extract data
+                                // currentStrikerId=0;
+                                //  currentNonStrikerId=0;
+                                //  extractAndLoadData(dataObject);
+                            } else {
+                                Log.e("Error", "Data object is null");
+                            }
+                        } else {
+                            Toaster.customToast(message);
+                        }
+                    } catch (Exception e) {
+                        loaderView.hideLoader();
+                        Log.e("Error", "Response parsing failed", e);
+                        Toaster.customToast("Failed to parse response!");
+                    }
+                } else {
+                    Toaster.customToast("Failed to process response!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                loaderView.hideLoader();
+                Toaster.customToast("Network error: " + t.getMessage());
+            }
+        });
+    }
+
+
+    private void showChangeStrikerDialog() {
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(R.layout.dialog_change_striker);
+
+        CheckBox cbDeclared = bottomSheetDialog.findViewById(R.id.cbDeclared);
+        CheckBox cbShort = bottomSheetDialog.findViewById(R.id.cbShort);
+
+        TextView tvNotNow = bottomSheetDialog.findViewById(R.id.tvNotNow);
+        TextView tvYesSure = bottomSheetDialog.findViewById(R.id.tvYesSure);
+
+
+        cbDeclared.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked){
+                cbShort.setChecked(false);
+                strikeChangeMessage = cbDeclared.getText().toString();
+
+               // Toaster.customToast(strikeChangeMessage);
+            }
+        });
+        cbShort.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked){
+                cbDeclared.setChecked(false);
+                strikeChangeMessage = cbShort.getText().toString();
+              //  Toaster.customToast(strikeChangeMessage);
+            }
+        });
+
+
+        tvNotNow.setOnClickListener(v -> bottomSheetDialog.dismiss());
+
+        tvYesSure.setOnClickListener(v -> {
+
+            if (Global.isOnline(this)) {
+                updateSquadChnage(currentNonStrikerId, currentStrikerId, currentBowlerId, inningNumber);
+            } else {
+                Global.showDialog(this);
+            }
+
+            bottomSheetDialog.dismiss();
+
+//            if(strikeChangeMessage.isEmpty()){
+//                Toaster.customToast("Tell the players what happened in the last ball");
+//            }else{
+//                if (Global.isOnline(this)) {
+//                    updateSquadChnage(currentNonStrikerId, currentStrikerId, currentBowlerId, inningNumber);
+//                } else {
+//                    Global.showDialog(this);
+//                }
+//
+//                bottomSheetDialog.dismiss();
+//            }
+        });
+
+
+        bottomSheetDialog.show();
+    }
+
+
 
 }

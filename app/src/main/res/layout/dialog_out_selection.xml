@@ -4,18 +4,19 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tvLegByeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
-        android:text="Who?"
-        android:textColor="@color/black"
+        android:layout_margin="@dimen/_10sdp"
+        android:text="Whom do you want to change?"
+        android:visibility="visible"
+        android:textColor="@color/light_red"
         android:textSize="@dimen/_12sdp"
-        android:textStyle="bold" />
+       android:fontFamily="@font/opensans_semibold" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -122,26 +123,30 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:inputType="number"
         android:hint="Enter Runs"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 
     <!-- OK and Cancel buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:orientation="horizontal"
-        android:paddingTop="20dp">
+        android:weightSum="2"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnCancel"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:background="@color/light_sky"
+            android:visibility="visible"
             android:text="CANCEL" />
 
         <Button
             android:id="@+id/btnOK"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@color/dark_selection"
             android:text="OK"

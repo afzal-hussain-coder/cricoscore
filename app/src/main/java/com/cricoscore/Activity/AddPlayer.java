@@ -94,7 +94,7 @@ public class AddPlayer extends AppCompatActivity {
 
         if (getIntent() != null) {
             teamId = getIntent().getIntExtra("ID",0);
-            Toaster.customToast(teamId+"//");
+           // Toaster.customToast(teamId+"//");
         }
 
 

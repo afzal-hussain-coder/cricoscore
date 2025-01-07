@@ -20,7 +20,9 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cricoscore.Activity.DashboardLiveScoringActivity;
 import com.cricoscore.Activity.ScheduleedMatchDetaislUpdateActivity;
+import com.cricoscore.Activity.ScorecardActivity;
 import com.cricoscore.Activity.ScoringDashBordActivity;
 import com.cricoscore.Activity.StartInningActivity;
 import com.cricoscore.Activity.YourMatchTeamListActivity;
@@ -37,6 +39,7 @@ import com.cricoscore.retrofit.ApiRequest;
 import com.cricoscore.retrofit.RetrofitRequest;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.color.utilities.Score;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
@@ -348,11 +351,11 @@ public class MatchFragment extends Fragment {
 //            rb_resumeScoring.setChecked(false);
 //            radioSelectionText = rb_startStreaming.getText().toString().trim();
 //        });
-//        rbViewFullScorecard.setOnCheckedChangeListener((compoundButton, b) -> {
-//            rb_startStreaming.setChecked(false);
-//            rb_resumeScoring.setChecked(false);
-//            radioSelectionText = rbViewFullScorecard.getText().toString().trim();
-//        });
+        rbViewFullScorecard.setOnCheckedChangeListener((compoundButton, b) -> {
+            rb_startStreaming.setChecked(false);
+            rb_resumeScoring.setChecked(false);
+            radioSelectionText = rbViewFullScorecard.getText().toString().trim();
+        });
 
 
         bottomSheetDialog.findViewById(R.id.mb_save).setOnClickListener(v -> {
@@ -361,9 +364,9 @@ public class MatchFragment extends Fragment {
                 startActivity(new Intent(getContext(), ScoringDashBordActivity.class).putExtra("inning_id", inning_id));
                 requireActivity().finish();
 
-            } else {
-                //  startActivity(new Intent(mContext, DashboardLiveScoringActivity.class).putExtra("FROM","SCORECARD"));
-                // finish();
+            } else if(radioSelectionText.equalsIgnoreCase(getContext().getResources().getString(R.string.view_full_scorecard))) {
+                  startActivity(new Intent(getContext(), ScorecardActivity.class).putExtra("FROM","SCORECARD"));
+                 requireActivity().finish();
             }
 
 
