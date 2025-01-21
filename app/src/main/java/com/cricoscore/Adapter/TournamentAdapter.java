@@ -51,7 +51,7 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.My
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
 
         Tournament _tournamentdata = tList.get(position);
-        holder.tvTName.setText(_tournamentdata.getName());
+        holder.tvTName.setText(Global.capitalizeFirstLatterOfString(_tournamentdata.getName()));
         holder.tvtLocation.setText(_tournamentdata.getLocation());
 
 

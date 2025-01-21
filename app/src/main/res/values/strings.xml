@@ -211,6 +211,7 @@
     <string name="playing_squad">Playing Squad</string>
     <string name="replace_underlined"><u>Replace</u></string>
     <string name="leaderboard">Cricoscore Leaderboard</string>
+    <string name="info">Team Information</string>
 
 
 </resources>

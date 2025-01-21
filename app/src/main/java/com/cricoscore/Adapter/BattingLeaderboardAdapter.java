@@ -41,7 +41,7 @@ public class BattingLeaderboardAdapter extends RecyclerView.Adapter<BattingLeade
 
         holder.tvPoints.setText(position + 1 + "");
 
-        holder.tvPlayerName.setText(item.getName());
+        holder.tvPlayerName.setText(Global.capitalizeFirstLatterOfString(item.getName()));
         holder.tvInningCount.setText(item.getTotal_inning() + "");
         holder.tvSrCount.setText(item.getStrike_rate() + "");
         holder.tvRunsCount.setText(item.getTotal_runs() + "");

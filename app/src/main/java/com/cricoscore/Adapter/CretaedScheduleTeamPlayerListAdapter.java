@@ -52,7 +52,7 @@ public class CretaedScheduleTeamPlayerListAdapter extends RecyclerView.Adapter<C
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         PlayerModel tournament = tList.get(position);
-        holder.tvTName.setText(tournament.getName());
+        holder.tvTName.setText(Global.capitalizeFirstLatterOfString(tournament.getName()));
 
         if (tournament.getAvatar().isEmpty()) {
             Glide.with(mContext).load(R.drawable.placeholder_user).into(holder.image);

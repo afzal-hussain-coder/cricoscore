@@ -87,7 +87,6 @@ public class BowlingFragment extends Fragment {
                             for (int i = 0; i < jsonArrayBatting.length(); i++) {
                                 battingList.add(new BowlingLeaderboatrdModel(jsonArrayBatting.getJSONObject(i)));
                             }
-
                         }
 
                         bowlingLeaderboardAdapter = new BowlingLeaderboardAdapter(getActivity(),battingList);

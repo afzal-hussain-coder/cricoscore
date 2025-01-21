@@ -48,8 +48,8 @@ public class ScheduleMatchAdapter extends RecyclerView.Adapter<ScheduleMatchAdap
         holder.itemView.setEnabled(true);
 
         // Bind data to views
-        holder.tvTeamName.setText(tournament.getTeamAInfo().getName());
-        holder.tvTName_teamTwo.setText(tournament.getTeamBInfo().getName());
+        holder.tvTeamName.setText(Global.capitalizeFirstLatterOfString(tournament.getTeamAInfo().getName()));
+        holder.tvTName_teamTwo.setText(Global.capitalizeFirstLatterOfString(tournament.getTeamBInfo().getName()));
 
         Glide.with(mContext)
                 .load(Global.BASE_URL + "/" + tournament.getTeamAInfo().getTeamLogo())

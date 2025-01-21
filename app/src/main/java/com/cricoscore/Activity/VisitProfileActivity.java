@@ -390,9 +390,9 @@ public class VisitProfileActivity extends AppCompatActivity {
 
     // Set Data here
     private void setUserData() {
-        activityVisitProfileBinding.editTextUsernameSignup.setText(SessionManager.getUserName());
-        activityVisitProfileBinding.editTextFirstname.setText(SessionManager.getFirstName());
-        activityVisitProfileBinding.editTextLastname.setText(SessionManager.getLastName());
+        activityVisitProfileBinding.editTextUsernameSignup.setText(Global.capitalizeFirstLatterOfString(SessionManager.getUserName()));
+        activityVisitProfileBinding.editTextFirstname.setText(Global.capitalizeFirstLatterOfString(SessionManager.getFirstName()));
+        activityVisitProfileBinding.editTextLastname.setText(Global.capitalizeFirstLatterOfString(SessionManager.getLastName()));
         activityVisitProfileBinding.editTextEmailSignup.setText(SessionManager.getEmail());
         activityVisitProfileBinding.editTextPhoneSignup.setText(SessionManager.getPhone());
         // image_uri = Uri.parse(SessionManager.getUserAvtar());

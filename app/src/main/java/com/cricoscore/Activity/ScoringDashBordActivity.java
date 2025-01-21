@@ -282,11 +282,11 @@ public class ScoringDashBordActivity extends AppCompatActivity {
 
             // Toaster.customToast(currentBowlerId + "//" + currentStrikerId + "/" + currentNonStrikerId);
 
-            tossInfo.setText(battingTeamName + " " + "elected to bat");
-            tvBattingTeamName.setText(battingTeamName);
+            tossInfo.setText(Global.capitalizeFirstLatterOfString(battingTeamName) + " " + "elected to bat");
+            tvBattingTeamName.setText(Global.capitalizeFirstLatterOfString(battingTeamName));
             //playerNameStrike.setText(StrikePlayerName);
             //playerNameNonStrike.setText(nonStrikeName);
-            tvbowlerName.setText(bowlerName);
+            tvbowlerName.setText(Global.capitalizeFirstLatterOfString(bowlerName));
         }
         if (Global.isOnline(this)) {
             getInningDetails(inningNumber);
@@ -785,8 +785,8 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         ImageView imgStrike = bottomSheetDialog.findViewById(R.id.imgStrike);
         ImageView imgNonStrike = bottomSheetDialog.findViewById(R.id.imgNonStrike);
 
-        tvStrikeName.setText(StrikePlayerName);
-        tvNonStrikeName.setText(nonStrikeName);
+        tvStrikeName.setText(Global.capitalizeFirstLatterOfString(StrikePlayerName));
+        tvNonStrikeName.setText(Global.capitalizeFirstLatterOfString(nonStrikeName));
 
 
         mcvStrike.setOnClickListener(v -> {
@@ -1094,7 +1094,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
             currentBowlerId = dataObject.getJSONObject("bowler").getInt("player_id");
             battingTeamName = dataObject.getString("team_name");
 
-            tvBattingTeamName.setText(battingTeamName);
+            tvBattingTeamName.setText(Global.capitalizeFirstLatterOfString(battingTeamName));
             bowlingTeamId = dataObject.getInt("bowling_team_id");
             teamIdBatting = dataObject.getInt("batting_team_id");
 
@@ -1477,12 +1477,12 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         scoreTextView.setText(totalRuns + "/" + wickets + "(" + overValue + " : " + over_limit_inning + ")");
 
         // Update individual player scores
-        player1ScoreView.setText(StrikePlayerName + ": " + player1Score);
-        player2ScoreView.setText(nonStrikeName + " : " + player2Score);
+        player1ScoreView.setText(Global.capitalizeFirstLatterOfString(StrikePlayerName) + ": " + player1Score);
+        player2ScoreView.setText(Global.capitalizeFirstLatterOfString(nonStrikeName) + " : " + player2Score);
 
         // Update bowler stats
         bowlerStatsView.setText("Over :" + " " + overValue + "  -  " + "Run : " + " " + totalRuns + " " + "  -  " + "Wicket : " + " " + wickets);
-        tvbowlerName.setText(bowlerName);
+        tvbowlerName.setText(Global.capitalizeFirstLatterOfString(bowlerName));
     }
 
     private void inningCompletedDialog(int totalRunss, int overss, int wickett, String name) {
@@ -1599,7 +1599,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         TextView tvTeamNameWinningHeader = bottomSheetDialog.findViewById(R.id.tvTeamNameWinningHeader);
         tvTeamNameWinningHeader.setText(target_msg);
         TextView tvLossingTeam = bottomSheetDialog.findViewById(R.id.tvLossingTeam);
-        tvLossingTeam.setText(firstInningTeamName);
+        tvLossingTeam.setText(Global.capitalizeFirstLatterOfString(firstInningTeamName));
         TextView tvLoosingTeamWicket = bottomSheetDialog.findViewById(R.id.tvLoosingTeamWicket);
         tvLoosingTeamWicket.setText(firstInningTotalWicket + "");
         TextView tvLoosingTeamOver = bottomSheetDialog.findViewById(R.id.tvLoosingTeamOver);
@@ -1608,7 +1608,7 @@ public class ScoringDashBordActivity extends AppCompatActivity {
         tvRunLoosingTeam.setText(firstInningScore + "");
 
         TextView tvWinningTeamName = bottomSheetDialog.findViewById(R.id.tvWinningTeamName);
-        tvWinningTeamName.setText(battingTeamName + "");
+        tvWinningTeamName.setText(Global.capitalizeFirstLatterOfString(battingTeamName + ""));
         TextView tvWinningTeamRun = bottomSheetDialog.findViewById(R.id.tvWinningTeamRun);
         tvWinningTeamRun.setText(totalRuns + "");
         TextView tvWinningTeamWicket = bottomSheetDialog.findViewById(R.id.tvWinningTeamWicket);

@@ -58,7 +58,7 @@ public class YourTeamListAdapter extends RecyclerView.Adapter<YourTeamListAdapte
         TeamModel tournament = tList.get(position);
 
         // Set team name and location
-        holder.tvTName.setText(tournament.getName());
+        holder.tvTName.setText(Global.capitalizeFirstLatterOfString(tournament.getName()));
         holder.tvtLocation.setText(tournament.getCity());
 
         // Load the team logo

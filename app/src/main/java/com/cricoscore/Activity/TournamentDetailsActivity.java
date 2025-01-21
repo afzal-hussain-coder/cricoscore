@@ -106,7 +106,7 @@ public class TournamentDetailsActivity extends AppCompatActivity {
 
 
 
-        toolbarBinding.toolbartext.setText(tournamentName);
+        toolbarBinding.toolbartext.setText(Global.capitalizeFirstLatterOfString(tournamentName));
         toolbarBinding.toolbar.setNavigationOnClickListener(v -> finish());
 
 

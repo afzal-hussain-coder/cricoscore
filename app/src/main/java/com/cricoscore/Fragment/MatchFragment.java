@@ -108,25 +108,6 @@ public class MatchFragment extends Fragment {
         }
     }
 
-    public List<Match> getMatchList(){
-        List<Match> tList = new ArrayList<>();
-        tList.add(new Match(Color.parseColor("#c8f5ae"),
-                Color.parseColor("#c8f5ae"),"First-class Match","Inderjit Singh Bindra Stadium",
-                "30-Mar-23 to 31-Sep-23"));
-        tList.add(new Match(Color.parseColor("#d7e09b"),
-                Color.parseColor("#d7e09b"),"One day Match","Dr. Y. S. Rajasekhara Reddy International Cricket Stadium",
-                "01-Apr-23 to 22-july-23"));
-        tList.add(new Match(Color.parseColor("#F1DB9C"),
-                Color.parseColor("#F1DB9C"),"Twenty 20 (T20)","Rajiv Gandhi International Cricket Stadium",
-                "9-Jan-23 to 31-Mar-23"));
-        tList.add(new Match(Color.parseColor("#F4CEC8"),
-                Color.parseColor("#F4CEC8"),"One Day Internationals","Vidarbha Cricket Association Stadium",
-                "5-Feb-23 to 23-May-23"));
-        tList.add(new Match(Color.parseColor("#E6C2EF"),
-                Color.parseColor("#E6C2EF"),"Twenty 20 Internationals","Arun Jaitley Cricket Stadium","16-Nov-23 to 27-Dec-23"
-        ));
-        return tList;
-    }
     public class Match{
         public int getBanner() {
             return banner;

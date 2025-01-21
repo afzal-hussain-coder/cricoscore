@@ -54,7 +54,7 @@ public class ScorecardActivity extends AppCompatActivity {
         activityScorecardBinding.tabLayout.addTab(activityScorecardBinding.tabLayout.newTab().setText(mContext.getResources().getString(R.string.live)));
         activityScorecardBinding.tabLayout.addTab(activityScorecardBinding.tabLayout.newTab().setText(mContext.getResources().getString(R.string.scorecard)));
         activityScorecardBinding.tabLayout.addTab(activityScorecardBinding.tabLayout.newTab().setText(mContext.getResources().getString(R.string.commentary)));
-        //activityScorecardBinding.tabLayout.addTab(activityScorecardBinding.tabLayout.newTab().setText(mContext.getResources().getString(R.string.gallery)));
+        activityScorecardBinding.tabLayout.addTab(activityScorecardBinding.tabLayout.newTab().setText(mContext.getResources().getString(R.string.info)));
         activityScorecardBinding.tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         FragmentManager fragmentManager = getSupportFragmentManager();

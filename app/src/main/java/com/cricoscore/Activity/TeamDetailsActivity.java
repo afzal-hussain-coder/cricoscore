@@ -174,7 +174,7 @@ public class TeamDetailsActivity extends AppCompatActivity {
 
         try {
             String name = jsonObject.getString("name");
-            activityTeamDetailsBinding.tvTName.setText(name);
+            activityTeamDetailsBinding.tvTName.setText(Global.convertUTCDateToLocal(name));
         } catch (JSONException e) {
             e.printStackTrace();
         }

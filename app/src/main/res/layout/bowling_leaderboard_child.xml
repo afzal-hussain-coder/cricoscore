@@ -41,6 +41,7 @@ tools:ignore="NamespaceTypo">
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/rl_profile"
         android:layout_toLeftOf="@+id/tvPoints"
+        android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_5sdp"
         android:paddingStart="@dimen/_2sdp"
         android:layout_marginStart="@dimen/_5sdp"
@@ -53,13 +54,13 @@ tools:ignore="NamespaceTypo">
             android:layout_centerVertical="true"
             android:text="Player Name"
             android:layout_toLeftOf="@+id/cb"
-            android:textColor="@color/black"
+            android:textColor="@color/purple_700"
             android:textSize="@dimen/_10sdp"
             app:fontFamily="@font/opensans_semibold" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -76,7 +77,7 @@ tools:ignore="NamespaceTypo">
                     android:textColor="@color/purple_700"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:textSize="@dimen/_10sdp"
-                    app:fontFamily="@font/opensans_regular" />
+                    app:fontFamily="@font/opensans_semibold" />
                 <TextView
                     android:id="@+id/tvInningCount"
                     android:layout_width="match_parent"
@@ -89,13 +90,14 @@ tools:ignore="NamespaceTypo">
                     android:textColor="@color/purple_700"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:textSize="@dimen/_10sdp"
-                    app:fontFamily="@font/opensans_regular" />
+                    app:fontFamily="@font/opensans_semibold" />
             </LinearLayout>
             <View
                 android:layout_width="@dimen/_1sdp"
-                android:layout_height="@dimen/_7sdp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_height="@dimen/_12sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_2sdp"
                 android:background="@color/dim_grey"
                 />
 
@@ -131,9 +133,10 @@ tools:ignore="NamespaceTypo">
             </LinearLayout>
             <View
                 android:layout_width="@dimen/_1sdp"
-                android:layout_height="@dimen/_7sdp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_height="@dimen/_12sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_2sdp"
                 android:background="@color/dim_grey"
                 />
 
@@ -152,7 +155,7 @@ tools:ignore="NamespaceTypo">
                     android:textColor="@color/purple_700"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:textSize="@dimen/_10sdp"
-                    app:fontFamily="@font/opensans_regular" />
+                    app:fontFamily="@font/opensans_semibold" />
                 <TextView
                     android:id="@+id/tvEcoCount"
                     android:layout_width="match_parent"
@@ -165,7 +168,7 @@ tools:ignore="NamespaceTypo">
                     android:textColor="@color/purple_700"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:textSize="@dimen/_10sdp"
-                    app:fontFamily="@font/opensans_regular" />
+                    app:fontFamily="@font/opensans_semibold" />
             </LinearLayout>
             <View
                 android:layout_width="@dimen/_1sdp"
@@ -192,7 +195,7 @@ tools:ignore="NamespaceTypo">
                     android:textColor="@color/purple_700"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:textSize="@dimen/_10sdp"
-                    app:fontFamily="@font/opensans_regular" />
+                    app:fontFamily="@font/opensans_semibold" />
                 <TextView
                     android:id="@+id/tvSrCount"
                     android:layout_width="match_parent"
@@ -205,7 +208,7 @@ tools:ignore="NamespaceTypo">
                     android:textColor="@color/purple_700"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:textSize="@dimen/_10sdp"
-                    app:fontFamily="@font/opensans_regular" />
+                    app:fontFamily="@font/opensans_semibold" />
             </LinearLayout>
 
 
@@ -231,7 +234,7 @@ tools:ignore="NamespaceTypo">
                     android:textColor="@color/purple_700"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:textSize="@dimen/_10sdp"
-                    app:fontFamily="@font/opensans_regular" />
+                    app:fontFamily="@font/opensans_semibold" />
                 <TextView
                     android:id="@+id/tvMeddianCount"
                     android:layout_width="match_parent"
@@ -244,9 +247,16 @@ tools:ignore="NamespaceTypo">
                     android:textColor="@color/purple_700"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:textSize="@dimen/_10sdp"
-                    app:fontFamily="@font/opensans_regular" />
+                    app:fontFamily="@font/opensans_semibold" />
             </LinearLayout>
-
+            <View
+                android:layout_width="@dimen/_1sdp"
+                android:layout_height="@dimen/_12sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:background="@color/dim_grey"
+                />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -297,7 +307,7 @@ tools:ignore="NamespaceTypo">
                     android:textColor="@color/purple_700"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:textSize="@dimen/_10sdp"
-                    app:fontFamily="@font/opensans_regular" />
+                    app:fontFamily="@font/opensans_semibold" />
                 <TextView
                     android:id="@+id/tvSixCount"
                     android:layout_width="match_parent"
@@ -310,7 +320,7 @@ tools:ignore="NamespaceTypo">
                     android:textColor="@color/purple_700"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:textSize="@dimen/_10sdp"
-                    app:fontFamily="@font/opensans_regular" />
+                    app:fontFamily="@font/opensans_semibold" />
             </LinearLayout>
 
 
@@ -330,7 +340,7 @@ tools:ignore="NamespaceTypo">
                     android:textColor="@color/purple_700"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:textSize="@dimen/_10sdp"
-                    app:fontFamily="@font/opensans_regular" />
+                    app:fontFamily="@font/opensans_semibold" />
                 <TextView
                     android:id="@+id/tv4sCount"
                     android:layout_width="match_parent"
@@ -343,7 +353,7 @@ tools:ignore="NamespaceTypo">
                     android:textColor="@color/purple_700"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:textSize="@dimen/_10sdp"
-                    app:fontFamily="@font/opensans_regular" />
+                    app:fontFamily="@font/opensans_semibold" />
             </LinearLayout>
 
 
@@ -363,7 +373,7 @@ tools:ignore="NamespaceTypo">
                     android:textColor="@color/purple_700"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:textSize="@dimen/_10sdp"
-                    app:fontFamily="@font/opensans_regular" />
+                    app:fontFamily="@font/opensans_semibold" />
                 <TextView
                     android:id="@+id/tv50sCount"
                     android:layout_width="match_parent"
@@ -376,7 +386,7 @@ tools:ignore="NamespaceTypo">
                     android:textColor="@color/purple_700"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:textSize="@dimen/_10sdp"
-                    app:fontFamily="@font/opensans_regular" />
+                    app:fontFamily="@font/opensans_semibold" />
             </LinearLayout>
 
 
@@ -396,7 +406,7 @@ tools:ignore="NamespaceTypo">
                     android:textColor="@color/purple_700"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:textSize="@dimen/_10sdp"
-                    app:fontFamily="@font/opensans_regular" />
+                    app:fontFamily="@font/opensans_semibold" />
                 <TextView
                     android:id="@+id/tv100sCount"
                     android:layout_width="match_parent"
@@ -409,7 +419,7 @@ tools:ignore="NamespaceTypo">
                     android:textColor="@color/purple_700"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:textSize="@dimen/_10sdp"
-                    app:fontFamily="@font/opensans_regular" />
+                    app:fontFamily="@font/opensans_semibold" />
             </LinearLayout>
 
         </LinearLayout>

@@ -63,7 +63,7 @@ public class YourPlayerListAdapter extends RecyclerView.Adapter<YourPlayerListAd
         PlayerModel player = tList.get(position);
 
         // Set player name and avatar
-        holder.tvTName.setText(player.getName());
+        holder.tvTName.setText(Global.capitalizeFirstLatterOfString(player.getName()));
         if (player.getAvatar().isEmpty()) {
             Glide.with(mContext).load(R.drawable.placeholder_user).into(holder.image);
         } else {

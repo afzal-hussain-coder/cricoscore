@@ -40,7 +40,7 @@ public class BowlingLeaderboardAdapter extends RecyclerView.Adapter<BowlingLeade
         BowlingLeaderboatrdModel bowlingLeaderboatrdModel = itemList.get(position);
         holder.tvPoints.setText(position+1+"");
         Glide.with(mContext).load(Global.BASE_URL+bowlingLeaderboatrdModel.getAvatar()).into(holder.image);
-        holder.tvPlayerName.setText(bowlingLeaderboatrdModel.getName());
+        holder.tvPlayerName.setText(Global.capitalizeFirstLatterOfString(bowlingLeaderboatrdModel.getName()));
 
         holder.tvACount.setText(bowlingLeaderboatrdModel.getBowlingAverage()+"");
         holder.tvEcoCount.setText(bowlingLeaderboatrdModel.getEconomyRate()+"");
